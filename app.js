@@ -13,6 +13,12 @@ angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource'])
                 url: "/home",
                 templateUrl: 'home.view.html',
             })
+            .state('app.openPonto', {
+                //                abstract: true,
+                url: "/openPonto",
+                templateUrl: 'openPonto.view.html',
+            controller
+            })
 
         //if no state redirect to home
         $urlRouterProvider.otherwise('home');
