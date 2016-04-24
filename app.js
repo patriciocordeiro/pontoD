@@ -11,7 +11,7 @@ angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource'])
             .state('app.home', {
                 //                abstract: true,
                 url: "/home",
-                templateUrl: 'components/home/home.view.html',
+                templateUrl: 'home.view.html',
             })
 
         //if no state redirect to home
