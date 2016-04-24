@@ -1,0 +1,33 @@
+{
+  "name": "pontodapp",
+  "version": "1.0.0",
+  "description": "Teste do lcd usando wiring pi",
+  "main": "lcdFirstTest.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Patricio Cordeiro",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4",
+    "mongoose": "^4.4.13",
+    "wiring-pi": "^2.1.1"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patriciocordeiro/pontoD.git"
+  },
+  "keywords": [
+    "ponto",
+    "lcd",
+    "raspberry",
+    "wiring",
+    "pi",
+    "keyboard"
+  ],
+  "bugs": {
+    "url": "https://github.com/patriciocordeiro/pontoD/issues"
+  },
+  "homepage": "https://github.com/patriciocordeiro/pontoD#readme"
+}
