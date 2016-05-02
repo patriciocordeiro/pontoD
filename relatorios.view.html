@@ -1,0 +1,23 @@
+<md-toolbar>
+    <div class="md-toolbar-tools">
+        <h2 class="md-title">Janeiro 2016</h2>
+
+    </div>
+</md-toolbar>
+<!--<md-tabs>-->
+<!--    <md-tab ng-repeat="months in vm.calendar[1].months" label="{{months}}">-->
+<div layout="column">
+    <div layout="row" layout-align="center center">
+        <md-grid-list flex="40" md-cols="7" md-row-height="2:2" md-gutter="0px">
+            <md-grid-tile ng-repeat="weekDays in vm.calendar[0].weekDays">
+                {{weekDays}}
+            </md-grid-tile>
+            <md-grid-tile style="border: 1px solid" ng-repeat="days in vm.monthDays">
+                {{days}}
+            </md-grid-tile>
+        </md-grid-list>
+    </div>
+</div>
+
+<!--    </md-tab>-->
+<!--</md-tabs>-->

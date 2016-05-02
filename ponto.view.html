@@ -1,0 +1,29 @@
+<div layout="row" layout-align="center center">
+    <md-card flex="40">
+        <form name="baterPontoForm" ng-submit="baterPontoForm.$valid && vm.openClosePonto(vm.employee)">
+        <md-card-title>
+            <h2>Registro de ponto</h2>
+        </md-card-title>
+        <md-card-content layout="column" >
+            <md-input-container>
+                <label>Entre aqui com o Seu Id</label>
+                <input type="number" name="id" ng-model="vm.employee.empId"  maxlength="4" required/>
+                <div ng-messages="baterPontoForm.id.$error"  role="alert">
+                    <div ng-message="required">Por favor, entre com o seu ID</div>
+                </div>
+            </md-input-container>
+            <md-input-container>
+                <label>Entre aqui com a sua senha</label>
+                <input type="password" name="password" ng-model="vm.employee.password"  maxlength="6" required/>
+                <div ng-messages="baterPontoForm.password.$error" role="alert">
+                    <div ng-message="required">Por favor, entre com a senha</div>
+                </div>
+            </md-input-container>
+        </md-card-content>
+        <md-card-actions layout="row" layout-padding layout-align="space-between">
+            <md-button ng-click="vm.employee.working=true" type="submit" class="md-primary md-raised">Entrada</md-button>
+            <md-button ng-click="vm.employee.working=false" type="submit"  class="md-warn md-raised">Saída</md-button>
+        </md-card-actions>
+        </form>
+    </md-card>
+</div>

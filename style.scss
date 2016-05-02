@@ -1,0 +1,18 @@
+.my-md-menu-button {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    .md-button {
+        border-radius: 0;
+        //        line-height: inherit;
+        margin: 0;
+        display: inherit;
+    }
+    .md-button:hover {
+        border-bottom: solid 4px #FF5722;
+    }
+
+}
+.active-menu{
+    border-bottom: solid 4px #FF5722;
+}

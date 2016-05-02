@@ -16,24 +16,24 @@
     <script src="controller.js"></script>
     <!--css-->
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
-<body ng-app="pontoDApp" >
+<body ng-app="pontoDApp">
     <script src="bower_components/angular-aria/angular-aria.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-material/angular-material.min.js"></script>
-
     <div ng-controller="Ctrl as vm">
-    <md-toolbar class="md-toolbar-tools" >
-        <div>
-            <md-button ng-click="vm.getUserOnWork()">Home</md-button>
-            <md-button>Pontos abertos</md-button>
-            <md-button>Pontos fechados</md-button>
-            <md-button>Relatórios</md-button>
+        <div layout="row" layout-align="center center">
+            <div flex="80">
+                <md-toolbar class="md-toolbar-tools">
+                    <div class=" my-md-menu-button" layout="row" layout-fill >
+                        <md-button ng-class="{'active-menu':$index==vm.isActive}" ng-repeat="navbar in vm.navbarItems" ui-sref="{{navbar.url}}" ng-click="vm.getUserOnWork();vm.getIndex($index)" >{{navbar.item}}</md-button>
+                    </div>
+                </md-toolbar>
+            </div>
         </div>
-    </md-toolbar>
     </div>
-
     <ui-view></ui-view>
 </body>
 
