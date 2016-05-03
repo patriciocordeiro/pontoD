@@ -11,6 +11,7 @@
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/lodash/dist/lodash.min.js"></script>
 
     <script src="app.js"></script>
     <script src="controller.js"></script>
@@ -27,8 +28,8 @@
         <div layout="row" layout-align="center center">
             <div flex="80">
                 <md-toolbar class="md-toolbar-tools">
-                    <div class=" my-md-menu-button" layout="row" layout-fill >
-                        <md-button ng-class="{'active-menu':$index==vm.isActive}" ng-repeat="navbar in vm.navbarItems" ui-sref="{{navbar.url}}" ng-click="vm.getUserOnWork();vm.getIndex($index)" >{{navbar.item}}</md-button>
+                    <div class=" my-md-menu-button" layout="row" layout-fill>
+                        <md-button ng-class="{'active-menu':$index==vm.isActive}" ng-repeat="navbar in vm.navbarItems" ui-sref="{{navbar.url}}" ng-click="vm.getUserOnWork();vm.getIndex($index)">{{navbar.item}}</md-button>
                     </div>
                 </md-toolbar>
             </div>

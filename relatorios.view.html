@@ -16,7 +16,25 @@
                 {{days}}
             </md-grid-tile>
         </md-grid-list>
+
+        <md-grid-list flex="40" md-cols="7" md-row-height="2:2" md-gutter="0px">
+            <md-grid-tile ng-repeat="dataA in  vm.All">
+                {{dataA.weekDay}}
+                <div tyle="border: 1px solid" ng-repeat="data in  vm.All[$index].days">
+                    {{data}}
+                </div>
+            </md-grid-tile>
+            <!--
+          <div ng-repeat="dataA in  vm.All">
+    <md-grid-tile style="border: 1px solid" ng-repeat="data in  vm.All[$index].days">
+        <p>{{data}}</p>
+    </md-grid-tile>
+</div>
+-->
+        </md-grid-list>
     </div>
+
+
 </div>
 
 <!--    </md-tab>-->
