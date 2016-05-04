@@ -16,4 +16,12 @@
 .active-menu {
   border-bottom: solid 4px #FF5722; }
 
+/* line 20, C:/Home Solutions/projetos/pontoD/code/pontoD/style.scss */
+.work-is-true {
+  background-color: aquamarine; }
+
+/* line 24, C:/Home Solutions/projetos/pontoD/code/pontoD/style.scss */
+.work-is-fale {
+  background-color: red; }
+
 /*# sourceMappingURL=style.css.map */

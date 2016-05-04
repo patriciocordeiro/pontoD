@@ -14,7 +14,7 @@
     "express": "^4.13.4",
     "mongodb": "^2.1.18",
     "mongoose": "^4.4.13",
-    "wiring-pi": "^2.1.1"
+   // "wiring-pi": "^2.1.1"
   },
   "devDependencies": {},
   "repository": {

@@ -1,41 +1,21 @@
-<md-toolbar>
-    <div class="md-toolbar-tools">
-        <h2 class="md-title">Janeiro 2016</h2>
-
-    </div>
-</md-toolbar>
 <!--<md-tabs>-->
 <!--    <md-tab ng-repeat="months in vm.calendar[1].months" label="{{months}}">-->
-<div layout="column">
+<div layout="column" layout-margin>
+
     <div layout="row" layout-align="center center">
-        <md-grid-list flex="40" md-cols="7" md-row-height="2:2" md-gutter="0px">
-            <md-grid-tile ng-repeat="weekDays in vm.calendar[0].weekDays">
+        <md-grid-list flex="25" md-cols="7" md-row-height="2:2" md-gutter="0px">
+            <md-toolbar>
+                <div class="md-toolbar-tools" layout="row" layout-align="center center">
+                    <h2 class="md-title"> <md-button class="md-primary md-raised" ng-click=" vm.changeMonth('prev')">Prev</md-button> {{vm.calendar.currentMonth}} {{ vm.calendar.currentYear}}   <md-button class="md-primary md-raised" ng-click=" vm.changeMonth('next')">Next</md-button> </h2>
+
+                </div>
+            </md-toolbar>
+            <md-grid-tile ng-repeat="weekDays in vm.calendar.weekDays">
                 {{weekDays}}
             </md-grid-tile>
-            <md-grid-tile style="border: 1px solid" ng-repeat="days in vm.monthDays">
+            <md-grid-tile style="border: 1px solid" ng-repeat="days in  vm.calendar.days track by $index" ng-class="vm.calendar.dayCssClass[$index]">
                 {{days}}
             </md-grid-tile>
         </md-grid-list>
-
-        <md-grid-list flex="40" md-cols="7" md-row-height="2:2" md-gutter="0px">
-            <md-grid-tile ng-repeat="dataA in  vm.All">
-                {{dataA.weekDay}}
-                <div tyle="border: 1px solid" ng-repeat="data in  vm.All[$index].days">
-                    {{data}}
-                </div>
-            </md-grid-tile>
-            <!--
-          <div ng-repeat="dataA in  vm.All">
-    <md-grid-tile style="border: 1px solid" ng-repeat="data in  vm.All[$index].days">
-        <p>{{data}}</p>
-    </md-grid-tile>
-</div>
--->
-        </md-grid-list>
     </div>
-
-
 </div>
-
-<!--    </md-tab>-->
-<!--</md-tabs>-->
