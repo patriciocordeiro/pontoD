@@ -14,7 +14,7 @@ mongoose.connect('mongodb://localhost/pontoD');
 //check if connected
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function(callback) {
+db.once('open', function (callback) {
     console.log('connected to database')
 });
 /*--------------------------------------------------------------*/
@@ -30,19 +30,47 @@ var userSchema = new mongoose.Schema({
     },
     password: String,
     ponto: [{
-        data: {
+        date: {
             type: Date,
             default: Date.now()
         },
-        horaEntrada: String,
-        horaSaida: String,
-        turnoEntrada: String,
-        turnoSaida: String,
-        day: String,
-        year: String,
-        month: String
+        totalExtraTime: String,
+        totalFaultTime: String,
+        turno1: {
+            timeIn: String, //hora de entrada
+            timeOut: String, // Hora de saida
+            worked: Boolean, //Sinaliza se trabalhou
+            isDelayedIn: Boolean, //sinaliza se entrou atrasado
+            isDelayedOut: Boolean, //sinaliza se saiu atrasado
+            extraTime: String, //Tempo extra trabalhado 
+        },
+        turno2: {
+            timeIn: String, //hora de entrada
+            timeOut: String, // Hora de saida
+            worked: Boolean, //Sinaliza se trabalhou
+            isDelayedIn: Boolean, //sinaliza se entrou atrasado
+            isDelayedOut: Boolean, //sinaliza se saiu atrasado
+            extraTime: String, //Tempo extra trabalhado 
+        },
 
     }]
+
+
+
+    //    [{
+    //        data: {
+    //            type: Date,
+    //            default: Date.now()
+    //        },
+    //        horaEntrada: String,
+    //        horaSaida: String,
+    //        turnoEntrada: String,
+    //        turnoSaida: String,
+    //        day: String,
+    //        year: String,
+    //        month: String
+    //
+    //    }]
 })
 
 /*Create a mongoose model*/
@@ -64,11 +92,11 @@ app.use(bodyParser.urlencoded({
 //use static files
 app.use(express.static(path.join(__dirname, '/')));
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
 });
 
-app.get('/getOpenPonto', function(req, res) {
+app.get('/getOpenPonto', function (req, res) {
     console.log('Chegou do cliente', req.body);
     employees.aggregate({
         $match: {
@@ -80,7 +108,7 @@ app.get('/getOpenPonto', function(req, res) {
         $match: {
             "ponto.day": "1"
         }
-    }, function(err, data) {
+    }, function (err, data) {
         if (err) console.log(err)
         console.log('result', data);
         res.send(data);
@@ -88,102 +116,102 @@ app.get('/getOpenPonto', function(req, res) {
 
 })
 
-    //app.post('/openClosePonto', function(req, res) {
-    //    console.log('Chegou do cliente', req.body);
-    //    employees.find({id:req.body.empId.toString()}, function(err, data){
-    //        if (err) console.log(err)
-    //        console.log(data);
-    //        res.send(data);
-    //    });
-    //
-    //})
-    ////
-    app.post('/openClosePonto', function(req, res) {
-        console.log('Chegou do cliente', req.body);
-        employees.find({
-            id: req.body.empId
-        }, function(err, user) {
-            if (err)
-                console.log(err)
-            console.log('employee data', user);
-            if (!user[0]) {
-                console.log('user not found');
-                res.json({
-                    res: 'noUser'
-                });
-            } else {
-                if (req.body.password) {
-                    if (user[0].password == req.body.password) {
-                        employees.update({
-                            id: req.body.empId
-                        }, {
-                            $set: {
-                                working: req.body.working
-                            }
-                        }, function(err, data) {
-                            if (err) console.log(err);
-                            console.log(data);
+//app.post('/openClosePonto', function(req, res) {
+//    console.log('Chegou do cliente', req.body);
+//    employees.find({id:req.body.empId.toString()}, function(err, data){
+//        if (err) console.log(err)
+//        console.log(data);
+//        res.send(data);
+//    });
+//
+//})
+////
+app.post('/openClosePonto', function (req, res) {
+    console.log('Chegou do cliente', req.body);
+    employees.find({
+        id: req.body.empId
+    }, function (err, user) {
+        if (err)
+            console.log(err)
+        console.log('employee data', user);
+        if (!user[0]) {
+            console.log('user not found');
+            res.json({
+                res: 'noUser'
+            });
+        } else {
+            if (req.body.password) {
+                if (user[0].password == req.body.password) {
+                    employees.update({
+                        id: req.body.empId
+                    }, {
+                        $set: {
+                            working: req.body.working
+                        }
+                    }, function (err, data) {
+                        if (err) console.log(err);
+                        console.log(data);
 
 
-                            if (data.ok == 1) {
-                                if (data.nModified == 1) {
-                                    console.log('Ponto Aberto');
+                        if (data.ok == 1) {
+                            if (data.nModified == 1) {
+                                console.log('Ponto Aberto');
 
-                                    if (req.body.working == true) {
-                                        /*Entrada*/
-                                        employees.update({
-                                            id: req.body.empId
-                                        }, {
-                                            $push: {
-                                                ponto: req.body.ponto
-                                            }
-                                        }, function(err, data) {
-                                            if (err) console.log(err);
-                                            console.log(data);
+                                if (req.body.working == true) {
+                                    /*Entrada*/
+                                    employees.update({
+                                        id: req.body.empId
+                                    }, {
+                                        $push: {
+                                            ponto: req.body.ponto
+                                        }
+                                    }, function (err, data) {
+                                        if (err) console.log(err);
+                                        console.log(data);
 
-                                        })
-                                    } else if (req.body.working == false) {
-                                        //                                    console.log(obj);
-                                        /*Saída*/
-                                        employees.update({
-                                            "ponto._id": ObjectId(user[0].ponto[0]._id)
-                                        }, {
-                                            $set: {
-                                                "ponto.$.horaSaida": req.body.ponto.horaSaida
-                                            }
-                                        }, function(err, data) {
-                                            if (err) console.log(err);
-                                            console.log(user[0].ponto[0]._id);
-                                            console.log('Usúário saindo', data);
+                                    })
+                                } else if (req.body.working == false) {
+                                    //                                    console.log(obj);
+                                    /*Saída*/
+                                    employees.update({
+                                        "ponto._id": ObjectId(user[0].ponto[0]._id)
+                                    }, {
+                                        $set: {
+                                            "ponto.$.horaSaida": req.body.ponto.horaSaida
+                                        }
+                                    }, function (err, data) {
+                                        if (err) console.log(err);
+                                        console.log(user[0].ponto[0]._id);
+                                        console.log('Usúário saindo', data);
 
-                                        })
+                                    })
 
-                                    }
-
-                                } else {
-                                    console.log('O ponto já foi aberto');
                                 }
-                            }
-                            res.send(data[0]);
-                        })
 
-                    } else {
-                        console.log('wrong password');
-                        res.json({
-                            res: 'wrongPass'
-                        });
-                    }
+                            } else {
+                                console.log('O ponto já foi aberto');
+                            }
+                        }
+                        res.send(data[0]);
+                    })
+
                 } else {
-                    console.log('NO password');
+                    console.log('wrong password');
                     res.json({
-                        res: 'noPass'
+                        res: 'wrongPass'
                     });
                 }
+            } else {
+                console.log('NO password');
+                res.json({
+                    res: 'noPass'
+                });
             }
-            //            }
-        });
+        }
+        //            }
     });
+});
 
-    app.listen(3000, function() {
-        console.log('Example app listening on port 3000!');
-    });
+app.listen(3000, function () {
+    console.log('Example app listening on port 3000!');
+});

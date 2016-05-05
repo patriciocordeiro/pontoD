@@ -1,6 +1,6 @@
 'use strict'
 angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource'])
-    .config(function($stateProvider, $urlRouterProvider) {
+    .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('app', {
                 url: "^",
@@ -11,24 +11,24 @@ angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource'])
             .state('app.home', {
                 //                abstract: true,
                 url: "/home",
-                templateUrl: 'home.view.html',
+                templateUrl: '/views/home.view.html',
             })
             .state('app.openPonto', {
                 //                abstract: true,
                 url: "/openPonto",
-                templateUrl: 'openPonto.view.html',
+                templateUrl: '/views/openPonto.view.html',
                 controller: 'Ctrl as vm',
             })
             .state('app.ponto', {
                 //                abstract: true,
                 url: "/ponto",
-                templateUrl: 'ponto.view.html',
+                templateUrl: '/views/ponto.view.html',
                 controller: 'Ctrl as vm',
             })
             .state('app.relatorios', {
                 //                abstract: true,
                 url: "/relatorios",
-                templateUrl: 'relatorios.view.html',
+                templateUrl: '/views/relatorios.view.html',
                 controller: 'Ctrl as vm',
             })
 
