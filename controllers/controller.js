@@ -51,6 +51,21 @@
             })
         }
         /*-----------------------------------------------------------------------------*/
+        vm.selectedEmployee = {} // selected emplyee for the report (ng-model)
+        vm.getSelectedEmployee = function(index) {
+            vm.SelectedEmployeeData = vm.allEmployees[index]
+            console.log(vm.SelectedEmployeeData);
+        }
+
+        vm.getAll = function(acao, callback) {
+            var httpCall = new httpResource();
+            httpCall.get({
+                acao: acao
+            }, function(data) {
+                return callback(data)
+            })
+        }
+
         vm.getOpenPonto = function(query, acao, callback) {
             var httpCall = new httpResource();
             httpCall.get({
@@ -59,6 +74,13 @@
                 return callback(data);
             })
         }
+
+
+        //Get all employees
+        vm.getAll('getEmployees', function(data) {
+            vm.allEmployees = data
+            console.log(vm.allEmployees);
+        })
 
         /*Get opened ponto*/
         var query = {};
@@ -140,14 +162,14 @@
 
         var employeeWorkTrue = {
             month: 'january',
-            days: [1, 2,3,4, 5, 6,7, 8, 9,10,-1,12,13,14,15,16,17,18,19,20,21,22,-1,24,25,26,27,-1,29,30, 31]
+            days: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -1, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, -1, 24, 25, 26, 27, -1, 29, 30, 31]
         }
 
         /*Calendário------------------------------------------------------------------*/
         //Calendar object
         vm.calendar = {}
         vm.calendar.weekDays = ['Dom', 'Seg', 'Ter', 'Quar', 'Qui', 'Sex', 'Sab'];
-        vm.calendar.dayCssClass =[];
+        vm.calendar.dayCssClass = [];
         //Defaults (Starting year and month)
         var defaultYear = 2016;
         var defaultMonth = 0 //january
@@ -207,11 +229,11 @@
                     k++
                 }
 
-                if(employeeWorkTrue.days[i]!==-1){
+                if (employeeWorkTrue.days[i] !== -1) {
                     console.log(i);
                     console.log(employeeWorkTrue.days[i]);
                     vm.calendar.dayCssClass.push('work-is-true');
-                }else{
+                } else {
                     vm.calendar.dayCssClass.push('work-is-false');
 
                 }
@@ -221,8 +243,23 @@
 
         }
         /*--------------------------------------------------------------------------------------------------------------*/
+        /*Relatorios*/
+        //1462653588952
+        vm.relatorios = ['Dias trabalhados', 'Horas trabalhadas', 'Horas extras', 'Dias não trabalhadas', 'Horas não trabalhadas']
 
+        var Mydate = new Date(1970, 0, 1);
+        console.log(Mydate.getTime());
+        var today = new Date().getTime();
+        console.log(today);
 
+        var diff = 1462654059142 - 1462653588952 + 10800000
+        var diffHours = new Date(diff);
+        var HourString = diffHours.toTimeString()
+        console.log('diff', diff);
+
+        //        convert timeString to Date object
+        console.log(new Date(1970, 0, 1, '00', '07', '50').getTime());
+        console.log(new Date(diff).getTime());
 
     }
 })();

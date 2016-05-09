@@ -2,20 +2,99 @@
 <!--    <md-tab ng-repeat="months in vm.calendar[1].months" label="{{months}}">-->
 <div layout="column" layout-margin>
 
-    <div layout="row" layout-align="center center">
-        <md-grid-list flex="25" md-cols="7" md-row-height="2:2" md-gutter="0px">
-            <md-toolbar>
-                <div class="md-toolbar-tools" layout="row" layout-align="center center">
-                    <h2 class="md-title"> <md-button class="md-primary md-raised" ng-click=" vm.changeMonth('prev')">Prev</md-button> {{vm.calendar.currentMonth}} {{ vm.calendar.currentYear}}   <md-button class="md-primary md-raised" ng-click=" vm.changeMonth('next')">Next</md-button> </h2>
-
-                </div>
-            </md-toolbar>
-            <md-grid-tile ng-repeat="weekDays in vm.calendar.weekDays">
-                {{weekDays}}
-            </md-grid-tile>
-            <md-grid-tile style="border: 1px solid" ng-repeat="days in  vm.calendar.days track by $index" ng-class="vm.calendar.dayCssClass[$index]">
-                {{days}}
-            </md-grid-tile>
-        </md-grid-list>
-    </div>
+    <md-input-container>
+        <label>Escolha o colaborador</label>
+        <md-select ng-model="vm.selectedEmployee.name">
+            <md-option ng-click="vm.getSelectedEmployee($index)" ng-repeat="employee in vm.allEmployees track by $index" ng-value="employee.name">
+                {{employee.name}}
+            </md-option>
+        </md-select>
+    </md-input-container>
+    <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="sdkjdkjsk">
+            <div layout="row" layout-align="center center">
+                <md-grid-list flex="25" md-cols="7" md-row-height="2:2" md-gutter="0px">
+                    <md-toolbar>
+                        <div class="md-toolbar-tools" layout="row" layout-align="center center">
+                            <h2 class="md-title"> <md-button class="md-primary md-raised" ng-click=" vm.changeMonth('prev')">Prev</md-button> {{vm.calendar.currentMonth}} {{ vm.calendar.currentYear}}   <md-button class="md-primary md-raised" ng-click=" vm.changeMonth('next')">Next</md-button> </h2>
+                        </div>
+                    </md-toolbar>
+                    <md-grid-tile ng-repeat="weekDays in vm.calendar.weekDays">
+                        {{weekDays}}
+                    </md-grid-tile>
+                    <md-grid-tile style="border: 1px solid" ng-repeat="days in  vm.calendar.days track by $index" ng-class="vm.calendar.dayCssClass[$index]">
+                        {{days}}
+                    </md-grid-tile>
+                </md-grid-list>
+            </div>
+        </md-tab>
+        <md-tab layout="column" label="Horas trabalhadas" layout-align="center center">
+            <div class="md-title">Mês</div>
+            <md-list>
+                <md-list-item>
+                    <p class="md-title"><b>Dia</b>
+                    </p>
+                    <p class="md-title"><b>Total de horas trabalhadas</b>
+                    </p>
+                    <p class="md-title"><b>Hora extra</b>
+                    </p>
+                    <p class="md-title"><b>Horas não trabalhada</b>
+                    </p>
+                </md-list-item>
+                <md-list-item ng-class-odd="'list-grey'" ng-repeat="employeeData in  vm.SelectedEmployeeData.ponto">
+                    <p>{{employeeData.date | date:'dd-MMM-yyyy': 'GMT' }} zz
+                    </p>
+                    <p>{{employeeData.totalWorkedHours | date:'medium'}}</p>
+                    <p>{{employeeData.totalExtrahours | date:'medium'}}</p>
+                    <p>{{employeeData.totalFaultHours | date:'medium'}}</p>
+                    <div ng-show="true">
+                        <p>Entrada: {{employeeData.turno1.inTime}}</p>
+                        <p>Saida: {{employeeData.turno1.outTime}}</p>
+                    </div>
+                </md-list-item>
+            </md-list>
+        </md-tab>
+        <md-tab label="Assiduidade" layout="column" layout-align="center center">
+            <div layout="row" layout-align="center center">
+                <md-list flex>
+                    <span class="md-title">Turno 2</span>
+                    <md-list-item>
+                        <p class="md-title"><b>Hora de entrada</b>
+                        </p>
+                        <p class="md-title"><b>Atrasado</b>
+                        </p>
+                    </md-list-item>
+                    <md-list-item ng-class-odd="'list-grey'" ng-repeat="employeeData in  vm.SelectedEmployeeData.ponto">
+                        <p>{{employeeData.turno1.inTime}}</p>
+                        <p ng-show="employeeData.turno1.isDelaydIn"><b>Sim<md-icon class="material-icons md-warn md-raised">alarm</md-icon></b>
+                        </p>
+                        <p ng-show="!employeeData.turno1.isDelaydIn">Não</p>
+                    </md-list-item>
+                </md-list>
+                <md-divider></md-divider>
+                <md-list flex>
+                    <span class="md-title">Turno 2</span>
+                    <md-list-item>
+                        <p class="md-title"><b>Hora de entrada</b>
+                        </p>
+                        <p class="md-title"><b>Atrasado</b>
+                        </p>
+                    </md-list-item>
+                    <md-list-item ng-class-odd="'list-grey'" ng-repeat="employeeData in  vm.SelectedEmployeeData.ponto">
+                        <p>{{employeeData.turno2.inTime}}</p>
+                        <p ng-show="employeeData.turno2.isDelaydIn"><b>Sim<md-icon class="material-icons md-warn md-raised">alarm</md-icon></b>
+                        </p>
+                        <p ng-show="!employeeData.turno2.isDelaydIn">Não</p>
+                    </md-list-item>
+                </md-list>
+            </div>
+        </md-tab>
+        <md-tab ng-repeat="relatorio in vm.relatorios" label="{{relatorio}}">
+            <md-list>
+                <md-lis-item ng-repeat="employeeData in  vm.SelectedEmployeeData">
+                    <p>{{employeeData.name}}</p>
+                </md-lis-item>
+            </md-list>
+        </md-tab>
+    </md-tabs>
 </div>

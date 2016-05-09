@@ -8,13 +8,45 @@ var path = require('path');
 var mongoose = require('mongoose');
 var ObjectId = require('mongodb').ObjectID;
 
+/*global variables*/
+var minWorkHours = '01:00:00'; //minimo de horas para considerar trabalho
+var maxWorkHours = '04:00:00'; //máximo de horas para não considera hora extra
+var maxTimeInTurno1 = '08:15:00';
+var maxTimeInTurno2 = '14:15:00';
+
+/*global functions*/
+//function getworkedHours(inTime, outTime) {
+//    return var workedHours = outTime - inTime;
+//
+//}
+//
+//function getExtraHours(workedHours, maxWorkHours) {
+//    if (workedHours > maxWorkHour) {
+//        return var extraTime = workedHours - maxWorkHours;
+//    }
+//}
+//
+//function getFaultHours(workedHours, maxWorkHours) {
+//    if (workedHours < maxWorkHour) {
+//        return var faultHours = workedHours - maxWorkHours;
+//    }
+//}
+//
+//function getTotalExtraHours(extraHoursFirstPeriod, extraHoursSecondPeriod) {
+//    return var totalExtraHours = extraHoursFirstPeriod + extraHoursSecondPeriod
+//}
+//
+//function getTotalFaultHours(faultHoursFirstPeriod, faultHoursSecondPeriod) {
+//    return var totalFaultHours = faultHoursFirstPeriod + faultHoursSecondPeriod
+//}
+
 
 /*MONGODB--------------------------------------------------*/
 mongoose.connect('mongodb://localhost/pontoD');
 //check if connected
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function (callback) {
+db.once('open', function(callback) {
     console.log('connected to database')
 });
 /*--------------------------------------------------------------*/
@@ -37,51 +69,31 @@ var userSchema = new mongoose.Schema({
         totalExtraTime: String,
         totalFaultTime: String,
         turno1: {
-            timeIn: String, //hora de entrada
-            timeOut: String, // Hora de saida
+            inTime: String, //hora de entrada
+            outTime: String, // Hora de saida
             worked: Boolean, //Sinaliza se trabalhou
             isDelayedIn: Boolean, //sinaliza se entrou atrasado
             isDelayedOut: Boolean, //sinaliza se saiu atrasado
-            extraTime: String, //Tempo extra trabalhado 
+            extraTime: String, //Tempo extra trabalhado
+            faultHours: String, //Tempo não trabalhado
+            workedHours: String //horas trabalhadas
         },
         turno2: {
-            timeIn: String, //hora de entrada
-            timeOut: String, // Hora de saida
+            inTime: Date, //hora de entrada
+            outTime: String, // Hora de saida
             worked: Boolean, //Sinaliza se trabalhou
             isDelayedIn: Boolean, //sinaliza se entrou atrasado
             isDelayedOut: Boolean, //sinaliza se saiu atrasado
-            extraTime: String, //Tempo extra trabalhado 
+            extraTime: String, //Tempo extra trabalhado
+            faultHours: String, //Tempo não trabalhado
+            workedHours: String //horas trabalhadas
         },
 
     }]
-
-
-
-    //    [{
-    //        data: {
-    //            type: Date,
-    //            default: Date.now()
-    //        },
-    //        horaEntrada: String,
-    //        horaSaida: String,
-    //        turnoEntrada: String,
-    //        turnoSaida: String,
-    //        day: String,
-    //        year: String,
-    //        month: String
-    //
-    //    }]
 })
 
 /*Create a mongoose model*/
 var employees = mongoose.model('employees', userSchema);
-
-///*Create new user*/
-//var newUSer = new user({
-//    name: 'yasmin',
-//    id: 1902 ,
-//    password: 1256,
-//})
 
 /*Express config*/
 app.use(cors());
@@ -92,11 +104,20 @@ app.use(bodyParser.urlencoded({
 //use static files
 app.use(express.static(path.join(__dirname, '/')));
 
-app.get('/', function (req, res) {
+
+/*Routes*/
+app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
 });
 
-app.get('/getOpenPonto', function (req, res) {
+app.get('/getEmployees', function(req, res){
+    employees.find({},function(err, data){
+        if(err) console.lo
+        res.send(data)
+    })
+})
+
+app.get('/getOpenPonto', function(req, res) {
     console.log('Chegou do cliente', req.body);
     employees.aggregate({
         $match: {
@@ -108,7 +129,7 @@ app.get('/getOpenPonto', function (req, res) {
         $match: {
             "ponto.day": "1"
         }
-    }, function (err, data) {
+    }, function(err, data) {
         if (err) console.log(err)
         console.log('result', data);
         res.send(data);
@@ -116,21 +137,11 @@ app.get('/getOpenPonto', function (req, res) {
 
 })
 
-//app.post('/openClosePonto', function(req, res) {
-//    console.log('Chegou do cliente', req.body);
-//    employees.find({id:req.body.empId.toString()}, function(err, data){
-//        if (err) console.log(err)
-//        console.log(data);
-//        res.send(data);
-//    });
-//
-//})
-////
-app.post('/openClosePonto', function (req, res) {
+app.post('/openClosePonto', function(req, res) {
     console.log('Chegou do cliente', req.body);
     employees.find({
         id: req.body.empId
-    }, function (err, user) {
+    }, function(err, user) {
         if (err)
             console.log(err)
         console.log('employee data', user);
@@ -148,7 +159,7 @@ app.post('/openClosePonto', function (req, res) {
                         $set: {
                             working: req.body.working
                         }
-                    }, function (err, data) {
+                    }, function(err, data) {
                         if (err) console.log(err);
                         console.log(data);
 
@@ -165,7 +176,7 @@ app.post('/openClosePonto', function (req, res) {
                                         $push: {
                                             ponto: req.body.ponto
                                         }
-                                    }, function (err, data) {
+                                    }, function(err, data) {
                                         if (err) console.log(err);
                                         console.log(data);
 
@@ -179,7 +190,7 @@ app.post('/openClosePonto', function (req, res) {
                                         $set: {
                                             "ponto.$.horaSaida": req.body.ponto.horaSaida
                                         }
-                                    }, function (err, data) {
+                                    }, function(err, data) {
                                         if (err) console.log(err);
                                         console.log(user[0].ponto[0]._id);
                                         console.log('Usúário saindo', data);
@@ -212,6 +223,6 @@ app.post('/openClosePonto', function (req, res) {
     });
 });
 
-app.listen(3000, function () {
+app.listen(3000, function() {
     console.log('Example app listening on port 3000!');
 });
