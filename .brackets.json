@@ -1,5 +1,35 @@
 {
     "jscodehints.detectedExclusions": [
-        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/js/whiteframe/whiteframe.min.js"
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/js/whiteframe/whiteframe.min.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/fabTrigger/fabTrigger.min.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/gridList/gridList.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/gridList/gridList.min.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/icon/icon.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/assets/dbGenerator/db_employees.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/input/input.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/input/input.min.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/list/list.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/list/list.min.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/menu/menu.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/menu/menu.min.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/menuBar/menuBar.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/menuBar/menuBar.min.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/panel/panel.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/panel/panel.min.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/progressCircular/progressCircular.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/progressCircular/progressCircular.min.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/progressLinear/progressLinear.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/progressLinear/progressLinear.min.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/radioButton/radioButton.js",
+        "jquery.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/assets/dbGenerator/jasonGenerator.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/select/select.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/select/select.min.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/showHide/showHide.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/showHide/showHide.min.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/sidenav/sidenav.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/sidenav/sidenav.min.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/slider/slider.js",
+        "C:/Home Solutions/projetos/pontoD/code/pontoD/bower_components/angular-material/modules/closure/slider/slider.min.js"
     ]
 }

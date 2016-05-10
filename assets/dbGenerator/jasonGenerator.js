@@ -259,7 +259,7 @@ var minYear = 2016;
 var maxYear = 2016;
 
 var minMonth = 0;
-var maxMonth = 2;
+var maxMonth = 1;
 var day = 0;
 var InhourFirstPeriod = 8;
 var InMinMinute = 0;
@@ -336,11 +336,13 @@ var temp = {
         if (workedHours > maxWorkHoursInMs) {
             //            console.log('HORA EXTRA');
             var extraTime = workedHours - maxWorkHoursInMs + adjustDate;
-            var extraTimeString = new Date(extraTime).toTimeString()
+            var extraTimeString = new Date(extraTime).toTimeString().split(' ')[0]
             //            console.log('extraTime', extraTimeString);
         }
         return extraTimeString;
     }
+
+
     //----------------------------------------------------------------------
 
     function getFaultHours(workedHours, maxWorkHours) {
@@ -350,9 +352,24 @@ var temp = {
         var maxWorkHoursInMs = d.getTime();
         if (workedHours < maxWorkHoursInMs) {
             var faultHours = maxWorkHoursInMs - workedHours + adjustDate;
-            var faultHoursString = new Date(faultHours).toTimeString()
+            var faultHoursString = new Date(faultHours).toTimeString().split(' ')[0]
         }
         return faultHoursString;
+    }
+
+    function getIsAntiOut(faultHours) {
+        //Sinaliza saída antecipada
+        var temp = faultHours.split(':');
+        var hour = temp[0]
+        var min = temp[1]
+        var seg = temp[2]
+        //        console.log('faultHours', faultHours);
+        if ((hour > 0) || (min > 0) || (seg > 0)) {
+            //            console.log('Saiu antes da hora');
+            return true;
+        } else {
+            return false;
+        }
     }
     //----------------------------------------------------------------------
 
@@ -373,14 +390,30 @@ var temp = {
         var turno1ExtraWorkedHours = new Date(2016, 0, 1, temp1[0], temp1[1], temp1[2]).getTime(); //hours in ms
         var turno2ExtraWorkedHours = new Date(2016, 0, 1, temp2[0], temp2[1], temp2[2]).getTime(); //hours in ms
         var totalExtradHours = turno1ExtraWorkedHours + turno2ExtraWorkedHours - (new Date(2016, 0, 1).getTime()); //sum the two and sub the 1970, 1,1 data
-        var totalExtraHoursString = new Date(totalExtradHours).toTimeString() // convert to string format (00:00:00)
+        var totalExtraHoursString = new Date(totalExtradHours).toTimeString().split(' ')[0] // convert to string format (00:00:00)
         return totalExtraHoursString;
     }
     //----------------------------------------------------------------------
 
+    function getIsGeneral(fullHour) {
+        //Sinaliza saída antecipada
+        var temp = fullHour.split(':');
+        var hour = temp[0]
+        var min = temp[1]
+        var seg = temp[2]
+        //        console.log('faultHours', faultHours);
+        if ((hour > 0) || (min > 0) || (seg > 0)) {
+            //            console.log('Saiu antes da hora');
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     function getTotalWorkedHours(workedHoursTurno1, workedHoursTurno2) {
         var totalWorkedHours = workedHoursTurno1 + workedHoursTurno2 - (new Date(2016, 0, 1).getTime());; //sum the two and sub the 1970, 1,1 data
-        var totalWorkedHoursString = new Date(totalWorkedHours).toTimeString() // convert to string format (00:00:00)
+        var totalWorkedHoursString = new Date(totalWorkedHours).toTimeString().split(' ')[0] // convert to string format (00:00:00)
         return totalWorkedHoursString
     }
     /*Verifica se o funcionário trabalhou ou não*/
@@ -400,7 +433,7 @@ var temp = {
         var turno1FaultHours = new Date(2016, 0, 1, temp1[0], temp1[1], temp1[2]).getTime(); //hours in ms
         var turno2FaultHours = new Date(2016, 0, 1, temp2[0], temp2[1], temp2[2]).getTime(); //hours in ms
         var totalFaultHours = turno1FaultHours + turno2FaultHours - (new Date(2016, 0, 1).getTime()); //sum the two and sub the 1970, 1,1 data
-        var totalFaultHoursString = new Date(totalFaultHours).toTimeString() // convert to string format (00:00:00)
+        var totalFaultHoursString = new Date(totalFaultHours).toTimeString().split(' ')[0] // convert to string format (00:00:00)
         return totalFaultHoursString;
     }
     //----------------------------------------------------------------------
@@ -444,25 +477,31 @@ async.series([
     },
     function(callback) {
         /*Entrada primeiro turno*/
-        console.log('adadad', employee);
+        //        console.log('adadad', employee);
         getHours(minYear, maxYear, minMonth, maxMonth, 1, turno1MinInHour, turno1MaxInHour, turno1MinInMin, turno1MaxInMin, function(data) {
             for (k = 0; k < maxEmployees; k++) {
 
                 for (var i = 0; i < data.length; i++) {
                     var temp = {
+                        fullDate: {},
                         date: {},
                         turno1: {},
                         turno2: {},
                     }
-                    temp.date = data[i].toDateString(); //Date of work
-                    temp.turno1.inTime = data[i].toTimeString(); //Hora de Entrada
+                    temp.fullDate = data[i].toDateString(); //Date of work
+                    temp.date.year = data[i].getFullYear().toString(); //Date of work
+                    temp.date.month = data[i].getMonth().toString(); //Date of work
+                    temp.date.weekday = data[i].getDay().toString(); //Date of work
+                    temp.date.day = data[i].getDate().toString(); //Date of work
+
+                    temp.turno1.inTime = data[i].toTimeString().split(' ')[0]; //Hora de Entrada
                     date1[i] = new Date(data[i]).getTime(); // hora entrada em ms
                     temp.turno1.isDelaydIn = getIsDelayed(date1[i], turno1MaxInTime) //sinalize se entrou atrasado
                     employee[k].ponto.push(temp); // push para o array ponto
                 }
             }
         })
-        console.log('primeiro pronto', employee)
+        //        console.log('primeiro pronto', employee)
         callback()
     },
     function(callback) {
@@ -471,7 +510,7 @@ async.series([
             console.log('segundo iniciado')
             for (k = 0; k < maxEmployees; k++) {
                 for (var i = 0; i < data.length; i++) {
-                    employee[k].ponto[i].turno1.outTime = data[i].toTimeString();
+                    employee[k].ponto[i].turno1.outTime = data[i].toTimeString().split(' ')[0];
                     date2[i] = new Date(data[i]).getTime(); // hora saida em ms
 
                     employee[k].ponto[i].turno1.isDelaydOut = getIsDelayed(date2[i], turno1MaxOutTime) //sinalize se saiu atrasado
@@ -479,10 +518,12 @@ async.series([
                     //Extra hours calculation
                     var diff = date2[i] - date1[i] + Mydate;
                     var diffInMs = new Date(diff);
-                    employee[k].ponto[i].turno1.workedHours = diffInMs.toTimeString();
+                    employee[k].ponto[i].turno1.workedHours = diffInMs.toTimeString().split(' ')[0];
                     employee[k].ponto[i].turno1.extraWorkedHours = getExtraHours(diffInMs.getTime(), maxWorkHours)
                     //faul hours calculation
-                    employee[k].ponto[i].turno1.faultHours = getFaultHours(diffInMs.getTime(), maxWorkHours)
+                    employee[k].ponto[i].turno1.faultHours = getFaultHours(diffInMs.getTime(), maxWorkHours);
+                    //Sinaliza se saiu antecipado
+                    employee[k].ponto[i].turno1.isAntiOut = getIsAntiOut(employee[k].ponto[i].turno1.faultHours);
                 }
             }
             callback();
@@ -491,20 +532,20 @@ async.series([
     },
 
     function(callback) {
-        /*Entrada primeiro turno*/
+        /*Entrada Segundo turno*/
         getHours(minYear, maxYear, minMonth, maxMonth, 1, turno2MinInHour, turno2MaxInHour, turno2MinInMin, turno2MaxInMin, function(data) {
             for (k = 0; k < maxEmployees; k++) {
                 for (var i = 0; i < data.length; i++) {
                     employee[k].ponto[i].turno2 = {}
                     employee[k].ponto[i].turno2.date = data[i].toDateString(); //Date of work
-                    employee[k].ponto[i].turno2.inTime = data[i].toTimeString(); //Hora de Entrada
+                    employee[k].ponto[i].turno2.inTime = data[i].toTimeString().split(' ')[0]; //Hora de Entrada
                     date1[i] = new Date(data[i]).getTime(); // hora entrada em ms
                     employee[k].ponto[i].turno2.isDelaydIn = getIsDelayed(date1[i], turno2MaxInTime) //sinalize se entrou atrasado
                     //                employee.ponto.push(temp); // push para o array ponto
                 }
             }
         })
-        console.log('Segundo pronto', employee)
+        //        console.log('Segundo pronto', employee)
         callback()
     },
     function(callback) {
@@ -515,7 +556,7 @@ async.series([
             dataLength = data.length;
             for (k = 0; k < maxEmployees; k++) {
                 for (var i = 0; i < data.length; i++) {
-                    employee[k].ponto[i].turno2.outTime = data[i].toTimeString();
+                    employee[k].ponto[i].turno2.outTime = data[i].toTimeString().split(' ')[0];
                     date2[i] = new Date(data[i]).getTime(); // hora saida em ms
 
                     employee[k].ponto[i].turno2.isDelaydOut = getIsDelayed(date2[i], turno2MaxOutTime) //sinalize se saiu atrasado
@@ -523,10 +564,13 @@ async.series([
                     //Extra hours calculation
                     var diff = date2[i] - date1[i] + Mydate;
                     var diffInMs = new Date(diff);
-                    employee[k].ponto[i].turno2.workedHours = diffInMs.toTimeString();
+                    employee[k].ponto[i].turno2.workedHours = diffInMs.toTimeString().split(' ')[0];
                     employee[k].ponto[i].turno2.extraWorkedHours = getExtraHours(diffInMs.getTime(), maxWorkHours)
                     //faul hours calculation
                     employee[k].ponto[i].turno2.faultHours = getFaultHours(diffInMs.getTime(), maxWorkHours)
+
+                    //Sinaliza se saiu antecipado
+                    employee[k].ponto[i].turno2.isAntiOut = getIsAntiOut(employee[k].ponto[i].turno2.faultHours)
                 }
             }
             callback();
@@ -550,12 +594,14 @@ async.series([
 
                 //get Total extra hours
                 var totalExtrahours = getTotalExtraHours(employee[k].ponto[i])
-                employee[k].ponto[i].totalExtrahours = totalExtrahours;
+                employee[k].ponto[i].totalExtraHours = totalExtrahours;
+                employee[k].ponto[i].isExtraHours = getIsGeneral(totalExtrahours) //check if there are extra hours
                 //            console.log('totalExtrahours', totalExtrahours);
 
                 //get total faul Hours
                 var totalFaultHours = getTotalFaultHours(employee[k].ponto[i])
                 employee[k].ponto[i].totalFaultHours = totalFaultHours;
+                employee[k].ponto[i].isFaultHours  = getIsGeneral(totalFaultHours)
                 //            getisWorked(totalWorkedHours)
             }
         }
@@ -574,6 +620,6 @@ async.series([
         });
 
         console.log('Tarefas concuidas');
-        //        console.log(employee);
+        console.log(employee);
     }
 ])

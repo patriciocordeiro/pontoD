@@ -8,6 +8,15 @@
         var vm = this
         vm.employeeOpenPonto = {};
 
+        //Defaults (Starting year and month)
+        var defaultYear = 2016;
+        var defaultMonth = 0 //january
+        vm.currentMonth = 'Jan'; //stores the current month
+        vm.currentYear = defaultYear; //stores the current year
+
+        var prevYear = 2015;
+        var prevMonth = 11 //december
+
         console.log('Starting the Controller');
 
         vm.navbarItems = [{
@@ -26,6 +35,10 @@
             item: 'Relatórios',
             url: 'app.relatorios'
         }]
+
+        //Array dos meses do ano
+        vm.months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Agos', 'Set', 'Out', 'Nov', 'Dez']
+        vm.weekDays = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex']
 
         //get index of clicked menu index
         vm.isActive = false; //set the active mennu button
@@ -54,7 +67,48 @@
         vm.selectedEmployee = {} // selected emplyee for the report (ng-model)
         vm.getSelectedEmployee = function(index) {
             vm.SelectedEmployeeData = vm.allEmployees[index]
+            vm.turno1TotalDelayedIn = 0 //Total de entradas atrasadas
+            vm.turno2TotalDelayedIn = 0 //Total de entradas atrasadas
+
             console.log(vm.SelectedEmployeeData);
+        }
+
+        vm.getPontoPerMonth = function(action) {
+            if (action == 'next') {
+                prevMonth++
+                defaultMonth++
+            } else if(action == 'prev'){
+                prevMonth--
+                defaultMonth--
+            }
+
+            //get a date  in Ms for the first day of the current month
+            var d = new Date(defaultYear, defaultMonth, 0)
+            var dateString = d.toDateString().split(' ');
+
+            console.log(dateString);
+            vm.currentMonth = dateString[1]; //stores the current month
+            vm.currentYear = dateString[3]; //stores the current year
+            var currentMonthInNum = d.getMonth().toString() //Current month as Number (0-11)
+            console.log( 'currentMonthInNum', typeof currentMonthInNum);
+            //            console.log(_.flattenDeep(vm.SelectedEmployeeData.ponto));
+            vm.SelectedEmployeeFiltData  = _.filter(vm.SelectedEmployeeData.ponto, {
+                //                'year': "2016",
+                date: {
+                    month: currentMonthInNum
+                }
+                //                'date.month': "0"
+            });
+
+            _(vm.SelectedEmployeeFiltData).forEach(function(data) {
+                if (data.turno1.isDelaydIn) {
+                    vm.turno1TotalDelayedIn++
+                }
+                if (data.turno2.isDelaydIn) {
+                    vm.turno2TotalDelayedIn++
+                }
+            })
+            console.log( vm.SelectedEmployeeFiltData);
         }
 
         vm.getAll = function(acao, callback) {
@@ -170,12 +224,7 @@
         vm.calendar = {}
         vm.calendar.weekDays = ['Dom', 'Seg', 'Ter', 'Quar', 'Qui', 'Sex', 'Sab'];
         vm.calendar.dayCssClass = [];
-        //Defaults (Starting year and month)
-        var defaultYear = 2016;
-        var defaultMonth = 0 //january
 
-        var prevYear = 2015;
-        var prevMonth = 11 //december
         vm.changeMonth = function(action) {
             if (action == 'next') {
                 prevMonth++

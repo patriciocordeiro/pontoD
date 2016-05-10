@@ -10,6 +10,11 @@
             </md-option>
         </md-select>
     </md-input-container>
+    <md-card>
+        <md-card-content layout="row" layout-align="center center">
+            <h2 class="md-title"> <md-button class="md-primary md-icon-button" ng-click=" vm.getPontoPerMonth('prev')"><md-icon class="material-icons ">navigate_before</md-icon></md-button> {{vm.currentMonth}} {{ vm.currentYear}}   <md-button class="md-primary md-icon-button" ng-click=" vm.getPontoPerMonth('next')"><md-icon class="material-icons">navigate_next</md-icon></md-button> </h2>
+        </md-card-content>
+    </md-card>
     <md-tabs md-dynamic-height md-border-bottom>
         <md-tab label="sdkjdkjsk">
             <div layout="row" layout-align="center center">
@@ -32,7 +37,7 @@
             <div class="md-title">Mês</div>
             <md-list>
                 <md-list-item>
-                    <p class="md-title"><b>Dia</b>
+                    <p class="md-title"><b>Data</b>
                     </p>
                     <p class="md-title"><b>Total de horas trabalhadas</b>
                     </p>
@@ -41,8 +46,8 @@
                     <p class="md-title"><b>Horas não trabalhada</b>
                     </p>
                 </md-list-item>
-                <md-list-item ng-class-odd="'list-grey'" ng-repeat="employeeData in  vm.SelectedEmployeeData.ponto">
-                    <p>{{employeeData.date | date:'dd-MMM-yyyy': 'GMT' }} zz
+                <md-list-item ng-class-odd="'list-grey'" ng-repeat="employeeData in   vm.SelectedEmployeeFiltData">
+                    <p>{{employeeData.fullDate | date:'dd-MMM-yyyy': 'GMT' }}
                     </p>
                     <p>{{employeeData.totalWorkedHours | date:'medium'}}</p>
                     <p>{{employeeData.totalExtrahours | date:'medium'}}</p>
@@ -55,43 +60,110 @@
             </md-list>
         </md-tab>
         <md-tab label="Assiduidade" layout="column" layout-align="center center">
+            <md-button class="md-warn md-raised" ng-click=" vm.getPontoPerMonth()">Aperte</md-button>
+
             <div layout="row" layout-align="center center">
+                <!--                <span>Data</span>-->
+
+                <!--                <md-card>-->
+                <!--                    <md-card-content>-->
                 <md-list flex>
-                    <span class="md-title">Turno 2</span>
+                    <span class="md-title">Turno 1</span>
+                    <p>Total de entradas atrasadas: {{vm.turno1TotalDelayedIn}}</p>
                     <md-list-item>
-                        <p class="md-title"><b>Hora de entrada</b>
-                        </p>
-                        <p class="md-title"><b>Atrasado</b>
-                        </p>
+                        <p><b>Data</b>
+                            <p><b>Entrada</b>
+                            </p>
+                            <p><b>Atrasada</b>
+                            </p>
+                            <p><b>Saída</b>
+                            </p>
+                            <p><b>Antecipada</b>
+                            </p>
                     </md-list-item>
-                    <md-list-item ng-class-odd="'list-grey'" ng-repeat="employeeData in  vm.SelectedEmployeeData.ponto">
+                    <md-list-item ng-class-odd="'list-grey'" ng-repeat="employeeData in   vm.SelectedEmployeeFiltData">
+                        <p>{{employeeData.fullDate | date:'dd-MMM-yyyy': 'GMT' }}</p>
                         <p>{{employeeData.turno1.inTime}}</p>
+
                         <p ng-show="employeeData.turno1.isDelaydIn"><b>Sim<md-icon class="material-icons md-warn md-raised">alarm</md-icon></b>
                         </p>
                         <p ng-show="!employeeData.turno1.isDelaydIn">Não</p>
+                        <p>{{employeeData.turno1.outTime}}</p>
+                        <p ng-show="employeeData.turno1.isAntiOut"><b>Sim<md-icon class="material-icons md-warn md-raised">alarm</md-icon></b>
+                        </p>
+                        <p ng-show="!employeeData.turno1.isAntiOut">Não</p>
                     </md-list-item>
                 </md-list>
+                <!--                    </md-card-content>-->
+                <!--                </md-card>-->
                 <md-divider></md-divider>
+                <!--                <md-card>-->
+                <!--                    <md-card-content>-->
                 <md-list flex>
+                    TODO: FILTRAR POR ATRASO
                     <span class="md-title">Turno 2</span>
+                    <p>Total de entradas atrasadas: {{vm.turno2TotalDelayedIn}}</p>
                     <md-list-item>
-                        <p class="md-title"><b>Hora de entrada</b>
+                        <!--                            <md-button class="md-primary md-raised">Resumido</md-button>-->
+                        <!--                            <md-button class="md-accent md-raised">Detalhado</md-button>-->
+                        <p><b>Data</b>
                         </p>
-                        <p class="md-title"><b>Atrasado</b>
+                        <p><b>Entrada</b>
+                        </p>
+                        <p><b>Atrasada</b>
+                        </p>
+                        <p><b>Saída</b>
+                        </p>
+                        <p><b>Antecipada</b>
                         </p>
                     </md-list-item>
-                    <md-list-item ng-class-odd="'list-grey'" ng-repeat="employeeData in  vm.SelectedEmployeeData.ponto">
+                    <md-list-item ng-class-odd="'list-grey'" ng-repeat="employeeData in   vm.SelectedEmployeeFiltData">
+                        <p>{{employeeData.fullDate | date:'dd-MMM-yyyy': 'GMT' }}</p>
                         <p>{{employeeData.turno2.inTime}}</p>
+
                         <p ng-show="employeeData.turno2.isDelaydIn"><b>Sim<md-icon class="material-icons md-warn md-raised">alarm</md-icon></b>
                         </p>
                         <p ng-show="!employeeData.turno2.isDelaydIn">Não</p>
+                        <p>{{employeeData.turno2.outTime}}</p>
+                        <p ng-show="employeeData.turno2.isAntiOut"><b>Sim<md-icon class="material-icons md-warn md-raised">alarm</md-icon></b>
+                        </p>
+                        <p ng-show="!employeeData.turno2.isAntiOut">Não</p>
                     </md-list-item>
                 </md-list>
+                <!--                    </md-card-content>-->
+                <!--                </md-card>-->
             </div>
+        </md-tab>
+        <md-tab label="Horas extras">
+            <md-list>
+                <md-list-item ng-show="employeeData.isExtraHours" ng-repeat="employeeData in   vm.SelectedEmployeeFiltData">
+                    <p>{{employeeData.fullDate | date:'dd-MMM-yyyy': 'GMT' }}</p>
+<!--                    <p>{{employeeData.isExtraHours}}</p>-->
+                    <p>{{employeeData.totalExtraHours}}</p>
+                </md-list-item>
+            </md-list>
+        </md-tab>
+        <md-tab label="Horas não trabalhadas">
+            <md-list>
+                <md-list-item ng-show="employeeData.isFaultHours" ng-repeat="employeeData in   vm.SelectedEmployeeFiltData">
+                    <p>{{employeeData.fullDate | date:'dd-MMM-yyyy': 'GMT' }}</p>
+<!--                    <p>{{employeeData.isFaultHours}}</p>-->
+                    <p>{{employeeData.totalFaultHours}}</p>
+                </md-list-item>
+            </md-list>
+        </md-tab>
+        <md-tab label="Estatísticas Gerais">
+            Média de horas trabalhas por dia
+            Média de dias trabalhadas
+            Média de entradas atrasadas
+            Média de saídas antecipadas
+
+
         </md-tab>
         <md-tab ng-repeat="relatorio in vm.relatorios" label="{{relatorio}}">
             <md-list>
-                <md-lis-item ng-repeat="employeeData in  vm.SelectedEmployeeData">
+                <md-lis-item ng-repeat="employeeData in  SelectedEmployeeFiltData">
+
                     <p>{{employeeData.name}}</p>
                 </md-lis-item>
             </md-list>

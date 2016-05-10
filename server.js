@@ -62,9 +62,15 @@ var userSchema = new mongoose.Schema({
     },
     password: String,
     ponto: [{
-        date: {
+        fullDate: {
             type: Date,
             default: Date.now()
+        },
+        date:{
+            year:String,
+            month:String,
+            weekDay:String,
+            day:String,
         },
         totalExtraTime: String,
         totalFaultTime: String,
@@ -79,7 +85,7 @@ var userSchema = new mongoose.Schema({
             workedHours: String //horas trabalhadas
         },
         turno2: {
-            inTime: Date, //hora de entrada
+            inTime: String, //hora de entrada
             outTime: String, // Hora de saida
             worked: Boolean, //Sinaliza se trabalhou
             isDelayedIn: Boolean, //sinaliza se entrou atrasado
