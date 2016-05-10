@@ -67,8 +67,7 @@
         vm.selectedEmployee = {} // selected emplyee for the report (ng-model)
         vm.getSelectedEmployee = function(index) {
             vm.SelectedEmployeeData = vm.allEmployees[index]
-            vm.turno1TotalDelayedIn = 0 //Total de entradas atrasadas
-            vm.turno2TotalDelayedIn = 0 //Total de entradas atrasadas
+
 
             console.log(vm.SelectedEmployeeData);
         }
@@ -77,7 +76,7 @@
             if (action == 'next') {
                 prevMonth++
                 defaultMonth++
-            } else if(action == 'prev'){
+            } else if (action == 'prev') {
                 prevMonth--
                 defaultMonth--
             }
@@ -90,16 +89,19 @@
             vm.currentMonth = dateString[1]; //stores the current month
             vm.currentYear = dateString[3]; //stores the current year
             var currentMonthInNum = d.getMonth().toString() //Current month as Number (0-11)
-            console.log( 'currentMonthInNum', typeof currentMonthInNum);
+            console.log('currentMonthInNum', typeof currentMonthInNum);
             //            console.log(_.flattenDeep(vm.SelectedEmployeeData.ponto));
-            vm.SelectedEmployeeFiltData  = _.filter(vm.SelectedEmployeeData.ponto, {
+            vm.SelectedEmployeeFiltData = _.filter(vm.SelectedEmployeeData.ponto, {
                 //                'year': "2016",
                 date: {
                     month: currentMonthInNum
                 }
                 //                'date.month': "0"
             });
-
+            vm.turno1TotalDelayedIn = 0 //Total de entradas atrasadas
+            vm.turno2TotalDelayedIn = 0 //Total de entradas atrasadas
+            vm.turno1TotalDelayedOut = 0 //Total de saídas antecipadas
+            vm.turno2TotalDelayedOut = 0 //Total de saídas antecipadas
             _(vm.SelectedEmployeeFiltData).forEach(function(data) {
                 if (data.turno1.isDelaydIn) {
                     vm.turno1TotalDelayedIn++
@@ -107,8 +109,14 @@
                 if (data.turno2.isDelaydIn) {
                     vm.turno2TotalDelayedIn++
                 }
+                if (data.turno1.isDelaydOut) {
+                    vm.turno1TotalDelayedOut++
+                }
+                if (data.turno2.isDelaydOut) {
+                    vm.turno2TotalDelayedOut++
+                }
             })
-            console.log( vm.SelectedEmployeeFiltData);
+            console.log(vm.SelectedEmployeeFiltData);
         }
 
         vm.getAll = function(acao, callback) {
