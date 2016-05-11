@@ -28,6 +28,7 @@
     "angular-resource": "^1.5.5",
     "angular-ui-router": "^0.2.18",
     "angular": "^1.5.5",
-    "lodash": "~4.11.2"
+    "lodash": "~4.11.2",
+    "highcharts-ng": "~0.0.11"
   }
 }

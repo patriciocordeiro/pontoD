@@ -36,6 +36,7 @@
             url: 'app.relatorios'
         }]
 
+        vm.setor = ['Administraçao', 'Pedagógica', 'Recursos', 'Humanos', 'Pedagógico', ]
         //Array dos meses do ano
         vm.months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Agos', 'Set', 'Out', 'Nov', 'Dez']
         vm.weekDays = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex']
@@ -64,12 +65,22 @@
             })
         }
         /*-----------------------------------------------------------------------------*/
-        vm.selectedEmployee = {} // selected emplyee for the report (ng-model)
+        vm.isEmployeeSelected = false; //Verifica se um funcionaro foi selecionado e abre o resto das infos (tab e tal)
+        vm.selectedEmployee = {
+            name: ''
+        } // selected emplyee for the report (ng-model)
         vm.getSelectedEmployee = function(index) {
             vm.SelectedEmployeeData = vm.allEmployees[index]
-
-
             console.log(vm.SelectedEmployeeData);
+
+            //Se for selecionado um colaborador
+            console.log(vm.selectedEmployee);
+            if (vm.selectedEmployee.name) {
+                //                sinalize para que as tabs sejam visualizadas
+                vm.isEmployeeSelected = true;
+            } else {
+                vm.isEmployeeSelected = false;
+            }
         }
 
         vm.getPontoPerMonth = function(action) {
