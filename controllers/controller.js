@@ -329,5 +329,46 @@
         console.log(new Date(1970, 0, 1, '00', '07', '50').getTime());
         console.log(new Date(diff).getTime());
 
+
+        /*Charts*/
+
+        vm.highchartsNG = {
+            options: {
+                chart: {
+                    type: 'column'
+                }
+            },
+            series: [{
+                data: [10, 15, 12, 8, 7]
+            }],
+            title: {
+                text: 'Hello'
+            },
+            loading: false
+        }
+
+        function getTotalDelaydHourtPerMonth() {
+            var currentYear = "2016"
+            vm.pontoSingleYearData = _.filter(vm.SelectedEmployeeData.ponto, {
+                //                'year': "2016",
+                date: {
+                    year: currentYear
+                }
+                //                'date.month': "0"
+            });
+            _vm.pontoSingleYearData.forEach(function(data){
+
+                _.filter(data, {
+                    //                'year': "2016",
+                    date: {
+                        month: 0
+                    }
+                    //                'date.month': "0"
+                });
+            })
+
+        }
+
+
     }
 })();

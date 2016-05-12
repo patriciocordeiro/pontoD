@@ -1,5 +1,5 @@
 'use strict'
-angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource'])
+angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource','highcharts-ng'])
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('app', {
