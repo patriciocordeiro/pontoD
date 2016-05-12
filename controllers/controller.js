@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular.module('pontoDApp').controller('Ctrl', ['$resource', Ctrl]);
@@ -37,17 +37,17 @@
         }]
 
         vm.setor = ['Administraçao', 'Pedagógica', 'Recursos', 'Humanos', 'Pedagógico', ]
-        //Array dos meses do ano
+            //Array dos meses do ano
         vm.months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Agos', 'Set', 'Out', 'Nov', 'Dez']
         vm.weekDays = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex']
 
         //get index of clicked menu index
         vm.isActive = false; //set the active mennu button
-        vm.getIndex = function(index) {
-            console.log(index);
-            return vm.isActive = index
-        }
-        /*Http Resource*/
+        vm.getIndex = function (index) {
+                console.log(index);
+                return vm.isActive = index
+            }
+            /*Http Resource*/
         function httpResource() {
             return $resource('http://localhost:3000/:acao/:employee/:id', {
                 employee: '@employee',
@@ -67,133 +67,135 @@
         /*-----------------------------------------------------------------------------*/
         vm.isEmployeeSelected = false; //Verifica se um funcionaro foi selecionado e abre o resto das infos (tab e tal)
         vm.selectedEmployee = {
-            name: ''
-        } // selected emplyee for the report (ng-model)
-        vm.getSelectedEmployee = function(index) {
-            vm.SelectedEmployeeData = vm.allEmployees[index]
-            console.log(vm.SelectedEmployeeData);
+                name: ''
+            } // selected emplyee for the report (ng-model)
+        vm.getSelectedEmployee = function (index) {
+                vm.SelectedEmployeeData = vm.allEmployees[index]
+                console.log(vm.SelectedEmployeeData);
 
-            //Se for selecionado um colaborador
-            console.log(vm.selectedEmployee);
-            if (vm.selectedEmployee.name) {
-                //                sinalize para que as tabs sejam visualizadas
-                vm.isEmployeeSelected = true;
-            } else {
-                vm.isEmployeeSelected = false;
+                //Se for selecionado um colaborador
+                console.log(vm.SelectedEmployeeData.name);
+                if (vm.SelectedEmployeeData.name) {
+                    //                sinalize para que as tabs sejam visualizadas
+                    vm.isEmployeeSelected = true;
+                } else {
+                    vm.isEmployeeSelected = false;
+                }
             }
-        }
+            /*---------------------------------------------------------------------------*/
+        vm.getPontoPerMonth = function (action) {
+                if (action == 'next') {
+                    prevMonth++
+                    defaultMonth++
+                } else if (action == 'prev') {
+                    prevMonth--
+                    defaultMonth--
+                }
 
-        vm.getPontoPerMonth = function(action) {
-            if (action == 'next') {
-                prevMonth++
-                defaultMonth++
-            } else if (action == 'prev') {
-                prevMonth--
-                defaultMonth--
+                //get a date  in Ms for the first day of the current month
+                var d = new Date(defaultYear, defaultMonth, 0)
+                var dateString = d.toDateString().split(' ');
+
+                console.log(dateString);
+                vm.currentMonth = dateString[1]; //stores the current month
+                vm.currentYear = dateString[3]; //stores the current year
+                var currentMonthInNum = d.getMonth().toString() //Current month as Number (0-11)
+                console.log('currentMonthInNum', typeof currentMonthInNum);
+                //            console.log(_.flattenDeep(vm.SelectedEmployeeData.ponto));
+                vm.SelectedEmployeeFiltData = _.filter(vm.SelectedEmployeeData.ponto, {
+                    //                'year': "2016",
+                    date: {
+                        month: currentMonthInNum
+                    }
+                    //                'date.month': "0"
+                });
+                vm.turno1TotalDelayedIn = 0 //Total de entradas atrasadas
+                vm.turno2TotalDelayedIn = 0 //Total de entradas atrasadas
+                vm.turno1TotalDelayedOut = 0 //Total de saídas antecipadas
+                vm.turno2TotalDelayedOut = 0 //Total de saídas antecipadas
+                _(vm.SelectedEmployeeFiltData).forEach(function (data) {
+                    if (data.turno1.isDelaydIn) {
+                        vm.turno1TotalDelayedIn++
+                    }
+                    if (data.turno2.isDelaydIn) {
+                        vm.turno2TotalDelayedIn++
+                    }
+                    if (data.turno1.isDelaydOut) {
+                        vm.turno1TotalDelayedOut++
+                    }
+                    if (data.turno2.isDelaydOut) {
+                        vm.turno2TotalDelayedOut++
+                    }
+                })
+                console.log(vm.SelectedEmployeeFiltData);
+
+                getTotalDelaydHourtPerMonth();
             }
-
-            //get a date  in Ms for the first day of the current month
-            var d = new Date(defaultYear, defaultMonth, 0)
-            var dateString = d.toDateString().split(' ');
-
-            console.log(dateString);
-            vm.currentMonth = dateString[1]; //stores the current month
-            vm.currentYear = dateString[3]; //stores the current year
-            var currentMonthInNum = d.getMonth().toString() //Current month as Number (0-11)
-            console.log('currentMonthInNum', typeof currentMonthInNum);
-            //            console.log(_.flattenDeep(vm.SelectedEmployeeData.ponto));
-            vm.SelectedEmployeeFiltData = _.filter(vm.SelectedEmployeeData.ponto, {
-                //                'year': "2016",
-                date: {
-                    month: currentMonthInNum
-                }
-                //                'date.month': "0"
-            });
-            vm.turno1TotalDelayedIn = 0 //Total de entradas atrasadas
-            vm.turno2TotalDelayedIn = 0 //Total de entradas atrasadas
-            vm.turno1TotalDelayedOut = 0 //Total de saídas antecipadas
-            vm.turno2TotalDelayedOut = 0 //Total de saídas antecipadas
-            _(vm.SelectedEmployeeFiltData).forEach(function(data) {
-                if (data.turno1.isDelaydIn) {
-                    vm.turno1TotalDelayedIn++
-                }
-                if (data.turno2.isDelaydIn) {
-                    vm.turno2TotalDelayedIn++
-                }
-                if (data.turno1.isDelaydOut) {
-                    vm.turno1TotalDelayedOut++
-                }
-                if (data.turno2.isDelaydOut) {
-                    vm.turno2TotalDelayedOut++
-                }
-            })
-            console.log(vm.SelectedEmployeeFiltData);
-        }
-
-        vm.getAll = function(acao, callback) {
-            var httpCall = new httpResource();
-            httpCall.get({
-                acao: acao
-            }, function(data) {
-                return callback(data)
-            })
-        }
-
-        vm.getOpenPonto = function(query, acao, callback) {
-            var httpCall = new httpResource();
-            httpCall.get({
-                acao: acao,
-            }, query, function(data) {
-                return callback(data);
-            })
-        }
-
+            /*---------------------------------------------------------------------------*/
+        vm.getAll = function (acao, callback) {
+                var httpCall = new httpResource();
+                httpCall.get({
+                    acao: acao
+                }, function (data) {
+                    return callback(data)
+                })
+            }
+            /*---------------------------------------------------------------------------*/
+        vm.getOpenPonto = function (query, acao, callback) {
+                var httpCall = new httpResource();
+                httpCall.get({
+                    acao: acao,
+                }, query, function (data) {
+                    return callback(data);
+                })
+            }
+            /*---------------------------------------------------------------------------*/
 
         //Get all employees
-        vm.getAll('getEmployees', function(data) {
-            vm.allEmployees = data
-            console.log(vm.allEmployees);
-        })
-
-        /*Get opened ponto*/
+        vm.getAll('getEmployees', function (data) {
+                vm.allEmployees = data
+                console.log(vm.allEmployees);
+            })
+            /*---------------------------------------------------------------------------*/
+            /*Get opened ponto*/
         var query = {};
         vm.lastPontoIdx = 0; //last entry for ponto
-        vm.getOpenPonto(query, 'getOpenPonto', function(data) {
-            console.log(data);
-            vm.employeeOpenPonto = data;
-            var time = data[0].ponto.horaEntrada
-            var ts = time.split(':');
-            var timeInSec = Date.UTC(1970, 0, 1, ts[0], ts[1], ts[2]);
-            console.log(timeInSec);
-            var d = new Date()
-            var timeNowInMs = Date.now();
+        vm.getOpenPonto(query, 'getOpenPonto', function (data) {
+                console.log(data);
+                vm.employeeOpenPonto = data;
+                var time = data[0].ponto.horaEntrada
+                var ts = time.split(':');
+                var timeInSec = Date.UTC(1970, 0, 1, ts[0], ts[1], ts[2]);
+                console.log(timeInSec);
+                var d = new Date()
+                var timeNowInMs = Date.now();
 
-            console.log(timeNowInMs);
+                console.log(timeNowInMs);
 
-            var difInMs = timeNowInMs - 1462159126047;
-            var sec = difInMs / (1000);
-            var min = Math.floor(sec / 60)
-            var hour = Math.floor(min / 60)
-            console.log(sec / 60);
-            console.log(min);
-            console.log(hour);
-            var myDate = new Date()
-            vm.timeOnWork = Date.UTC(1970, 0, 1, difInMs)
-            console.log(vm.timeOnWork);
-        })
-        /*---------------------------------------------------------------------------*/
-
-
-        var common = function(query, acao, callback) {
-            var httpCall = new httpResource();
-            httpCall.save({
-                acao: acao,
-            }, query, function(data) {
-                return callback(data);
+                var difInMs = timeNowInMs - 1462159126047;
+                var sec = difInMs / (1000);
+                var min = Math.floor(sec / 60)
+                var hour = Math.floor(min / 60)
+                console.log(sec / 60);
+                console.log(min);
+                console.log(hour);
+                var myDate = new Date()
+                vm.timeOnWork = Date.UTC(1970, 0, 1, difInMs)
+                console.log(vm.timeOnWork);
             })
-        }
+            /*---------------------------------------------------------------------------*/
 
-        vm.openClosePonto = function(employee) {
+
+        var common = function (query, acao, callback) {
+                var httpCall = new httpResource();
+                httpCall.save({
+                    acao: acao,
+                }, query, function (data) {
+                    return callback(data);
+                })
+            }
+            /*---------------------------------------------------------------------------*/
+        vm.openClosePonto = function (employee) {
             var query = {};
             var d = new Date();
             var hour = d.toTimeString().split(' ')[0];
@@ -220,9 +222,9 @@
             //            find the User ObjectId
             vm.employeeOpenPonto
             query.objectId =
-            //            query.working = true;
-            console.log('My query', query);
-            common(query, 'openClosePonto', function(data) {
+                //            query.working = true;
+                console.log('My query', query);
+            common(query, 'openClosePonto', function (data) {
                 console.log(data);
 
                 //                vm.employeeOpenPonto = data
@@ -244,75 +246,75 @@
         vm.calendar.weekDays = ['Dom', 'Seg', 'Ter', 'Quar', 'Qui', 'Sex', 'Sab'];
         vm.calendar.dayCssClass = [];
 
-        vm.changeMonth = function(action) {
-            if (action == 'next') {
-                prevMonth++
-                defaultMonth++
-            } else {
-                prevMonth--
-                defaultMonth--
-            }
-            console.log('prevYear', prevYear);
-            console.log('defaultYear', defaultYear);
-            console.log('defaultMonth', defaultMonth);
-            //Get total days of the previous month
-            var totalDaysinPrevMonth = new Date(prevYear, prevMonth, 0).getDate();
-            console.log('totalDaysinPrevMonth', totalDaysinPrevMonth);
-            //Get total days of the current month
-            var totalDaysinCurrMonth = new Date(defaultYear, defaultMonth, 0).getDate();
-            console.log('totalDaysinCurrMonth', totalDaysinCurrMonth);
-
-            //get a date  in Ms for the first day of the current month
-            var dateInMs = new Date(defaultYear, defaultMonth, 0).setUTCDate(1);
-
-            //create a date object with the date in ms
-            var d = new Date(dateInMs)
-
-            //Get the weekday as a number (0-6)
-            var weekDayNumber = d.getDay();
-            //Case weekDayNumber is 0 (sunday)
-            if (weekDayNumber == 0) {
-                //go to the next week (sunday)
-                weekDayNumber = 7;
-            }
-            //Convert the date object to string and split in an array
-            var dateString = d.toDateString().split(' ')
-
-            vm.calendar.currentMonth = dateString[1]; //stores the current month
-            vm.calendar.currentYear = dateString[3]; //stores the current year
-            vm.calendar.days = []; //store the days of the current month
-
-            var j = totalDaysinPrevMonth - weekDayNumber + 1;
-            var k = 1;
-
-            for (var i = 0; i < 42; i++) {
-                if (i < weekDayNumber) {
-                    vm.calendar.days.push(j);
-                    j++
-
-                } else if (i >= weekDayNumber && i < totalDaysinCurrMonth + weekDayNumber) {
-                    vm.calendar.days.push(i - weekDayNumber + 1);
+        vm.changeMonth = function (action) {
+                if (action == 'next') {
+                    prevMonth++
+                    defaultMonth++
                 } else {
-                    vm.calendar.days.push(k);
-                    k++
+                    prevMonth--
+                    defaultMonth--
                 }
+                console.log('prevYear', prevYear);
+                console.log('defaultYear', defaultYear);
+                console.log('defaultMonth', defaultMonth);
+                //Get total days of the previous month
+                var totalDaysinPrevMonth = new Date(prevYear, prevMonth, 0).getDate();
+                console.log('totalDaysinPrevMonth', totalDaysinPrevMonth);
+                //Get total days of the current month
+                var totalDaysinCurrMonth = new Date(defaultYear, defaultMonth, 0).getDate();
+                console.log('totalDaysinCurrMonth', totalDaysinCurrMonth);
 
-                if (employeeWorkTrue.days[i] !== -1) {
-                    console.log(i);
-                    console.log(employeeWorkTrue.days[i]);
-                    vm.calendar.dayCssClass.push('work-is-true');
-                } else {
-                    vm.calendar.dayCssClass.push('work-is-false');
+                //get a date  in Ms for the first day of the current month
+                var dateInMs = new Date(defaultYear, defaultMonth, 0).setUTCDate(1);
 
+                //create a date object with the date in ms
+                var d = new Date(dateInMs)
+
+                //Get the weekday as a number (0-6)
+                var weekDayNumber = d.getDay();
+                //Case weekDayNumber is 0 (sunday)
+                if (weekDayNumber == 0) {
+                    //go to the next week (sunday)
+                    weekDayNumber = 7;
                 }
+                //Convert the date object to string and split in an array
+                var dateString = d.toDateString().split(' ')
+
+                vm.calendar.currentMonth = dateString[1]; //stores the current month
+                vm.calendar.currentYear = dateString[3]; //stores the current year
+                vm.calendar.days = []; //store the days of the current month
+
+                var j = totalDaysinPrevMonth - weekDayNumber + 1;
+                var k = 1;
+
+                for (var i = 0; i < 42; i++) {
+                    if (i < weekDayNumber) {
+                        vm.calendar.days.push(j);
+                        j++
+
+                    } else if (i >= weekDayNumber && i < totalDaysinCurrMonth + weekDayNumber) {
+                        vm.calendar.days.push(i - weekDayNumber + 1);
+                    } else {
+                        vm.calendar.days.push(k);
+                        k++
+                    }
+
+                    if (employeeWorkTrue.days[i] !== -1) {
+                        console.log(i);
+                        console.log(employeeWorkTrue.days[i]);
+                        vm.calendar.dayCssClass.push('work-is-true');
+                    } else {
+                        vm.calendar.dayCssClass.push('work-is-false');
+
+                    }
+                }
+                console.log(vm.calendar.days);
+
+
             }
-            console.log(vm.calendar.days);
-
-
-        }
-        /*--------------------------------------------------------------------------------------------------------------*/
-        /*Relatorios*/
-        //1462653588952
+            /*--------------------------------------------------------------------------------------------------------------*/
+            /*Relatorios*/
+            //1462653588952
         vm.relatorios = ['Dias trabalhados', 'Horas trabalhadas', 'Horas extras', 'Dias não trabalhadas', 'Horas não trabalhadas']
 
         var Mydate = new Date(1970, 0, 1);
@@ -330,25 +332,12 @@
         console.log(new Date(diff).getTime());
 
 
-        /*Charts*/
-
-        vm.highchartsNG = {
-            options: {
-                chart: {
-                    type: 'column'
-                }
-            },
-            series: [{
-                data: [10, 15, 12, 8, 7]
-            }],
-            title: {
-                text: 'Hello'
-            },
-            loading: false
-        }
 
         function getTotalDelaydHourtPerMonth() {
-            var currentYear = "2016"
+            var currentYear = "2016";
+            var currentMonth = "0";
+            var totalDelaydPerMonth = 0;
+            vm.delaydOutArray = []
             vm.pontoSingleYearData = _.filter(vm.SelectedEmployeeData.ponto, {
                 //                'year': "2016",
                 date: {
@@ -356,18 +345,60 @@
                 }
                 //                'date.month': "0"
             });
-            _vm.pontoSingleYearData.forEach(function(data){
+            console.log(vm.pontoSingleYearData);
 
-                _.filter(data, {
+            for (var month = 0; month <= 11; month++) {
+                currentMonth = month.toString();
+                vm.temp = _.filter(vm.pontoSingleYearData, {
                     //                'year': "2016",
                     date: {
-                        month: 0
+                        month: currentMonth
                     }
                     //                'date.month': "0"
                 });
-            })
+                console.log(vm.temp);
+                _.forEach(vm.temp, function (data) {
+                    if (data.turno1.isDelaydOut || data.turno2.isDelaydOut) {
+                        totalDelaydPerMonth++
+                        console.log(totalDelaydPerMonth);
+                        //                        console.log(data.turno2.isDelaydOut);
+                    }
+                })
+                vm.delaydOutArray.push(totalDelaydPerMonth);
+                totalDelaydPerMonth = 0 //reinit
+                console.log(vm.delaydOutArray);
+            }
+            /*Charts*/
+            /*---------------------------------------------------------------------------*/
+            vm.highchartsNG = {
+                options: {
+                    chart: {
+                        type: 'column'
+                    }
+                },
+                xAxis: {
+                    categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+                        'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Número de atrasos'
+                    }
+                },
+                series: [{
+                    data: vm.delaydOutArray
+                }],
+                title: {
+                    text: 'Total de atrasos por mês'
+                },
+                loading: false
+            }
 
+
+            /*---------------------------------------------------------------------------*/
         }
+
 
 
     }

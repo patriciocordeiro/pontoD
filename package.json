@@ -9,12 +9,12 @@
   "author": "Patricio Cordeiro",
   "license": "ISC",
   "dependencies": {
+    "async": "^2.0.0-rc.4",
     "body-parser": "^1.15.0",
     "cors": "^2.7.1",
     "express": "^4.13.4",
     "mongodb": "^2.1.18",
-    "mongoose": "^4.4.13",
-   // "wiring-pi": "^2.1.1"
+    "mongoose": "^4.4.13"
   },
   "devDependencies": {},
   "repository": {
