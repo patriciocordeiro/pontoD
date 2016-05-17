@@ -12,24 +12,76 @@
   .my-md-menu-button .md-button:hover {
     border-bottom: solid 4px #FF5722; }
 
-/* line 16, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 15, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
 .active-menu {
   border-bottom: solid 4px #FF5722; }
 
-/* line 20, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 18, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
 .work-is-true {
   background-color: aquamarine; }
 
-/* line 24, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 21, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
 .work-is-fale {
   background-color: red; }
 
-/* line 30, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 24, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
 .list-grey {
-  background-color: #E3F2FD         !important; }
+  background-color: #E3F2FD !important; }
 
-/* line 35, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 27, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
 .smooth-title {
   color: rgba(0, 0, 0, 0.54) !important; }
+
+/* line 31, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.material-icons.md-18 {
+  font-size: 18px;
+  height: 18px;
+  width: 18px; }
+
+/* line 36, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.material-icons.md-24 {
+  font-size: 24px;
+  height: 24px;
+  width: 24px; }
+
+/* line 41, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.material-icons.md-36 {
+  font-size: 36px;
+  height: 36px;
+  width: 36px; }
+
+/* line 46, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.material-icons.md-48 {
+  font-size: 48px;
+  height: 48px; }
+
+/* line 50, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.material-icons.md-60 {
+  font-size: 60px;
+  height: 60px; }
+
+/* line 54, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.material-icons.md-96 {
+  font-size: 96px !important;
+  height: 96px;
+  width: 96px; }
+
+/* line 59, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.delayIn {
+  background-color: aqua; }
+
+/* line 62, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.antiOut {
+  background-color: orange; }
+
+/* line 65, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.legend-box {
+  height: 25px;
+  width: 25px; }
+
+/* line 69, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.mmd-nopadding_tb {
+  padding-bottom: 0 !important;
+  padding-top: 0   !important; }
 
 /*# sourceMappingURL=style.css.map */

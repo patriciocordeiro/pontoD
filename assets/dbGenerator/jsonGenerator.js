@@ -246,6 +246,10 @@ var employee = {
     //});
 
 var async = require('async');
+var moment = require('moment')
+
+//console.log(moment.duration(86400000).format("HH:mm:ss.SSS"));
+
 
 var minWorkHours = new Date(2016, 0, 1, 2, 0, 0);
 var maxWorkHours = 4;
@@ -259,7 +263,7 @@ var minYear = 2016;
 var maxYear = 2016;
 
 var minMonth = 0;
-var maxMonth = 11;
+var maxMonth = 6;
 var day = 0;
 var InhourFirstPeriod = 8;
 var InMinMinute = 0;
@@ -413,8 +417,11 @@ function getIsGeneral(fullHour) {
 
 function getTotalWorkedHours(workedHoursTurno1, workedHoursTurno2) {
     var totalWorkedHours = workedHoursTurno1 + workedHoursTurno2 - (new Date(2016, 0, 1).getTime());; //sum the two and sub the 1970, 1,1 data
-    var totalWorkedHoursString = new Date(totalWorkedHours).toTimeString().split(' ')[0] // convert to string format (00:00:00)
-    return totalWorkedHoursString
+    var totalWorkedHoursString = new Date(totalWorkedHours).toUTCString().split(' ')[0] // convert to string format (00:00:00)
+
+    var totalWorkedHoursString = moment(totalWorkedHours) // convert to string format (00:00:00)
+    console.log(totalWorkedHoursString.format());
+    return totalWorkedHoursString.format()
 }
 /*Verifica se o funcionário trabalhou ou não*/
 function getisWorked(totalWorkedHours, minWorkHours) {
@@ -433,7 +440,7 @@ function getTotalFaultHours(employeePonto) {
     var turno1FaultHours = new Date(2016, 0, 1, temp1[0], temp1[1], temp1[2]).getTime(); //hours in ms
     var turno2FaultHours = new Date(2016, 0, 1, temp2[0], temp2[1], temp2[2]).getTime(); //hours in ms
     var totalFaultHours = turno1FaultHours + turno2FaultHours - (new Date(2016, 0, 1).getTime()); //sum the two and sub the 1970, 1,1 data
-    var totalFaultHoursString = new Date(totalFaultHours).toTimeString().split(' ')[0] // convert to string format (00:00:00)
+    var totalFaultHoursString = new Date(totalFaultHours).toISOString() // convert to string format (00:00:00)
     return totalFaultHoursString;
 }
 //----------------------------------------------------------------------
@@ -452,7 +459,7 @@ var minNomes = 0;
 var maxNomes = nomes.length;
 var minSobrenomes = 0;
 var maxSobrenomes = sobrenomes.length;
-maxEmployees = 50;
+var maxEmployees = 1;
 async.series([
 
     function (callback) {
@@ -586,7 +593,10 @@ async.series([
                 var turno2WorkedHours = new Date(2016, 0, 1, temp2[0], temp2[1], temp2[2]);
 
                 var totalWorkedHours = getTotalWorkedHours(turno1WorkedHours.getTime(), turno2WorkedHours.getTime())
-                employee[k].ponto[i].totalWorkedHours = totalWorkedHours;
+                employee[k].ponto[i].totalWorkedHours={
+                    $date :''
+                }
+                employee[k].ponto[i].totalWorkedHours.$date = totalWorkedHours;
 
                 //Get if Employee worked
                 var isWorked = getisWorked(totalWorkedHours, minWorkHours);
@@ -599,8 +609,11 @@ async.series([
                     //            console.log('totalExtrahours', totalExtrahours);
 
                 //get total faul Hours
-                var totalFaultHours = getTotalFaultHours(employee[k].ponto[i])
-                employee[k].ponto[i].totalFaultHours = totalFaultHours;
+                var totalFaultHours = getTotalFaultHours(employee[k].ponto[i]);
+                employee[k].ponto[i].totalFaultHours= {
+                    $date:''
+                }
+                employee[k].ponto[i].totalFaultHours.$date = totalFaultHours;
                 employee[k].ponto[i].isFaultHours = getIsGeneral(totalFaultHours)
                     //            getisWorked(totalWorkedHours)
             }

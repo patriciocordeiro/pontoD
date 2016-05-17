@@ -11,27 +11,62 @@
     .md-button:hover {
         border-bottom: solid 4px #FF5722;
     }
-
 }
-.active-menu{
+.active-menu {
     border-bottom: solid 4px #FF5722;
 }
-
-.work-is-true{
+.work-is-true {
     background-color: aquamarine;
 }
-
-.work-is-fale{
+.work-is-fale {
     background-color: red;
-
 }
-
-
-.list-grey{
-    background-color: #E3F2FD
-        !important;
+.list-grey {
+    background-color: #E3F2FD !important;
 }
-
-.smooth-title{
+.smooth-title {
     color: rgba(0, 0, 0, 0.54) !important;
+}
+// Rules for sizing the icon.
+.material-icons.md-18 {
+    font-size: 18px;
+    height: 18px;
+    width: 18px;
+}
+.material-icons.md-24 {
+    font-size: 24px;
+    height: 24px;
+    width: 24px;
+}
+.material-icons.md-36 {
+    font-size: 36px;
+    height: 36px;
+    width: 36px;
+}
+.material-icons.md-48 {
+    font-size: 48px;
+    height: 48px;
+}
+.material-icons.md-60 {
+    font-size: 60px;
+    height: 60px;
+}
+.material-icons.md-96 {
+    font-size: 96px !important;
+    height: 96px;
+    width: 96px;
+}
+.delayIn {
+    background-color: aqua;
+}
+.antiOut {
+    background-color: orange;
+}
+.legend-box {
+    height: 25px;
+    width: 25px;
+}
+.mmd-nopadding_tb {
+    padding-bottom: 0 !important;
+    padding-top: 0   !important;
 }

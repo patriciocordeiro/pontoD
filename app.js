@@ -1,6 +1,13 @@
 'use strict'
-angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource','highcharts-ng'])
-    .config(function ($stateProvider, $urlRouterProvider) {
+angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource','highcharts-ng', 'chart.js', 'angularMoment'])
+    .config(function ($stateProvider, $urlRouterProvider, ChartJsProvider) {
+
+        // Configure all charts
+        ChartJsProvider.setOptions({
+            colours: ['#FF5252', '#FF8A80'],
+            responsive: false
+        });
+
         $stateProvider
             .state('app', {
                 url: "^",
@@ -29,6 +36,11 @@ angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource','highcharts
                 //                abstract: true,
                 url: "/relatorios",
                 templateUrl: '/views/relatorios.view.html',
+                controller: 'Ctrl as vm',
+            })   .state('app.estatisticas', {
+                //                abstract: true,
+            url: "/estatisticas",
+                templateUrl: '/views/estatisticas.view.html',
                 controller: 'Ctrl as vm',
             })
 

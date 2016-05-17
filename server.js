@@ -82,7 +82,7 @@ var userSchema = new mongoose.Schema({
             isDelayedOut: Boolean, //sinaliza se saiu atrasado
             extraTime: String, //Tempo extra trabalhado
             faultHours: String, //Tempo não trabalhado
-            workedHours: String //horas trabalhadas
+            workedHours: Date //horas trabalhadas
         },
         turno2: {
             inTime: String, //hora de entrada

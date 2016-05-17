@@ -1,0 +1,91 @@
+<!--<md-tabs>-->
+<!--    <md-tab ng-repeat="months in vm.calendar[1].months" label="{{months}}">-->
+<div layout="column" layout-margin>
+    <md-card>
+        <md-card-title class="md-headline">Gerador de relatórios de ponto dos colaboradores</md-card-title>
+        <md-card-content>
+            <md-input-container>
+                <label>Selecione o setor</label>
+                <md-select ng-model="vm.selectedEmployee.name">
+                    <md-option ng-click="vm.getSelectedEmployee($index)" ng-repeat="setor in vm.setor" ng-value="setor">
+                        {{setor}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container>
+                <label>Escolha o colaborador</label>
+                <md-select ng-model="vm.selectedEmployee.name">
+                    <md-option ng-click="vm.getSelectedEmployee($index)" ng-repeat="employee in vm.allEmployees track by $index" ng-value="employee.name">
+                        {{employee.name}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </md-card-content>
+
+    </md-card>
+    <div ng-show="vm.isEmployeeSelected">
+
+        <md-card>
+            <md-card-content layout="column">
+                <md-list>
+                    <md-list-item class="md-3-line">
+                        <div class="md-list-item-text" layout="column">
+                            <h2 flex class="md-title smooth-title">Colaborador:&nbsp;<span style="color:initial">{{vm.SelectedEmployeeData.name}}</span></h2>
+                            <h3 flex class="md-title smooth-title">Setor: <span><b>Administrativo</b></span></h3>
+                            <p>Data processada: <span><b>{{vm.currentMonth}} de {{vm.currentYear}}</b></span>
+                            </p>
+                        </div>
+
+                    </md-list-item>
+                </md-list>
+
+            </md-card-content>
+        </md-card>
+        <md-card>
+            <md-card-content layout="row" layout-align="center center">
+                <h2 class="md-title"> <md-button class="md-primary md-icon-button" ng-click=" vm.getPontoPerMonth('prev')"><md-icon class="material-icons ">navigate_before</md-icon></md-button> {{vm.currentMonth}} {{ vm.currentYear}}   <md-button class="md-primary md-icon-button" ng-click=" vm.getPontoPerMonth('next')"><md-icon class="material-icons">navigate_next</md-icon></md-button> </h2>
+            </md-card-content>
+        </md-card>
+        <md-tabs class="md-primary md-hue-2" md-dynamic-height md-border-bottom>
+<!--
+
+            <md-tab label="Horas trabalhadas">
+                <md-input-container>
+                    <label>Selecione o ano</label>
+                    <md-select ng-model="selectedYear">
+                        <md-option value="2015">2015</md-option>
+                        <md-option value="2016">2016</md-option>
+                    </md-select>
+                </md-input-container>
+                <md-button>Por mês</md-button>
+                <md-button>Por Dia</md-button>
+                Média de horas trabalhas por dia Média de dias trabalhadas Média de entradas atrasadas Média de saídas antecipadas
+                                <highchart id="chart1" config="vm.highchartsNG"></highchart>
+
+                <canvas id="line" class="chart chart-bar" chart-data="vm.data" chart-labels="vm.labels" chart-legend="true" chart-series="vm.series" chart-click="vm.onClick()"></canvas>
+            </md-tab>
+-->
+<!--
+            <md-tab label="Entradas Atrasadas" md-on-select="vm.statistics.meanDelaydin()">
+            </md-tab>
+            <md-tab label="Saídas antecipadas">
+            </md-tab>
+            <md-tab label="Hora Extra"></md-tab>
+            <md-tab label="Hora Falta"></md-tab>
+-->
+
+            <md-tab label="{{statisticsTab.label}}" md-on-select="vm.statisticsCreateChart($index)" ng-repeat="statisticsTab in  vm.statisticsTabs">
+                <md-input-container>
+                    <label>Selecione o ano</label>
+                    <md-select ng-model="selectedYear">
+                        <md-option value="2015">2015</md-option>
+                        <md-option value="2016">2016</md-option>
+                    </md-select>
+                </md-input-container>
+                <canvas  height="500" width="500" id="line" class="chart chart-bar" chart-data="vm.chartjs.data" chart-labels="vm.chartjs.labels" chart-legend="true" chart-series="vm.chartjs.series" chart-label="vm.chartjs.label" chart-click="vm.onClick()"></canvas>
+                <h2>{{statisticsTab.mean.title}}:&nbsp;{{statisticsTab.mean.data}}</h2>
+            </md-tab>
+
+        </md-tabs>
+    </div>
+</div>
