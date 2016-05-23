@@ -30,7 +30,7 @@ angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource','highcharts
                 //                abstract: true,
                 url: "/ponto",
                 templateUrl: '/views/ponto.view.html',
-                controller: 'Ctrl as vm',
+            controller: 'pontoCtrl as vm',
             })
             .state('app.relatorios', {
                 //                abstract: true,

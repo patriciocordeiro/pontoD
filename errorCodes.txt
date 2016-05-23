@@ -1,0 +1,9 @@
+Definindo códigos de erro para serem enviados pelo servidor
+
+Começaremos usando 3 digitos; no formato 000 - 999
+
+Código significado
+000        usuário não encontrado
+001        senha não existe
+002        senha inválida
+003        já está logado (trabalhando)

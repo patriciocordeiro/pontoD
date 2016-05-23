@@ -42,8 +42,8 @@
 
 
         //Setor de trabalho
-        vm.employee ={
-            setor:''
+        vm.employee = {
+            setor: ''
         } //salva o setor selecionado
         vm.setor = ['Administraçao', 'Pedagógica', 'Recursos', 'Humanos', 'Pedagógico', ]
         //Array dos meses do ano
@@ -148,8 +148,8 @@
                 }, {
                     index: 2,
                     header: 'Horas não trabalhadas',
-                    property: 'isFaultHours',
-                    value: 'totalFaultHours'
+                    property: 'isfaultTime',
+                    value: 'totalfaultTime'
                 }]
             }, {
                 label: 'Faltas',
@@ -635,8 +635,6 @@
             meanDelaydOut: function() {},
         }
 
-
-
         vm.statisticsCreateChart = function(index) {
             console.log(vm.statisticsTabs[index || 0]);
             //            vm.functionArray[index]();
@@ -645,8 +643,6 @@
             //            temp()
             //            console.log(temp);
         }
-
-
 
 
         vm.functionArray = [statistics.meanWorkedHours, statistics.meanDelaydin]
@@ -679,8 +675,7 @@
         //        vm.totalAntiOutPerMonth.push(totalAntiOutPerMonth)
         //        vm.meanWorkedHourPerDay.push(meanWorkedHour);
         //        statisticsTypeArray = [vm.meanDelaydInPerday, vm.totalAntiOutPerMonth, vm.meanWorkedHourPerDay]
-
-
+        console.log(moment().format('00:00:00'))
 
     }
 })();

@@ -8,6 +8,16 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!--Scripts-->
+
+    <script>
+        var socket = io.connect('http://localhost');
+        socket.on('news', function (data) {
+            console.log(data);
+            socket.emit('my other event', { my: 'data' });
+        });
+    </script>
+
+
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
@@ -18,8 +28,15 @@
     <script src="bower_components/angular-moment/angular-moment.min.js"></script>
 
 
+
+
     <script src="app.js"></script>
+    <!--Services-->
+    <script src="services/httpResource.srvc.js"></script>
+    <script src="services/httpCall.srvc.js"></script>
+    <!--Controllers-->
     <script src="/controllers/controller.js"></script>
+    <script src="controllers/openClosePonto.ctrl.js"></script>
     <!--css-->
     <link rel="stylesheet" href="assets/icons/angular-material-icon/material-icons.css">
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
