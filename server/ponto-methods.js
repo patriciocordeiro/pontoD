@@ -7,7 +7,7 @@ var ObjectId = require('mongodb').ObjectID;
 module.exports = {
 
     //no momento do login do primeiro turno
-    getTurno(date, callback) {
+    getTurno: function(date, callback) {
         //check if the date is valid
         console.log(date);
         var turno;

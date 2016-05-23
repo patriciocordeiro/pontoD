@@ -26,6 +26,7 @@
   "homepage": "https://github.com/patriciocordeiro/pontoD#readme",
   "dependencies": {
     "async-waterfall": "^0.1.5",
+    "moment": "^2.13.0",
     "wiring-pi": "^2.1.1"
   }
 }

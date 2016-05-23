@@ -7,14 +7,14 @@
     var pontoConfig = require('./ponto.config');
 
     module.exports = {
-
-
         getId: function(LCD, keypad, wpi, callback) {
             var id = '';
             var numOfIdChars = 0;
             var tempString = '';
             //clear lcd
-            wpi.lcdClear(LCD);
+            wpi.lcdPosition(LCD, 0, 1)
+            wpi.lcdCursorBlink(LCD, 1)
+//            wpi.lcdClear(LCD);
             wpi.lcdPuts(LCD, "ID: ");
             while (numOfIdChars < pontoConfig.idLength) {
                 keypad.read(function(typedChar) {
@@ -39,7 +39,9 @@
             var myString = '';
             var tempString= '';
             //clear lcd
-            wpi.lcdClear(LCD); //clear LCD
+//            wpi.lcdClear(LCD); //clear LCD`
+            wpi.lcdPosition(LCD, 0, 1)
+            wpi.lcdCursorBlink(LCD, 1)
             wpi.lcdPuts(LCD, "SENHA: "); //write SENHA into LCD
             while (numOfChars < pontoConfig.passwordLength) {
                 keypad.read(function(char) {
