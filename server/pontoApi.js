@@ -42,15 +42,15 @@ var pontoSchema = function() {
             faultTime: '', //Tempo não trabalhado
             workedTime: zeroTime //horas trabalhadas
         },
-    }
+    };
 
-}
+};
 
 var myPontoModel = new pontoSchema();
 
 module.exports = {
     getOpenPonto: function(employeeData, callback) {
-        console.log('Chegou do cliente', employeeData);
+        console.log('ABRIR PONTO: Chegou do cliente', employeeData);
         waterfall([
 
                 function(callback) {
@@ -61,16 +61,17 @@ module.exports = {
                     })
                         .select('password working') //get only the password field
                     .exec(function(err, user) {
-                        if (err)
-                            callback(null, err);
+                        if (err) {
+                            return callback(err);
+                        }
                         if (!user[0]) {
                             //return the error
                             return callback(null, pontoCode.error.noUser);
                         } else {
                             //return the user
-                            callback(null, user)
+                            callback(null, user);
                         }
-                    })
+                    });
                 },
                 function(user, callback) {
                     //Check the password
@@ -86,15 +87,19 @@ module.exports = {
                             //-----------------------------------------------
                             //Check if ponto is already open
                             if (user[0].working) {
-                                return callback(null, pontoCode.error.alreadyWorking)
+                                return callback(null, pontoCode.error.alreadyWorking);
                             } else {
                                 //open ponto
                                 //-----------------------------------------------
                                 //Get turno based on the received  time
-                                ponto.getTurno(moment().format(), function(turno) {
+                                ponto.getTurno(employeeData.date, function(turno) {
                                     console.log('TURNO', turno);
+
+                                    var turno = employeeData.turno //APAGAR
+                                    console.log('turnoturno', turno);
                                     //update the ponto object array
                                     myPontoModel[turno].inTime = employeeData.date; //virá do cliente
+//                                    console.log('CARACA', myPontoModel);
                                     myPontoModel[turno].isDelayedIn = ponto.getIsDelayd(employeeData.date, pontoConfig.maxInTimeInTurno1);
                                     myPontoModel.isActive = true;
                                     myPontoModel.isOpened = true;
@@ -116,25 +121,27 @@ module.exports = {
                                             console.log(res);
                                             callback(null, pontoCode.success.userUpdatedOk);
                                         }
-                                    })
+                                    });
                                 });
                             }
                         } else {
                             //Wrong password
-                            return callback(null, pontoCode.error.wrongPassword)
+                            return callback(null, pontoCode.error.wrongPassword);
                         }
                     } else {
                         //no password
-                        return callback(null, pontoCode.error.noPassword)
+                        return callback(null, pontoCode.error.noPassword);
                     }
                 }
             ],
             function(err, result) {
                 //finally
-                callback(result)
+                callback(result);
             });
     },
     getClosePonto: function(employeeData, callback) {
+        console.log('FECHAR PONTO: Chegou do cliente', employeeData);
+
         waterfall([
 
                 function(callback) {
@@ -149,15 +156,16 @@ module.exports = {
                             'ponto.isActive': true
                         }
                     }).exec(function(err, user) {
-                        if (err)
+                        if (err) {
                             return callback(null, err);
+                        }
                         if (!user[0]) {
                             console.log('user from match', user);
                             return callback(null, pontoCode.error.noUser);
                         } else {
-                            callback(null, user)
+                            callback(null, user);
                         }
-                    })
+                    });
                 },
                 function(user, callback) {
                     //Check the password
@@ -170,67 +178,76 @@ module.exports = {
                             console.log('Senha é válida');
                             //-----------------------------------------------
                             //Check if ponto was already open
-                            user[0].working = true
+                            user[0].working = true;
                             if (!user[0].working) {
-                                return callback(null, pontoCode.error.userNotWorking)
+                                return callback(null, pontoCode.error.userNotWorking);
                             } else {
                                 //-----------------------------------------------
                                 waterfall([
 
                                         function(callback) {
-                                            console.log(user[0]);
-                                            ponto.getTurno(moment().format(), function(turno) {
-                                                console.log(turno);
+//                                            console.log(user[0]);
+                                            //                                            ponto.getTurno(moment().format(), function(turno) {
+                                            //                                            USAR O DE CIMA (APENAS PARA TESTE)
+                                            ponto.getTurno(employeeData.date, function(turno) {
+//                                                console.log(turno);
+
+                                                var turno = employeeData.turno //APAGAR
+
                                                 var workedTime = ponto.getWordkedTime(user[0].ponto[turno].inTime, employeeData.date, pontoConfig.minTimeToWork);
 
                                                 callback(null, workedTime);
-                                            })
+                                            });
                                         },
                                         function(workedTime, callback) {
-                                            var pontoData = {}
+                                            var pontoData = {};
+
+                                            pontoData.outTime = employeeData.date;
                                             pontoData.workedTime = workedTime;
                                             pontoData.extraTime = ponto.getExtraTime(workedTime.duration, pontoConfig.maxTimeToWork);
                                             pontoData.faultTime = ponto.getFaultTime(workedTime.duration, pontoConfig.maxTimeToWork);
                                             callback(null, pontoData, user);
                                         },
                                         function(pontoData, user, callback) {
-                                            console.log('myuser', user);
-                                            console.log('PontoData', pontoData);
+//                                            console.log('myuser', user);
+//                                            console.log('PontoData', pontoData);
                                             ponto.getTurno(moment().format(), function(turno) {
-                                                var turno = 'turno2'
                                                 console.log('TURNO', turno);
+
+                                                var turno = employeeData.turno //APAGAR
+
                                                 ponto.getUpdatePonto(employee, user, pontoData, turno, function(res) {
                                                     console.log('resposta', res);
-                                                    if(!res.nModified===1){
-                                                        return callback(null, pontoCode.error.userNotUpdated)
-                                                    }else{
-                                                        return callback(null, pontoCode.success.userUpdatedOk)
+                                                    if (res.nModified !== 1) {
+                                                        return callback(null, pontoCode.error.userNotUpdated);
+                                                    } else {
+                                                        return callback(null, pontoCode.success.userUpdatedOk);
                                                     }
 
-                                                })
+                                                });
 
-                                            })
+                                            });
                                         }
                                     ],
                                     //finally (middle)
                                     function(err, result) {
-                                    console.log('finally (middle)', result);
-                                        callback(null, result)
-                                    })
+                                        console.log('finally (middle)', result);
+                                        callback(null, result);
+                                    });
                             }
                         } else {
                             //Wrong password
-                            return callback(null, pontoCode.error.wrongPassword)
+                            return callback(null, pontoCode.error.wrongPassword);
                         }
                     } else {
                         //No password
-                        return callback(null, pontoCode.error.noPassword)
+                        return callback(null, pontoCode.error.noPassword);
                     }
                 }
             ],
             function(err, result) {
                 //finally (end)
-            console.log('final', result);
+                console.log('final', result);
                 callback(result);
             });
     },
@@ -246,9 +263,12 @@ module.exports = {
                 "ponto.day": "1"
             }
         }, function(err, data) {
-            if (err) console.log(err)
-            console.log('result', data);
-            //            res.send(data);
+            if (err) {
+                console.log(err);
+            } else {
+                console.log('result', data);
+            }
+
         });
     },
 

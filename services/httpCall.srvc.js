@@ -1,4 +1,4 @@
-angular.module('pontoDApp').service('httCallSrvc', ['httpResSrvc',
+angular.module('pontoDApp').service('httpCallSrvc', ['httpResSrvc',
 
     function(httpResSrvc) {
 
@@ -10,8 +10,8 @@ angular.module('pontoDApp').service('httCallSrvc', ['httpResSrvc',
                 httpResSrvc.ponto.get({
                     acao: acao
                 }, function(data) {
-                    return callback(data)
-                })
+                    return callback(data);
+                });
             },
 
             ponto: function(query, acao, callback) {

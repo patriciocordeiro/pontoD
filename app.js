@@ -24,7 +24,7 @@ angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource','highcharts
                 //                abstract: true,
                 url: "/openPonto",
                 templateUrl: '/views/openPonto.view.html',
-                controller: 'Ctrl as vm',
+            controller: 'pontoCtrl as vm',
             })
             .state('app.ponto', {
                 //                abstract: true,
@@ -36,12 +36,12 @@ angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource','highcharts
                 //                abstract: true,
                 url: "/relatorios",
                 templateUrl: '/views/relatorios.view.html',
-                controller: 'Ctrl as vm',
+            controller: 'relatorioCtrl as vm',
             })   .state('app.estatisticas', {
                 //                abstract: true,
             url: "/estatisticas",
                 templateUrl: '/views/estatisticas.view.html',
-                controller: 'Ctrl as vm',
+            controller: 'pontoCtrl as vm',
             })
 
         //if no state redirect to home

@@ -1,5 +1,6 @@
 <div layout="row" layout-align="center center">
     <md-card flex="40">
+        <md-button ng-click="vm.sendPonto()">mandar</md-button>
         <form name="baterPontoForm" ng-submit="baterPontoForm.$valid && vm.getPontoOpenClose(vm.employee)">
         <md-card-title>
             <h2>Registro de ponto</h2>

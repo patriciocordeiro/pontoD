@@ -32,6 +32,15 @@ var employeesSchema = new mongoose.Schema({
             },
             totalExtraTime: Date,
             totalFaultTime: Date,
+            totalWorkedTime:Date,
+            isExtraTime: {
+                type: Boolean,
+                default: false
+            },
+            isFaultTime: {
+                type: Boolean,
+                default: true
+            },
             turno1: {
                 //Sinaliza se o ponto foi aberto
                 isOpened: {

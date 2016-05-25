@@ -28,10 +28,10 @@ module.exports = {
         //This function checks if the ponto Date is same as today
         var isValidDate = false;
         //get today date
-        var today = moment().format()
+        var today = moment().format();
         //compare with the user sent date
-        isValidDate = moment(date).isSame(today, 'day')
-        return isValidDate
+        isValidDate = moment(date).isSame(today, 'day');
+        return isValidDate;
     },
 
     getIsDelayd: function(currTime, maxTime) {
@@ -39,7 +39,7 @@ module.exports = {
         //maxTime: defined maxTime to compare with
         //create a date object with today date and maxTime
 
-        var maxTimeDate = moment.utc().startOf('day').hour(maxTime.hour).minute(maxTime.min).second(maxTime.sec)
+        var maxTimeDate = moment.utc().startOf('day').hour(maxTime.hour).minute(maxTime.min).second(maxTime.sec);
         //compare the two times
         var isDelayd = moment(currTime).isAfter(maxTimeDate);
         console.log('isDelayd:', isDelayd);
@@ -60,9 +60,9 @@ module.exports = {
         workedTime.duration = moment.utc().startOf('day').hour(temp.hours()).minutes(temp.minutes()).seconds(temp.seconds()); //No fault time
 
         if (workedTime.duration.hour() < minTimeTowork) {
-            workedTime.worked = false
+            workedTime.worked = false;
         } else {
-            workedTime.worked = true
+            workedTime.worked = true;
         }
 
         workedTime.duration = workedTime.duration.format();
@@ -82,7 +82,7 @@ module.exports = {
         if (faultTime.state) {
             var duration = moment.duration(expedientTimeObj.diff(workedTimeObj)); //get the diference bettween the two times
             //            console.log(duration);
-            faultTime.duration = moment(moment.utc().startOf('day').hour(duration.hours()).minutes(duration.minutes()).seconds(duration.seconds())).format()
+            faultTime.duration = moment(moment.utc().startOf('day').hour(duration.hours()).minutes(duration.minutes()).seconds(duration.seconds())).format();
         }
         //        faultTime.duration = faultTime.duration.format();
         return faultTime;
@@ -98,7 +98,7 @@ module.exports = {
 
         if (extraTime.state) {
             var duration = moment.duration(workedTime.diff(maxTimeToWork)); //get the diference bettween the two times
-            extraTime.duration = moment.utc().startOf('day').hour(duration.hours()).minutes(duration.minutes()).seconds(duration.seconds())
+            extraTime.duration = moment.utc().startOf('day').hour(duration.hours()).minutes(duration.minutes()).seconds(duration.seconds());
         }
         extraTime.duration = extraTime.duration.format();
         console.log(extraTime);
@@ -116,7 +116,7 @@ module.exports = {
                     'ponto.$.turno1.workedHours': pontoData.workedTime.duration,
                     'ponto.$.turno1.faultTime': pontoData.faultTime.duration,
                     'ponto.$.turno1.extraTime': pontoData.extraTime.duration,
-                    'ponto.$.turno1.outTime': moment.utc().format(),
+                    'ponto.$.turno1.outTime': pontoData.outTime,
                     'ponto.$.turno1.isDelayedOut': pontoData.extraTime.state,
                     'ponto.$.turno1.worked': pontoData.workedTime.state,
                     'ponto.$.turno1.isAntiOut': pontoData.faultTime.state, //fechou o ponto
@@ -137,17 +137,17 @@ module.exports = {
                         }
 
                     }).exec(function(err, res) {
-                        if (err)
-                            return callback(null, err)
-                            console.log(res);
-                    })
-                    console.log('Ponto Fechado com sucesso');
-                    callback(null, res);
+                        if (err) {
+                            return callback(null, err);
+                        } else {
+                            return callback(res);
+                        }
+                    });
                 }
-            })
+            });
         } else if (turno === 'turno2') {
             model.update({
-                "ponto._id": ObjectId(currUser.ponto._id)
+                "ponto._id": new ObjectId(currUser.ponto._id)
             }, {
                 $set: {
                     'ponto.$.turno2.workedHours': pontoData.workedTime.duration,
@@ -174,18 +174,18 @@ module.exports = {
                         }
 
                     }).exec(function(err, res) {
-                        if (err){
-                            return callback(null, err)
-                        }else{
+                        if (err) {
+                            return callback(null, err);
+                        } else {
                             return callback(res);
                         }
 
 
-                    })
+                    });
 
                 }
-            })
+            });
         }
 
     }
-}
+};

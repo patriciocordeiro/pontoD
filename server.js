@@ -14,6 +14,7 @@ var path = require('path');
 var employees = require('./server/ponto.models')
 var pontoApi = require('./server/pontoApi');
 var pontoWeb = require('./server/pontoWeb');
+var employeesWeb = require('./server/employeesWeb');
 var routes = require('./server/ponto.routes')
 
 //----------------------------------------------------------------------
@@ -41,6 +42,7 @@ app.use(express.static(path.join(__dirname, '/')));
 /*Routes*/
 //load my rouxtes
 require('./server/ponto.routes')(app, express, pontoWeb)
+require('./server/employees.routes')(app, express, employeesWeb)
 
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
@@ -75,7 +77,7 @@ io.on('connection', function(socket) {
 
 
     socket.emit('openClosePonto', {
-        message: 'Hey, SOU O SERVER!'
+        message: 'Hey, SOU O SERVER na máquina do patricio!'
     });
 });
 

@@ -1,8 +1,11 @@
-<!--<md-tabs>-->
-<!--    <md-tab ng-repeat="months in vm.calendar[1].months" label="{{months}}">-->
-<div layout="column" layout-margin>
+<div layout="column" layout-margin ng-cloak>
+
     <md-card>
-        <md-card-title class="md-headline">Gerador de relatórios de ponto dos colaboradores</md-card-title>
+        <md-card-title class="md-display-1">Gerador de relatórios de ponto dos colaboradores</md-card-title>
+    </md-card>
+
+    <md-card>
+        <md-card-title class="md-title">Selecione o colaborador</md-card-title>
         <md-card-content>
             <md-input-container>
                 <label>Selecione o setor</label>
@@ -25,26 +28,35 @@
     </md-card>
     <div ng-show="vm.isEmployeeSelected">
         <md-card>
+            <md-card-title  class="md-title" layout="row" layout-align="center center">
+               Selecione a data
+            </md-card-title>
             <md-card-content layout="row" layout-align="center center">
-                <md-input-container>
-                    <label>Selecione o ano</label>
-                    <md-select ng-model="selectedYear">
-                        <md-option value="2015">2015</md-option>
-                        <md-option value="2016">2016</md-option>
-                    </md-select>
-                </md-input-container>
-                <md-input-container>
-                    <label>Selecione o mês</label>
-                    <md-select ng-model="selectedYear">
-                        <md-option value="Jan">Jan</md-option>
-                        <md-option value="Jan">Fev</md-option>
-                    </md-select>
-                </md-input-container>
-                <h2 class="md-title"> <md-button class="md-primary md-icon-button" ng-click=" vm.getPontoPerMonth('prev')"><md-icon class="material-icons ">navigate_before</md-icon></md-button> {{vm.currentMonth}} {{ vm.currentYear}}   <md-button class="md-primary md-icon-button" ng-click=" vm.getPontoPerMonth('next')"><md-icon class="material-icons">navigate_next</md-icon></md-button> </h2>
+
+                <h2 class="md-title"> <md-button class="md-primary md-icon-button" ng-click=" vm.getPontoPerMonth('prev')"><md-icon class="material-icons ">navigate_before</md-icon></md-button>
+                    <md-input-container>
+                        <!--                        <label>Selecione o ano</label>-->
+                        <md-select ng-model="vm.currentMonth">
+                            <md-option  ng-repeat="month in vm.months" value="{{month}}">{{month}}</md-option>
+                            <!--                            <md-option value="2016">2016</md-option>-->
+                        </md-select>
+                    </md-input-container>
+                    ,
+                    <md-input-container>
+<!--                        <label>Selecione o ano</label>-->
+                        <md-select ng-model="vm.currentYear">
+                            <md-option  ng-repeat="years in vm.years" value="{{years}}">{{years}}</md-option>
+<!--                            <md-option value="2016">2016</md-option>-->
+                        </md-select>
+                    </md-input-container>
+
+
+<!--                    {{vm.currentMonth}} {{ vm.currentYear}}   -->
+                    <md-button class="md-primary md-icon-button" ng-click=" vm.getPontoPerMonth('next')"><md-icon class="material-icons">navigate_next</md-icon></md-button> </h2>
             </md-card-content>
         </md-card>
         <md-tabs class="md-primary md-hue-2" md-dynamic-height md-border-bottom>
-            <md-tab label="{{report.label}}" ng-repeat="report in vm.report.tab">
+            <md-tab label="{{report.label}}" ng-repeat="report in vm.relatorioTabsTwoCols">
                 <md-card>
                     <md-card-title>
                         <span class="md-display-1">{{report.title}}</span>
@@ -108,7 +120,7 @@
                                 <md-card-content>
 
                                     <md-grid-list md-cols="7" md-row-height="2:2" md-gutter="0px">
-                                        <md-grid-tile ng-repeat="weekDay in  vm.calendar.weekDays">
+                                        <md-grid-tile ng-repeat="weekDay in  vm.weekDays">
                                             {{weekDay}}
                                         </md-grid-tile>
                                         <md-divider></md-divider>
@@ -117,7 +129,7 @@
                                             <div layout="column" layout-align="center center">
                                                 <div flex>{{employeeData.fullDate|date:'d'}}</div>
                                                 <div flex layout="row">
-                                                    <md-icon ng-show="employeeData['{{turno.index}}'].isDelaydIn" class="md-warn material-icons">snooze</md-icon>
+                                                    <md-icon ng-show="employeeData['{{turno.index}}'].isDelayedIn" class="md-warn material-icons">snooze</md-icon>
                                                     <md-icon ng-show="employeeData['{{turno.index}}'].isAntiOut" class="md-primary material-icons">timer_off</md-icon>
                                                 </div>
                                             </div>
@@ -141,7 +153,7 @@
                     <md-divider></md-divider>
                 </div>
             </md-tab>
-            <md-tab label="{{towColProperty.label}}" ng-repeat="towColProperty in vm.report.towColPropetyTab">
+            <md-tab label="{{towColProperty.label}}" ng-repeat="towColProperty in  vm.relatorioTabs">
                 <md-card>
                     <md-card-title>
                         <span class="md-display-1">{{towColProperty.title}}</span>
@@ -186,7 +198,7 @@
                                 <md-list-item ng-show="employeeData[relType.property]" ng-repeat="employeeData in   vm.SelectedEmployeeFiltData" class="md-2-line">
                                     <p>{{employeeData.fullDate | date:'dd-MMM-yyyy': 'GMT' }}</p>
 
-                                    <p>{{employeeData[relType.value]| date:'hh:mm:ss':'GMT'}}</p>
+                                    <p>{{employeeData[relType.value]| date:'hh:mm:ss':'UTC'}}</p>
                                     <md-divider></md-divider>
                                 </md-list-item>
                             </div>
@@ -194,13 +206,13 @@
                     </md-card-content>
                 </md-card>
 
-                <md-card ng-show="vm.isListView" >
+                <md-card ng-show="vm.isListView">
                     <md-card-content>
                         <div class="view-calendar" layout="row" layout-align="center center" ng-show="!vm.isListView">
                             <md-card flex="100" flex-gt-md=35>
                                 <md-card-content>
                                     <md-grid-list md-cols="7" md-row-height="2:2" md-gutter="0px">
-                                        <md-grid-tile ng-repeat="weekDay in  vm.calendar.weekDays">
+                                        <md-grid-tile ng-repeat="weekDay in  vm.weekDays">
                                             {{weekDay}}
                                         </md-grid-tile>
                                         <md-divider></md-divider>
@@ -223,11 +235,11 @@
                             <md-card flex="100" flex-gt-md=35>
                                 <md-card-content>
                                     <md-grid-list md-cols="7" md-row-height="2:2" md-gutter="0px">
-                                        <md-grid-tile ng-repeat="weekDay in  vm.calendar.weekDays">
+                                        <md-grid-tile ng-repeat="weekDay in  vm.weekDays">
                                             {{weekDay}}
                                         </md-grid-tile>
                                         <md-divider></md-divider>
-                                        <md-grid-tile ng-repeat=" employeeData in   vm.SelectedEmployeeFiltData">
+                                        <md-grid-tile ng-repeat=" employeeData in   vm.SelectedEmployeeFiltData" ng-cloak>
                                             <div layout="column" layout-align="center center">
                                                 <div flex>{{employeeData.fullDate|date:'d'}}</div>
                                                 <div ng-show="towColProperty.isdataOnCalendar" flex class="md-subheader">{{employeeData[towColProperty.cols[1].value] | date:'hh:mm':'GMT'}}</div>

@@ -9,15 +9,6 @@
     <meta name="viewport" content="width=device-width">
     <!--Scripts-->
 
-    <script>
-        var socket = io.connect('http://localhost');
-        socket.on('news', function (data) {
-            console.log(data);
-            socket.emit('my other event', { my: 'data' });
-        });
-    </script>
-
-
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
@@ -34,9 +25,12 @@
     <!--Services-->
     <script src="services/httpResource.srvc.js"></script>
     <script src="services/httpCall.srvc.js"></script>
+    <script src="services/relatorio.srvc.js"></script>
     <!--Controllers-->
     <script src="/controllers/controller.js"></script>
-    <script src="controllers/openClosePonto.ctrl.js"></script>
+    <script src="controllers/ponto.ctrl.js"></script>
+    <script src="controllers/relatorio.ctrl.js"></script>
+    <script src="controllers/navbar.ctrl.js"></script>
     <!--css-->
     <link rel="stylesheet" href="assets/icons/angular-material-icon/material-icons.css">
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
@@ -51,12 +45,12 @@
     <script src="bower_components/angular-material/angular-material.min.js"></script>
     <script src="bower_components/Chart.js/Chart.js"></script>
     <script src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
-    <div ng-controller="Ctrl as vm">
+    <div>
         <div layout="row" layout-align="center center">
             <div flex="100" flex-gt-md="80">
-                <md-toolbar class="md-toolbar-tools">
-                    <div class=" my-md-menu-button" layout="row" layout-fill>
-                        <md-button ng-class="{'active-menu':$index==vm.isActive}" ng-repeat="navbar in vm.navbarItems" ui-sref="{{navbar.url}}" ng-click="vm.getUserOnWork();vm.getIndex($index)">{{navbar.item}}</md-button>
+                <md-toolbar class="md-toolbar-tools" ng-controller="navBarCtrl as vm">
+                    <div class="my-md-menu-button" layout="row" layout-fill>
+                        <md-button  ng-class="{'active-menu':$index==vm.isActive}" ng-repeat="navbar in vm.navbarItems" ui-sref="{{navbar.url}}" ng-click="vm.getUserOnWork();vm.getIndex($index)"><md-icon class="material-icons ">{{navbar.icon}}</md-icon>{{navbar.item}}</md-button>
                     </div>
                 </md-toolbar>
                 <ui-view></ui-view>
