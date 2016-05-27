@@ -49,7 +49,7 @@
                     if (char === '*') {
                         employeeCredentials.action = 'open'
                         wpi.lcdPuts(LCD, "Abrir ponto"); //write SENHA into LCD
-                    } else if(char==="#") {
+                    } else if (char === "#") {
                         //close ponto
                         employeeCredentials.action = 'open'
                         wpi.lcdPuts(LCD, "Fechar ponto"); //write SENHA into LCD
@@ -75,6 +75,10 @@
                 wpi.lcdPuts(LCD, "Waiting..."); //write SENHA into LCD
                 callback(employeeCredentials)
             });
+        },
+        writeToLCD: function(line1Text) {
+            wpi.lcdClear(LCD);
+            wpi.lcdPuts(LCD, line1Text); //write SENHA into LCD
         }
     }
 })();

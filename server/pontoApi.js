@@ -59,24 +59,25 @@ module.exports = {
                     employee.find({
                         id: employeeData.empId
                     })
-                        .select('password working') //get only the password field
+                        .select('name password working') //get only the password field
                     .exec(function(err, user) {
                         if (err) {
                             return callback(err);
                         }
                         if (!user[0]) {
                             //return the error
-                            return callback(null, pontoCode.error.noUser);
+                            return callback(null, pontoCode.error.noUser, null);
                         } else {
                             //return the user
-                            callback(null, user);
+                            callback(null, null, user);
                         }
                     });
                 },
-                function(user, callback) {
+                function(err, user, callback) {
                     //Check the password
-                    if (!user[0]) {
-                        return callback(null, pontoCode.error.noUser);
+                    console.log('user', user);
+                    if (!user) {
+                        return callback(null, null, pontoCode.error.noUser);
                     }
                     //If password exists
                     if (employeeData.password) {
@@ -87,7 +88,7 @@ module.exports = {
                             //-----------------------------------------------
                             //Check if ponto is already open
                             if (user[0].working) {
-                                return callback(null, pontoCode.error.alreadyWorking);
+                                return callback(null, user[0].name, pontoCode.error.alreadyWorking);
                             } else {
                                 //open ponto
                                 //-----------------------------------------------
@@ -95,11 +96,11 @@ module.exports = {
                                 ponto.getTurno(employeeData.date, function(turno) {
                                     console.log('TURNO', turno);
 
-                                    var turno = employeeData.turno //APAGAR
+                                    //                                    var turno = employeeData.turno  //APAGAR
                                     console.log('turnoturno', turno);
                                     //update the ponto object array
-                                    myPontoModel[turno].inTime = employeeData.date; //virá do cliente
-//                                    console.log('CARACA', myPontoModel);
+                                    myPontoModel[turno].inTime = employeeData.date || moment().format(); //virá do cliente
+                                    //                                    console.log('CARACA', myPontoModel);
                                     myPontoModel[turno].isDelayedIn = ponto.getIsDelayd(employeeData.date, pontoConfig.maxInTimeInTurno1);
                                     myPontoModel.isActive = true;
                                     myPontoModel.isOpened = true;
@@ -119,24 +120,34 @@ module.exports = {
                                             return callback(null, err);
                                         } else {
                                             console.log(res);
-                                            callback(null, pontoCode.success.userUpdatedOk);
+                                            var UserData = {};
+                                            UserData.name = user[0].name;
+                                            UserData.inTime = employeeData.date; //incluir hora de entrada e enviar para o user
+                                            UserData.isDelayedIn = myPontoModel[turno].isDelayedIn; //incluir hora de entrada e enviar para o user
+
+                                            console.log('USER', UserData);
+                                            callback(null, UserData, pontoCode.success.userUpdatedOk);
                                         }
                                     });
                                 });
                             }
                         } else {
                             //Wrong password
-                            return callback(null, pontoCode.error.wrongPassword);
+                            return callback(null, null, pontoCode.error.wrongPassword);
                         }
                     } else {
                         //no password
-                        return callback(null, pontoCode.error.noPassword);
+                        return callback(null, null, pontoCode.error.noPassword);
                     }
                 }
             ],
-            function(err, result) {
+            function(err, user, status) {
                 //finally
-                callback(result);
+                var res = {};
+                res.user = user;
+                res.status = status;
+                res.type = 'entrada';
+                callback(res);
             });
     },
     getClosePonto: function(employeeData, callback) {
@@ -145,32 +156,58 @@ module.exports = {
         waterfall([
 
                 function(callback) {
-                    employee.aggregate({
-                        $match: {
-                            id: employeeData.empId
-                        }
-                    }, {
-                        $unwind: "$ponto"
-                    }, {
-                        $match: {
-                            'ponto.isActive': true
-                        }
-                    }).exec(function(err, user) {
+                    console.log(employeeData);
+                    //get the user with the given Id
+                    employee.find({
+                        id: employeeData.empId
+                    })
+                        .select('name password working') //get only the password field
+                    .exec(function(err, user) {
                         if (err) {
-                            return callback(null, err);
+                            return callback(err);
                         }
                         if (!user[0]) {
-                            console.log('user from match', user);
-                            return callback(null, pontoCode.error.noUser);
+                            //return the error
+                            return callback(null, pontoCode.error.noUser, null);
                         } else {
-                            callback(null, user);
+                            //return the user
+                            callback(null, null, user);
                         }
                     });
                 },
-                function(user, callback) {
+                function(err, user, callback) {
+                    if (!user) {
+                        return callback(null, pontoCode.error.noUser, null);
+                    } else {
+                        employee.aggregate({
+                            $match: {
+                                id: employeeData.empId
+                            }
+                        }, {
+                            $unwind: "$ponto"
+                        }, {
+                            $match: {
+                                'ponto.isActive': true
+                            }
+                        }).exec(function(err, user) {
+                            if (err) {
+                                return callback(null, err);
+                            }
+                            if (!user[0]) {
+                                console.log('user from match', user);
+                                return callback(null, pontoCode.error.userNotWorking, null);
+                            } else {
+                                console.log('AUI', user);
+                                callback(null,null, user);
+                            }
+                        });
+                    }
+                },
+                function(err, user, callback) {
                     //Check the password
-                    if (!user[0]) {
-                        return callback(null, pontoCode.error.noUser);
+                    console.log('user',user);
+                    if (!user) {
+                        return callback(null, null, err);
                     }
                     if (employeeData.password) {
                         console.log('Senha existe');
@@ -180,19 +217,19 @@ module.exports = {
                             //Check if ponto was already open
                             user[0].working = true;
                             if (!user[0].working) {
-                                return callback(null, pontoCode.error.userNotWorking);
+                                return callback(null, user[0].name, pontoCode.error.userNotWorking);
                             } else {
                                 //-----------------------------------------------
                                 waterfall([
 
                                         function(callback) {
-//                                            console.log(user[0]);
+                                            //                                            console.log(user[0]);
                                             //                                            ponto.getTurno(moment().format(), function(turno) {
                                             //                                            USAR O DE CIMA (APENAS PARA TESTE)
                                             ponto.getTurno(employeeData.date, function(turno) {
-//                                                console.log(turno);
+                                                //                                                console.log(turno);
 
-                                                var turno = employeeData.turno //APAGAR
+                                                //                                                var turno = employeeData.turno //APAGAR
 
                                                 var workedTime = ponto.getWordkedTime(user[0].ponto[turno].inTime, employeeData.date, pontoConfig.minTimeToWork);
 
@@ -209,19 +246,25 @@ module.exports = {
                                             callback(null, pontoData, user);
                                         },
                                         function(pontoData, user, callback) {
-//                                            console.log('myuser', user);
-//                                            console.log('PontoData', pontoData);
+                                            //                                            console.log('myuser', user);
+                                            //                                            console.log('PontoData', pontoData);
                                             ponto.getTurno(moment().format(), function(turno) {
                                                 console.log('TURNO', turno);
 
-                                                var turno = employeeData.turno //APAGAR
+                                                //                                                var turno = employeeData.turno //APAGAR
 
                                                 ponto.getUpdatePonto(employee, user, pontoData, turno, function(res) {
                                                     console.log('resposta', res);
                                                     if (res.nModified !== 1) {
-                                                        return callback(null, pontoCode.error.userNotUpdated);
+                                                        return callback(null, null, pontoCode.error.userNotUpdated);
                                                     } else {
-                                                        return callback(null, pontoCode.success.userUpdatedOk);
+                                                        var userData = {};
+                                                        userData.name = user[0].name;
+                                                        userData.outTime = pontoData.outTime;
+                                                        userData.faultTime = pontoData.faultTime;
+                                                        userData.workedTime = pontoData.workedTime;
+
+                                                        return callback(null, userData, pontoCode.success.userUpdatedOk);
                                                     }
 
                                                 });
@@ -230,25 +273,30 @@ module.exports = {
                                         }
                                     ],
                                     //finally (middle)
-                                    function(err, result) {
-                                        console.log('finally (middle)', result);
-                                        callback(null, result);
+                                    function(err, user, status) {
+                                        console.log('finally (middle)', status);
+                                        callback(null, user, status);
                                     });
                             }
                         } else {
                             //Wrong password
-                            return callback(null, pontoCode.error.wrongPassword);
+                            return callback(null, null, pontoCode.error.wrongPassword);
                         }
                     } else {
                         //No password
-                        return callback(null, pontoCode.error.noPassword);
+                        return callback(null, null, pontoCode.error.noPassword);
                     }
                 }
             ],
-            function(err, result) {
+            function(err, user, status) {
                 //finally (end)
-                console.log('final', result);
-                callback(result);
+                var res = {};
+                res.user = user;
+                res.status = status;
+                res.type = 'saida';
+                console.log('final', res);
+                callback(res);
+
             });
     },
     getOpenedPonto: function() {

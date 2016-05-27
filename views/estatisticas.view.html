@@ -74,7 +74,7 @@
             <md-tab label="Hora Falta"></md-tab>
 -->
 
-            <md-tab label="{{statisticsTab.label}}" md-on-select="vm.statisticsCreateChart($index)" ng-repeat="statisticsTab in  vm.statisticsTabs">
+            <md-tab label="{{tab.label}}" md-on-select=" vm.createChart(tab.total.value)" ng-repeat="tab in  vm.statisticsTabs">
                 <md-input-container>
                     <label>Selecione o ano</label>
                     <md-select ng-model="selectedYear">
@@ -82,8 +82,9 @@
                         <md-option value="2016">2016</md-option>
                     </md-select>
                 </md-input-container>
-                <canvas  height="500" width="500" id="line" class="chart chart-bar" chart-data="vm.chartjs.data" chart-labels="vm.chartjs.labels" chart-legend="true" chart-series="vm.chartjs.series" chart-label="vm.chartjs.label" chart-click="vm.onClick()"></canvas>
-                <h2>{{statisticsTab.mean.title}}:&nbsp;{{statisticsTab.mean.data}}</h2>
+                <h2>{{tab.mean.title}}:&nbsp; {{vm.statistics.mean[tab.mean.value] | number : 2}}</h2>
+                <canvas  height="500" width="500" id="{{$index}}" class="chart chart-bar" chart-data="vm.chartjs.data" chart-labels="vm.chartjs.labels"  ></canvas>
+
             </md-tab>
 
         </md-tabs>

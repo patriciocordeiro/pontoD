@@ -56,6 +56,15 @@
     height: 96px;
     width: 96px;
 }
+.material-icons.md-success {
+    color: #4CAF50;
+}
+.material-icons.md-warning {
+    color: #FF9800;
+}
+.material-icons.md-error {
+    color: #F44336;
+}
 .delayIn {
     background-color: aqua;
 }
@@ -68,5 +77,5 @@
 }
 .mmd-nopadding_tb {
     padding-bottom: 0 !important;
-    padding-top: 0   !important;
+    padding-top: 0 !important;
 }

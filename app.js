@@ -1,8 +1,20 @@
 'use strict'
-angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource','highcharts-ng', 'chart.js', 'angularMoment'])
-    .config(function ($stateProvider, $urlRouterProvider, ChartJsProvider) {
+angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource', 'highcharts-ng', 'chart.js', 'angularMoment'])
+    .run(function(employeeSrvc) {
+
+    })
+    .config(function($stateProvider, $urlRouterProvider, ChartJsProvider, $mdThemingProvider) {
 
         // Configure all charts
+
+        /*Angular theme configuration*/
+        $mdThemingProvider.theme('default')
+            //            .primaryPalette('teal')
+            .primaryPalette('blue')
+            //        .primaryPalette('indigo')
+            .accentPalette('red');
+
+
         ChartJsProvider.setOptions({
             colours: ['#FF5252', '#FF8A80'],
             responsive: false
@@ -24,27 +36,27 @@ angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource','highcharts
                 //                abstract: true,
                 url: "/openPonto",
                 templateUrl: '/views/openPonto.view.html',
-            controller: 'pontoCtrl as vm',
+                controller: 'pontoCtrl as vm',
             })
             .state('app.ponto', {
                 //                abstract: true,
                 url: "/ponto",
                 templateUrl: '/views/ponto.view.html',
-            controller: 'pontoCtrl as vm',
+                controller: 'pontoCtrl as vm',
             })
             .state('app.relatorios', {
                 //                abstract: true,
                 url: "/relatorios",
                 templateUrl: '/views/relatorios.view.html',
-            controller: 'relatorioCtrl as vm',
-            })   .state('app.estatisticas', {
+                controller: 'relatorioCtrl as vm',
+            }).state('app.estatisticas', {
                 //                abstract: true,
-            url: "/estatisticas",
+                url: "/estatisticas",
                 templateUrl: '/views/estatisticas.view.html',
-            controller: 'pontoCtrl as vm',
+                controller: 'relatorioCtrl as vm',
             })
 
         //if no state redirect to home
-        $urlRouterProvider.otherwise('home');
+        $urlRouterProvider.otherwise("app.home");
 
     });

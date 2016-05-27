@@ -59,7 +59,7 @@
                             index: 2,
                             header: 'Horas não trabalhadas',
                             property: 'isFaultTime',
-                            value: 'totalFaultTime'
+                            value: 'Z'
                         }]
                     }, {
                         label: 'Faltas',
@@ -121,6 +121,7 @@
 
                 }]
             };
+
         }
     ]);
 })();

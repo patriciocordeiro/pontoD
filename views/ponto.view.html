@@ -8,7 +8,7 @@
         <md-card-content layout="column" >
             <md-input-container>
                 <label>Entre aqui com o Seu Id</label>
-                <input type="number" name="id" ng-model="vm.employee.empId"  maxlength="4" required/>
+                <input type="text" name="id" ng-model="vm.employee.empId"  maxlength="4" required/>
                 <div ng-messages="baterPontoForm.id.$error"  role="alert">
                     <div ng-message="required">Por favor, entre com o seu ID</div>
                 </div>

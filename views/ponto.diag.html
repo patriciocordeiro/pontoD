@@ -1,0 +1,31 @@
+<md-dialog aria-label="ponto" ng-cloak>
+    <md-toolbar ng-class="vm.statusClass">
+        <div class="md-toolbar-tools" layout="row" layout-align="end center">
+            <h2>Abertura de ponto</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="vm.closeDialog()">
+                <md-icon class="material-icons">close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div class="md-dialog-content">
+            <div id="show-wellcome" ng-show="vm.isShowWellCome" layout="column" layout-align="center center">
+                <md-icon  class="material-icons md-96 md-success">check_circle</md-icon>
+                <h2 class="headline-2">Bem vindo, {{vm.message.user.name}}</h2>
+                <span class="md-title">Hora de entrada:&nbsp; <b>{{vm.message.user.inTime|date:'hh:mm:ss'}}</b>
+                </span>
+                <h3  class="md-title">Atrasado(a):&nbsp; <span ng-show="vm.message.user.isDelayedIn"><b>Sim</b></span><span ng-show="!vm.message.user.isDelayedIn"><b>Não</b></span> </h3>
+            </div>
+            <div id="show-warn" ng-show="vm.isShowWarning" layout="column" layout-align="center center">
+                <md-icon  class="material-icons md-96 md-warning">warning</md-icon>
+                <h2 class="headline-2">Olá, {{vm.message.user}}</h2>
+                <h2 class="headline-1">O seu ponto já foi aberto</h2>
+            </div>
+            <div id="show-error" ng-show="vm.isShowError" layout="column" layout-align="center center">
+                <md-icon  class="material-icons md-96 md-error">error</md-icon>
+                <h2  class="headline-2">Colaborador não existe ou senha incorreta</h2>
+            </div>
+        </div>
+    </md-dialog-content>
+</md-dialog>
