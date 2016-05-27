@@ -1,8 +1,11 @@
 angular.module('pontoDApp').service('httpResSrvc', ['$resource',
     function($resource) {
     /*Http Resource*/
+//        var url = 'http://localhost:3000/';
+        var url = 'http://192.168.12:3000/';
+
     this.ponto =
-        $resource('http://localhost:3000/:acao/:employee/:id', {
+        $resource(url+':acao/:employee/:id', {
             employee: '@employee',
             id: '@id',
             acao: '@acao'

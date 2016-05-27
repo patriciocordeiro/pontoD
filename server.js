@@ -11,11 +11,11 @@ var path = require('path');
 
 //----------------------------------------------------------------------
 //my methods
-var employees = require('./server/ponto.models')
+var employees = require('./server/ponto.models');
 var pontoApi = require('./server/pontoApi');
 var pontoWeb = require('./server/pontoWeb');
 var employeesWeb = require('./server/employeesWeb');
-var routes = require('./server/ponto.routes')
+var routes = require('./server/ponto.routes');
 
 //----------------------------------------------------------------------
 
@@ -25,7 +25,7 @@ mongoose.connect('mongodb://localhost/pontoD');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function(callback) {
-    console.log('connected to database')
+    console.log('connected to database');
 });
 /*--------------------------------------------------------------*/
 
@@ -41,8 +41,8 @@ app.use(express.static(path.join(__dirname, '/')));
 
 /*Routes*/
 //load my rouxtes
-require('./server/ponto.routes')(app, express, pontoWeb)
-require('./server/employees.routes')(app, express, employeesWeb)
+require('./server/ponto.routes')(app, express, pontoWeb);
+require('./server/employees.routes')(app, express, employeesWeb);
 
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
@@ -61,7 +61,7 @@ io.on('connection', function(socket) {
                 socket.emit('openClosePonto', {
                     message: res
                 });
-            })
+            });
         } else if (data.message.action === 'close') {
             pontoApi.getClosePonto(data.message, function(res) {
                 console.log('resposta de fechamento do ponto', res);
@@ -70,7 +70,7 @@ io.on('connection', function(socket) {
                 socket.emit('openClosePonto', {
                     message: res
                 });
-            })
+            });
         }
     });
 

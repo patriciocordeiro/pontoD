@@ -1,22 +1,21 @@
 <div layout="row" layout-align="center center">
     <md-card flex="40">
-        <md-button ng-click="vm.sendPonto()">mandar</md-button>
-        <form name="baterPontoForm" ng-submit="baterPontoForm.$valid && vm.getPontoOpenClose(vm.employee)">
-        <md-card-title>
-            <h2>Registro de ponto</h2>
+        <form name="vm.baterPontoForm" ng-submit="vm.baterPontoForm.$valid && vm.getPontoOpenClose(vm.employee)">
+        <md-card-title layout="row" layout-align="center center">
+            <h2 class="md-display-1">Registro de ponto</h2>
         </md-card-title>
         <md-card-content layout="column" >
             <md-input-container>
                 <label>Entre aqui com o Seu Id</label>
                 <input type="text" name="id" ng-model="vm.employee.empId"  maxlength="4" required/>
-                <div ng-messages="baterPontoForm.id.$error"  role="alert">
+                <div ng-messages="vm.baterPontoForm.id.$error"  role="alert">
                     <div ng-message="required">Por favor, entre com o seu ID</div>
                 </div>
             </md-input-container>
             <md-input-container>
                 <label>Entre aqui com a sua senha</label>
                 <input type="password" name="password" ng-model="vm.employee.password"  maxlength="6" required/>
-                <div ng-messages="baterPontoForm.password.$error" role="alert">
+                <div ng-messages="vm.baterPontoForm.password.$error" role="alert">
                     <div ng-message="required">Por favor, entre com a senha</div>
                 </div>
             </md-input-container>

@@ -1,7 +1,7 @@
-<md-dialog aria-label="ponto" ng-cloak>
-    <md-toolbar ng-class="vm.statusClass">
+<md-dialog aria-label="ponto" ng-cloak flex-gt-md="40" flex="60">
+    <md-toolbar layout="row" class="md-tall" ng-class="vm.headerClass" layout-align="center center" >
         <div class="md-toolbar-tools" layout="row" layout-align="end center">
-            <h2>Abertura de ponto</h2>
+            <span style="text-transform: uppercase;" class="md-headline">{{vm.headTile}}</span>
             <span flex></span>
             <md-button class="md-icon-button" ng-click="vm.closeDialog()">
                 <md-icon class="material-icons">close</md-icon>
@@ -10,21 +10,24 @@
     </md-toolbar>
     <md-dialog-content>
         <div class="md-dialog-content">
-            <div id="show-wellcome" ng-show="vm.isShowWellCome" layout="column" layout-align="center center">
-                <md-icon  class="material-icons md-96 md-success">check_circle</md-icon>
-                <h2 class="headline-2">Bem vindo, {{vm.message.user.name}}</h2>
-                <span class="md-title">Hora de entrada:&nbsp; <b>{{vm.message.user.inTime|date:'hh:mm:ss'}}</b>
-                </span>
-                <h3  class="md-title">Atrasado(a):&nbsp; <span ng-show="vm.message.user.isDelayedIn"><b>Sim</b></span><span ng-show="!vm.message.user.isDelayedIn"><b>Não</b></span> </h3>
+            <div id="show-wellcome" ng-show="vm.isShowSucess.status" layout="column" layout-align="center center">
+                <md-icon class="material-icons md-96" ng-class="vm.isShowSucess.icon.class">{{vm.isShowSucess.icon.type}}</md-icon>
+                <h2 class="headline">{{vm.isShowSucess.text.title}}</h2>
+                <h3 class="md-title">{{vm.isShowSucess.text.time.title}}<span><b>{{vm.isShowSucess.text.time.value}}</b></span>
+                </h3>
+                <h3 ng-show="vm.isShowSucess.showWorkedTime" class="md-title">{{vm.isShowSucess.text.workTime.title}}<span><b>{{vm.isShowSucess.text.workTime.value}}</b></span>
+                </h3>
+                <h3 class="md-title">{{vm.isShowSucess.text.situation.title}}<span ng-class="vm.statusClass"> <b>{{vm.isShowSucess.text.situation.status}}</b></span></h3>
+                <!--                <h3  class="md-title">Atrasado(a):&nbsp; <span ng-show="vm.message.user.isDelayedIn"><b>Sim</b></span><span ng-show="!vm.message.user.isDelayedIn"><b>Não</b></span> </h3>-->
             </div>
-            <div id="show-warn" ng-show="vm.isShowWarning" layout="column" layout-align="center center">
-                <md-icon  class="material-icons md-96 md-warning">warning</md-icon>
-                <h2 class="headline-2">Olá, {{vm.message.user}}</h2>
-                <h2 class="headline-1">O seu ponto já foi aberto</h2>
+            <div id="show-warn" ng-show="vm.isShowWarning.status" layout="column" layout-align="center center">
+                <md-icon class="material-icons md-96" ng-class="vm.isShowWarning.icon.class">{{vm.isShowWarning.icon.type}}</md-icon>
+                <h2 class="headline">{{vm.isShowWarning.text.title}}</h2>
+                <h2 class="headline">{{vm.isShowWarning.text.content}}</h2>
             </div>
-            <div id="show-error" ng-show="vm.isShowError" layout="column" layout-align="center center">
-                <md-icon  class="material-icons md-96 md-error">error</md-icon>
-                <h2  class="headline-2">Colaborador não existe ou senha incorreta</h2>
+            <div id="show-error" ng-show="vm.isShowError.status" layout="column" layout-align="center center">
+                <md-icon class="material-icons md-96" ng-class="vm.isShowError.icon.class">{{vm.isShowError.icon.type}}</md-icon>
+                <h2 class="headline">{{vm.isShowError.text.title}}</h2>
             </div>
         </div>
     </md-dialog-content>

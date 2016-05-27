@@ -8,25 +8,8 @@
         var http = httpCallSrvc;
         console.log('Controller de ponto iniciado');
         var now = moment().toISOString();
-        vm.employee = {};
-
-
-        //        myApp.controller('AppCtrl', function($scope, $mdDialog) {
-        //            $scope.items = [1,2,3];
-        //            $mdDialog.show({
-        //                controller: function Ctrl() {},
-        //                controllerAs: 'ctrl',
-        //                templateUrl: 'dialog1.tmpl.html',
-        //                locals: {
-        //                    items: $scope.items
-        //                }
-        //            });
-        //        });
 
         vm.getPontoOpenClose = function(employee) {
-
-            vm.pontoRes = {};
-
             console.log(employee);
             var query = {};
             query = employee;
@@ -38,7 +21,11 @@
 
             http.employee.ponto(query, employee.action, function(resData) {
                 //TODO: clear ponto form
-                //                vm.employee = {};
+                vm.baterPontoForm.$setPristine();
+                vm.baterPontoForm.$setUntouched();
+                vm.baterPontoForm.$setDirty(false);
+                vm.employee = '';
+
 
                 console.log(resData);
                 vm.pontoRes = resData;
