@@ -35,7 +35,7 @@ angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource', 'highchart
             .state('app.openPonto', {
                 //                abstract: true,
                 url: "/openPonto",
-                templateUrl: '/views/openPonto.view.html',
+                templateUrl: '/views/openedPonto.view.html',
                 controller: 'pontoCtrl as vm',
             })
             .state('app.ponto', {
@@ -49,12 +49,25 @@ angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource', 'highchart
                 url: "/relatorios",
                 templateUrl: '/views/relatorios.view.html',
                 controller: 'relatorioCtrl as vm',
-            }).state('app.estatisticas', {
+            })
+            .state('app.estatisticas', {
                 //                abstract: true,
                 url: "/estatisticas",
                 templateUrl: '/views/estatisticas.view.html',
                 controller: 'relatorioCtrl as vm',
             })
+            .state('app.employee', {
+//                                abstract: true,
+                url: "/employee/:id",
+            templateUrl: '/views/employee.view.html',
+            controller: 'pontoCtrl as vm',
+            })
+//            .state('app.employee.id', {
+//                //                abstract: true,
+//                url: "/:id",
+//                templateUrl: '/views/estatisticas.view.html',
+//                controller: 'relatorioCtrl as vm',
+//            });
 
         //if no state redirect to home
         $urlRouterProvider.otherwise("app.home");

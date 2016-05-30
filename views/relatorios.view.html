@@ -1,157 +1,211 @@
 <div layout="column" layout-margin ng-cloak>
 
-    <md-card>
-        <md-card-title class="md-display-1">Gerador de relatórios de ponto dos colaboradores</md-card-title>
+    <md-card class="no-shadow">
+        <md-card-title class="md-display-1">Relatório de ponto dos colaboradores</md-card-title>
     </md-card>
+    <md-divider></md-divider>
 
-    <md-card>
-        <md-card-title class="md-title">Selecione o colaborador</md-card-title>
-        <md-card-content>
-            <md-input-container>
-                <label>Selecione o setor</label>
-                <md-select ng-model="vm.employee.setor">
-                    <md-option ng-click="vm.getSelectedEmployee($index)" ng-repeat="setor in vm.setor" ng-value="setor">
-                        {{setor}}
-                    </md-option>
-                </md-select>
-            </md-input-container>
-            <md-input-container>
-                <label>Escolha o colaborador</label>
-                <md-select ng-model="vm.selectedEmployee.name">
-                    <md-option ng-click="vm.getSelectedEmployee($index)" ng-repeat="employee in vm.allEmployees track by $index" ng-value="employee.name">
-                        {{employee.name}}
-                    </md-option>
-                </md-select>
-            </md-input-container>
-        </md-card-content>
-
-    </md-card>
-    <div ng-show="vm.isEmployeeSelected">
-        <md-card>
-            <md-card-title  class="md-title" layout="row" layout-align="center center">
-               Selecione a data
-            </md-card-title>
-            <md-card-content layout="row" layout-align="center center">
-
-                <h2 class="md-title"> <md-button class="md-primary md-icon-button" ng-click=" vm.getPontoPerMonth('prev')"><md-icon class="material-icons ">navigate_before</md-icon></md-button>
-                    <md-input-container>
-                        <!--                        <label>Selecione o ano</label>-->
-                        <md-select ng-model="vm.currentMonth">
-                            <md-option  ng-repeat="month in vm.months" value="{{month}}">{{month}}</md-option>
-                            <!--                            <md-option value="2016">2016</md-option>-->
-                        </md-select>
-                    </md-input-container>
-                    ,
-                    <md-input-container>
-<!--                        <label>Selecione o ano</label>-->
-                        <md-select ng-model="vm.currentYear">
-                            <md-option  ng-repeat="years in vm.years" value="{{years}}">{{years}}</md-option>
-<!--                            <md-option value="2016">2016</md-option>-->
-                        </md-select>
-                    </md-input-container>
-
-
-<!--                    {{vm.currentMonth}} {{ vm.currentYear}}   -->
-                    <md-button class="md-primary md-icon-button" ng-click=" vm.getPontoPerMonth('next')"><md-icon class="material-icons">navigate_next</md-icon></md-button> </h2>
-            </md-card-content>
-        </md-card>
-        <md-tabs class="md-primary md-hue-2" md-dynamic-height md-border-bottom>
-            <md-tab label="{{report.label}}" ng-repeat="report in vm.relatorioTabsTwoCols">
-                <md-card>
-                    <md-card-title>
-                        <span class="md-display-1">{{report.title}}</span>
-                    </md-card-title>
-                </md-card>
-                <div layout="row">
-                    <div flex="80">
-                        <md-card>
-                            <md-list>
-                                <md-list-item class="md-3-line">
-                                    <div class="md-list-item-text" layout="column">
-                                        <h2 flex class="md-title smooth-title">Colaborador:&nbsp;<span style="color:initial">{{vm.SelectedEmployeeData.name}}</span></h2>
-                                        <h3 flex class="md-title smooth-title">Setor: <span><b>{{vm.employee.setor}}</b></span></h3>
-                                        <p>Data processada: <span><b>{{vm.currentMonth}} de {{vm.currentYear}}</b></span>
-                                        </p>
-                                    </div>
-                                </md-list-item>
-                            </md-list>
-                        </md-card>
-                    </div>
-                    <div flex>
-                        <md-button ng-class="vm.buttonClass" ng-click="vm.toggleView()">Modo de visualização:
-                            <md-icon class="material-icons md-48">
-                                <md-tooltip md-direction="bottom">
-                                    {{vm.tooltip}}
-                                </md-tooltip>
-                                {{vm.viewIconicon}}</md-icon>
-                        </md-button>
-                    </div>
-                </div>
-                <div layout="row" layout-align="start start">
-                    <md-card flex ng-repeat="turno in report.turno track by $index">
-                        <md-card-title layout="column" class="mmd-nopadding_tb">
-                            <h3 class="md-title">{{turno.title}}</h3>
-                            <div layout="column">
-                                <span flex class="md-subhead smooth-title">Total de entradas atrasadas: &nbsp; <b>{{vm.turno1TotalDelayedIn}}</b></span>
-                                <span class="md-subhead smooth-title">Total de saídas antecipadas:&nbsp;<b>{{vm.turno1TotalDelayedOut}}</b> </span>
-                            </div>
-                        </md-card-title>
-                        <md-card ng-show="!vm.isListView">
-                            <md-card-content layout="row">
-                                <md-list flex ng-repeat="header in turno.cols">
-                                    <md-list-item>
-                                        <p>{{header.title}}</p>
-                                    </md-list-item>
-                                    <md-divider></md-divider>
-                                    <md-list-item ng-show="employeeData[turno.index][header.property]" ng-repeat="employeeData in   vm.SelectedEmployeeFiltData" class="md-2-line">
-                                        <div class="md-list-item-text">
-                                            <h3>{{employeeData.fullDate | date:'dd-MMM-yyyy': 'GMT' }}</h3>
-
-                                            <p>{{employeeData[turno.index][header.value]}}</p>
-                                        </div>
-                                        <md-divider></md-divider>
-                                    </md-list-item>
-                                </md-list>
-                            </md-card-content>
-                        </md-card>
-
-                        <div layout="row" layout-align="center center" ng-show="vm.isListView">
-                            <md-card flex>
-                                <md-card-content>
-
-                                    <md-grid-list md-cols="7" md-row-height="2:2" md-gutter="0px">
-                                        <md-grid-tile ng-repeat="weekDay in  vm.weekDays">
-                                            {{weekDay}}
-                                        </md-grid-tile>
-                                        <md-divider></md-divider>
-                                        <md-grid-tile ng-repeat=" employeeData in   vm.SelectedEmployeeFiltData">
-
-                                            <div layout="column" layout-align="center center">
-                                                <div flex>{{employeeData.fullDate|date:'d'}}</div>
-                                                <div flex layout="row">
-                                                    <md-icon ng-show="employeeData['{{turno.index}}'].isDelayedIn" class="md-warn material-icons">snooze</md-icon>
-                                                    <md-icon ng-show="employeeData['{{turno.index}}'].isAntiOut" class="md-primary material-icons">timer_off</md-icon>
-                                                </div>
-                                            </div>
-                                            <md-tooltip md-direction="top">
-                                                Entrada: {{employeeData[turno.index].inTime}} Saída:{{employeeData[turno.index].outTime}}
-                                            </md-tooltip>
-                                        </md-grid-tile>
-                                    </md-grid-list>
-                                    <md-divider></md-divider>
-                                    <div layout="row" layout-align="center center" layout-padding>
-                                        <span flex="none"><md-icon class="md-warn material-icons">snooze</md-icon>&nbsp;Entrada atrasada</span>
-                                        <span flex><md-icon class="md-primary material-icons">timer_off</md-icon>&nbsp;Saída antecipada</span>
-                                    </div>
-                                </md-card-content>
-                            </md-card>
-
+    <div id="reportEntry" ng-show="!vm.isViewReport">
+        <md-card class="no-shadow">
+            <md-card-title class="md-title">Selecione as entradas para a geração do relatório</md-card-title>
+            <md-card-content>
+                <form name="employeeReportForm" ng-submit="employeeReportForm.$valid && vm.getEmployeesBySector(vm.employee)" novalidate>
+                    <div layout="row" layout-margin>
+                        <div class="md-block" flex>
+                            <span class="md-title">
+                    1
+                </span>
+                            <md-input-container class="md-block">
+                                <label>Selecione o setor</label>
+                                <md-select ng-model="vm.employee.setor" name="setor" required>
+                                    <md-option ng-repeat="setor in  vm.sectors" ng-value="setor" ng-click="vm.getReportEntry('sector')">
+                                        {{setor}}
+                                    </md-option>
+                                </md-select>
+                                <div ng-messages="employeeReportForm.setor.$error" role="alert">
+                                    <div ng-message="required">Escolha o setor</div>
+                                </div>
+                            </md-input-container>
                         </div>
 
-
-                    </md-card>
+                        <div flex>
+                            <div ng-show="vm.reportEntry.isShowYearSel">
+                                <span class="md-title">
+                    2
+                </span>
+                                <md-input-container class="md-block">
+                                    <label>Selecione o ano</label>
+                                    <md-select ng-model="vm.employee.reportYear" name="reportYear" required>
+                                        <md-option ng-repeat="years in vm.years" value="{{years}}" ng-click="vm.getReportEntry('year')">{{years}}</md-option>
+                                    </md-select>
+                                    <div ng-messages="employeeReportForm.reportYear.$error" role="alert">
+                                        <div ng-message="required">Escolha o ano</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </div>
                     <md-divider></md-divider>
-                </div>
+                    <md-button type="submit" class="md-primary md-raised" ng-disabled="employeeReportForm.$invalid">Enviar</md-button>
+                </form>
+            </md-card-content>
+        </md-card>
+
+        <md-card class="no-shadow" ng-show="vm.isViewSelectEmployee">
+            <md-divider></md-divider>
+            <md-card-content>
+                <h3 class="md-title">Selecione o colaborador</h3>
+                <span class="md-title">
+                    3
+                </span>
+                <md-input-container class="md-block">
+                    <label>Selecione o colaborador</label>
+                    <md-select ng-model="vm.employee.name">
+                        <md-option ng-click="vm.getSelectedEmployee($index)" ng-repeat="employee in vm.allEmployees" ng-value="employee._id.name">
+                            {{employee._id.name}}
+                        </md-option>
+                    </md-select>
+
+                </md-input-container>
+            </md-card-content>
+        </md-card>
+    </div>
+    <div ng-show="true">
+<!--    <div ng-show="vm.isViewReport">-->
+
+        <md-tabs class="" md-dynamic-height md-border-bottom md-border-top>
+            <md-tab label="{{report.label}}" ng-repeat="report in vm.relatorioTabsTwoCols">
+                <md-card class="no-shadow no-margin">
+                    <md-card-title>
+                        <span class="md-headline ">{{report.title}}</span>
+                    </md-card-title>
+                    <md-divider></md-divider>
+                </md-card>
+
+                <md-card layout-gt-xs="row" class="no-shadow bg-grey no-margin">
+                    <md-list flex>
+                        <md-list-item class="md-3-line">
+                            <div class="md-list-item-text" layout="column">
+                                <h2 flex class="md-title smooth-title">Colaborador:&nbsp;<span style="color:initial">{{vm.employee.name}}</span></h2>
+                                <h3 flex class="md-title smooth-title">Setor: <span><b>{{vm.employee.setor}}</b></span></h3>
+                                <p>Data processada: <span><b>{{vm.currentMonth}} de {{vm.currentYear}}</b></span>
+                                </p>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                    <span flex></span>
+                    <div ng-show="vm.isViewReport">
+                        <md-button class="md-raised md-accent no-text-transform" ng-click="vm.isViewReport=false">Selecionar outro(a) colaborador(a)</md-button>
+                    </div>
+
+                </md-card>
+
+                <!--                    </div>-->
+
+                <!--                </div>-->
+
+                <md-card class="no-margin">
+                    <md-card-content>
+                        <div flex label="viewMode">
+                            <md-button style="text-transform:none" class="md-raised" ng-class="vm.viewMode.buttonClass" ng-click="vm.toggleView()">Visualizar
+                                <md-icon class="material-icons md-36">
+                                    <md-tooltip md-direction="bottom">
+                                        {{vm.viewMode.tooltip}}
+                                    </md-tooltip>
+                                    {{vm.viewMode.icon}}</md-icon>
+                            </md-button>
+                        </div>
+                        <md-divider></md-divider>
+                        <md-toolbar class="md-hue-2">
+                            <div label="navigationMonth" layout="row" layout-align="center center" flex="100">
+                                <!--                            <h2 class="md-title">-->
+                                <md-button class="md-icon-button" ng-click="vm.getPontoPerMonth('prev')">
+                                    <md-icon class="material-icons ">navigate_before</md-icon>
+                                </md-button>
+                                <md-input-container>
+                                    <md-select ng-model="vm.currentMonth">
+                                        <md-option ng-repeat="month in vm.months" value="{{month}}" ng-click="vm.getPontoPerMonth($index)"><span class="md-title">{{month}}</span>
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>, &nbsp;
+                                <span class="md-title">{{vm.employee.reportYear}}</span>
+                                <md-button class="md-icon-button" ng-click=" vm.getPontoPerMonth('next')">
+                                    <md-icon class="material-icons">navigate_next</md-icon>
+                                </md-button>
+                                <!--                    </h2>-->
+                            </div>
+                        </md-toolbar>
+                        <div ng-show="vm.isDataView" layout-sm="column" layout-gt-sm="row" layout-align-gt-sm="center start">
+                            <md-card class="no-shadow" flex="100" ng-repeat="turno in report.turno track by $index">
+                                <md-card-title layout="column" class="mmd-nopadding_tb bg-grey">
+                                    <!--                                    <md-card-title-text>-->
+                                    <h3 class="md-title">{{turno.title}}</h3>
+                                    <div layout="column" class="bg-grey">
+                                        <span flex class="md-subhead smooth-title">Total de entradas atrasadas: &nbsp; <b>{{vm.turno1TotalDelayedIn}}</b></span>
+                                        <span class="md-subhead smooth-title">Total de saídas antecipadas:&nbsp;<b>{{vm.turno1TotalDelayedOut}}</b> </span>
+                                    </div>
+                                    <!--                                    </md-card-title-text>-->
+                                </md-card-title>
+                                <md-card ng-show="!vm.isListView">
+                                    <md-card-content layout="row">
+                                        <md-list flex ng-repeat="header in turno.cols">
+                                            <md-list-item>
+                                                <p>{{header.title}}</p>
+                                            </md-list-item>
+                                            <md-divider></md-divider>
+                                            <md-list-item ng-show="employeeData[turno.index][header.property]" ng-repeat="employeeData in  vm.employeePontoSingleMonth" class="md-2-line">
+                                                <div class="md-list-item-text">
+                                                    <h3>{{employeeData.fullDate | date:'dd-MMM-yyyy': 'GMT' }}</h3>
+
+                                                    <p>{{employeeData[turno.index][header.value]}}</p>
+                                                </div>
+                                                <md-divider></md-divider>
+                                            </md-list-item>
+                                        </md-list>
+                                    </md-card-content>
+                                </md-card>
+
+                                <div class="view-calendar" layout="row" layout-align="center center" ng-show="true">
+<!--                                    <div class="view-calendar" layout="row" layout-align="center center" ng-show="vm.isListView">-->
+                                    <md-card flex="100" flex-gt-xs="80">
+                                        <md-card-content>
+                                            <md-grid-list class="calendar" md-cols="7" md-row-height="2:2" md-gutter="0px">
+                                                <md-grid-tile  class="items" ng-repeat="weekDay in  vm.weekDays">
+                                                    {{weekDay}}
+                                                </md-grid-tile>
+                                                <md-divider></md-divider>
+                                                <md-grid-tile ng-repeat=" employeeData in  vm.employeePontoSingleMonth">
+                                                    <div layout="column" layout-align="center center">
+                                                        <div flex>{{employeeData.fullDate|date:'d'}}</div>
+                                                        <div flex layout="row">
+                                                            <md-icon ng-show="employeeData['{{turno.index}}'].isDelayedIn" class="md-warn material-icons">snooze</md-icon>
+                                                            <md-icon ng-show="employeeData['{{turno.index}}'].isAntiOut" class="md-primary material-icons">timer_off</md-icon>
+                                                        </div>
+                                                    </div>
+                                                    <md-tooltip md-direction="top">
+                                                        Entrada: {{employeeData[turno.index].inTime}} Saída:{{employeeData[turno.index].outTime}}
+                                                    </md-tooltip>
+                                                </md-grid-tile>
+                                            </md-grid-list>
+                                            <md-divider></md-divider>
+                                            <div class="bg-grey" layout="row" layout-align="center center" layout-padding>
+                                                <span flex="none"><md-icon class="md-warn material-icons">snooze</md-icon>&nbsp;Entrada atrasada</span>
+                                                <span flex><md-icon class="md-primary material-icons">timer_off</md-icon>&nbsp;Saída antecipada</span>
+                                            </div>
+                                        </md-card-content>
+                                    </md-card>
+                                    <md-divider></md-divider>
+
+                                </div>
+                            </md-card>
+
+                            <md-divider></md-divider>
+                        </div>
+                        <div ng-show="!vm.isDataView" id="noDataForCurrent">
+                            <h1 class="md-display-2">Não existem dados para a data selecionada</h1>
+                        </div>
+                    </md-card-content>
+                </md-card>
             </md-tab>
             <md-tab label="{{towColProperty.label}}" ng-repeat="towColProperty in  vm.relatorioTabs">
                 <md-card>
@@ -160,12 +214,12 @@
                     </md-card-title>
                 </md-card>
                 <div layout="row">
-                    <div flex="80">
+                    <div>
                         <md-card>
                             <md-list>
                                 <md-list-item class="md-3-line">
                                     <div class="md-list-item-text" layout="column">
-                                        <h2 flex class="md-title smooth-title">Colaborador:&nbsp;<span style="color:initial">{{vm.SelectedEmployeeData.name}}</span></h2>
+                                        <h2 flex class="md-title smooth-title">Colaborador:&nbsp;<span style="color:initial">{{vm.employee.name}}</span></h2>
                                         <h3 flex class="md-title smooth-title">Setor: <span><b>Administrativo</b></span></h3>
                                         <p>Data processada: <span><b>{{vm.currentMonth}} de {{vm.currentYear}}</b></span>
                                         </p>
@@ -175,90 +229,114 @@
                             </md-list>
                         </md-card>
                     </div>
-                    <div flex>
-                        <md-button ng-class="vm.buttonClass" ng-click="vm.toggleView()">Modo de visualização:
-                            <md-icon class="material-icons md-48">
-                                <md-tooltip md-direction="bottom">
-                                    {{vm.tooltip}}
-                                </md-tooltip>
-                                {{vm.viewIconicon}}</md-icon>
-                        </md-button>
-                    </div>
+
                 </div>
-                <md-card ng-show="!vm.isListView">
+                <md-card>
                     <md-card-content>
-                        <md-list>
-                            <md-list-item>
-                                <p ng-repeat="relType in towColProperty.cols"><b>{{relType.header}}</b>
-                                </p>
-                            </md-list-item>
+                        <div flex label="viewMode">
+                            <md-button style="text-transform:none" class="md-raised" ng-class="vm.viewMode.buttonClass" ng-click="vm.toggleView()">Visualizar
+                                <md-icon class="material-icons md-48">
+                                    <md-tooltip md-direction="bottom">
+                                        {{vm.viewMode.tooltip}}
+                                    </md-tooltip>
+                                    {{vm.viewMode.icon}}</md-icon>
+                            </md-button>
+                        </div>
+                        <md-divider></md-divider>
+                        <div label="navigationMonth" layout="row" layout-align="center center" flex="100">
+                            <h2>
+                    <md-button class="md-primary md-icon-button" ng-click="vm.getPontoPerMonth('prev')"><md-icon class="material-icons ">navigate_before</md-icon></md-button>
+                    <md-input-container>
+                        <md-select ng-model="vm.currentMonth" >
+                            <md-option  ng-repeat="month in vm.months" value="{{month}}" ng-click="vm.getPontoPerMonth($index)">{{month}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-button class="md-primary md-icon-button" ng-click=" vm.getPontoPerMonth('next')"><md-icon class="material-icons">navigate_next</md-icon>
+                    </md-button>
+                    </h2>
+                        </div>
+                        <div ng-show="vm.isDataView">
+                            <md-card flex="100" ng-show="!vm.isListView">
+                                <md-card-content>
+                                    <md-list>
+                                        <md-list-item flex>
+                                            <p ng-repeat="relType in towColProperty.cols"><b>{{relType.header}}</b>
+                                            </p>
+                                        </md-list-item>
 
-                            <md-divider></md-divider>
-                            <div ng-repeat="relType in towColProperty.cols">
-                                <md-list-item ng-show="employeeData[relType.property]" ng-repeat="employeeData in   vm.SelectedEmployeeFiltData" class="md-2-line">
-                                    <p>{{employeeData.fullDate | date:'dd-MMM-yyyy': 'GMT' }}</p>
+                                        <md-divider></md-divider>
+                                        <div ng-repeat="relType in towColProperty.cols">
+                                            <md-list-item ng-show="employeeData[relType.property]" ng-repeat="employeeData in  vm.employeePontoSingleMonth" class="md-2-line" flex>
+                                                <p>{{employeeData.fullDate | date:'dd-MMM-yyyy': 'GMT' }}</p>
 
-                                    <p>{{employeeData[relType.value]| date:'hh:mm:ss':'UTC'}}</p>
-                                    <md-divider></md-divider>
-                                </md-list-item>
+                                                <p>{{employeeData[relType.value]| date:'hh:mm:ss':'UTC'}}</p>
+                                                <md-divider></md-divider>
+                                            </md-list-item>
+                                        </div>
+                                    </md-list>
+                                </md-card-content>
+                            </md-card>
+                            <!--                            <md-card ng-show="vm.isListView">-->
+                            <!--                                <md-card-content>-->
+                            <!--
+                                    <div class="view-calendar" layout="row" layout-align="center center" ng-show="!vm.isListView">
+                                        <md-card flex>
+                                            <md-card-content >
+                                                <md-grid-list md-cols="7" md-row-height="2:2" md-gutter="0px">
+                                                    <md-grid-tile ng-repeat="weekDay in  vm.weekDays">
+                                                        {{weekDay}}
+                                                    </md-grid-tile>
+                                                    <md-divider></md-divider>
+                                                    <md-grid-tile ng-repeat=" employeeData in  vm.employeePontoSingleMonth">
+                                                        <div layout="column" layout-align="center center">
+                                                            <div flex>{{employeeData.fullDate|date:'d'}}</div>
+                                                            <div flex layout="row">
+                                                                <md-icon ng-show="employeeData.isExtraHours" class="md-primary material-icons">add_alarm</md-icon>
+                                                            </div>
+                                                        </div>
+                                                        <md-tooltip md-direction="top">
+                                                            Total de horas extras: {{employeeData.totalExtraHours}}
+                                                        </md-tooltip>
+                                                    </md-grid-tile>
+                                                </md-grid-list>
+                                            </md-card-content>
+                                        </md-card>
+                                    </div>
+-->
+                            <div layout="row" layout-align="center center" ng-show="vm.isListView">
+                                <div flex="35" class="view-calendar" layout="column">
+                                    <md-card flex="80" flex-gt-md="35">
+                                        <md-card-content>
+                                            <md-grid-list md-cols="7" md-row-height="2:2" md-gutter="0px">
+                                                <md-grid-tile ng-repeat="weekDay in  vm.weekDays">
+                                                    {{weekDay}}
+                                                </md-grid-tile>
+                                                <md-divider></md-divider>
+                                                <md-grid-tile ng-repeat=" employeeData in  vm.employeePontoSingleMonth" ng-cloak>
+                                                    <div layout="column" layout-align="center center">
+                                                        <div flex>{{employeeData.fullDate|date:'d'}}</div>
+                                                        <div ng-show="towColProperty.isdataOnCalendar" flex class="md-subheader">{{employeeData[towColProperty.cols[1].value] | date:'hh:mm':'GMT'}}</div>
+                                                        <div ng-show="towColProperty.isIcon" flex layout="row">
+                                                            <md-icon ng-show="employeeData[towColProperty.cols[1].property]" class="md-primary material-icons">{{towColProperty.icon}}</md-icon>
+                                                        </div>
+                                                    </div>
+                                                    <md-tooltip ng-show="towColProperty.isTooltip" md-direction="top">
+                                                        {{towColProperty.toolTipText}}: {{employeeData[towColProperty.cols[1].value]}}
+                                                    </md-tooltip>
+                                                </md-grid-tile>
+                                            </md-grid-list>
+                                        </md-card-content>
+                                    </md-card>
+                                </div>
                             </div>
-                        </md-list>
-                    </md-card-content>
-                </md-card>
-
-                <md-card ng-show="vm.isListView">
-                    <md-card-content>
-                        <div class="view-calendar" layout="row" layout-align="center center" ng-show="!vm.isListView">
-                            <md-card flex="100" flex-gt-md=35>
-                                <md-card-content>
-                                    <md-grid-list md-cols="7" md-row-height="2:2" md-gutter="0px">
-                                        <md-grid-tile ng-repeat="weekDay in  vm.weekDays">
-                                            {{weekDay}}
-                                        </md-grid-tile>
-                                        <md-divider></md-divider>
-                                        <md-grid-tile ng-repeat=" employeeData in   vm.SelectedEmployeeFiltData">
-                                            <div layout="column" layout-align="center center">
-                                                <div flex>{{employeeData.fullDate|date:'d'}}</div>
-                                                <div flex layout="row">
-                                                    <md-icon ng-show="employeeData.isExtraHours" class="md-primary material-icons">add_alarm</md-icon>
-                                                </div>
-                                            </div>
-                                            <md-tooltip md-direction="top">
-                                                Total de horas extras: {{employeeData.totalExtraHours}}
-                                            </md-tooltip>
-                                        </md-grid-tile>
-                                    </md-grid-list>
-                                </md-card-content>
-                            </md-card>
+                            <!--                                </md-card-content>-->
+                            <!--                            </md-card>-->
                         </div>
-                        <div class="view-calendar" layout="row" layout-align="center center" ng-show="vm.isListView">
-                            <md-card flex="100" flex-gt-md=35>
-                                <md-card-content>
-                                    <md-grid-list md-cols="7" md-row-height="2:2" md-gutter="0px">
-                                        <md-grid-tile ng-repeat="weekDay in  vm.weekDays">
-                                            {{weekDay}}
-                                        </md-grid-tile>
-                                        <md-divider></md-divider>
-                                        <md-grid-tile ng-repeat=" employeeData in   vm.SelectedEmployeeFiltData" ng-cloak>
-                                            <div layout="column" layout-align="center center">
-                                                <div flex>{{employeeData.fullDate|date:'d'}}</div>
-                                                <div ng-show="towColProperty.isdataOnCalendar" flex class="md-subheader">{{employeeData[towColProperty.cols[1].value] | date:'hh:mm':'GMT'}}</div>
-                                                <div ng-show="towColProperty.isIcon" flex layout="row">
-                                                    <md-icon ng-show="employeeData[towColProperty.cols[1].property]" class="md-primary material-icons">{{towColProperty.icon}}</md-icon>
-                                                </div>
-                                            </div>
-                                            <md-tooltip ng-show="towColProperty.isTooltip" md-direction="top">
-                                                {{towColProperty.toolTipText}}: {{employeeData[towColProperty.cols[1].value]}}
-                                            </md-tooltip>
-                                        </md-grid-tile>
-                                    </md-grid-list>
-                                </md-card-content>
-                            </md-card>
+                        <div ng-show="!vm.isDataView">
+                            <h1 class="md-display-2">Não existem dados para a data selecionada</h1>
                         </div>
                     </md-card-content>
                 </md-card>
-
-
             </md-tab>
         </md-tabs>
     </div>

@@ -1,4 +1,7 @@
-.my-md-menu-button {
+//Google material design palete import (see https://github.com/danlevan/google-material-color)
+//Allow the use of material color palette inside my css
+@import 'palette.scss';
+ .my-md-menu-button {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -75,7 +78,71 @@
     height: 25px;
     width: 25px;
 }
+
+.mmd-nopadding{
+    padding: 0;
+}
 .mmd-nopadding_tb {
     padding-bottom: 0 !important;
     padding-top: 0 !important;
+}
+.list {
+    background-color: #ECEFF1;
+    margin: 4px;
+}
+.no-text-transform {
+    text-transform: none;
+}
+.no-shadow {
+    box-shadow: none;
+}
+.mmd-input-container {
+    //    border: solid 2px #448AFF ;
+    //    border-radius: 4px;
+    background-color: #80D8FF;
+    //    color: azure;
+    ;
+    border-left: solid 4px red;
+}
+.bg-grey {
+    background-color: #f5f5f5;
+}
+.no-margin-tb {
+    //no margin top-bottom
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.no-margin {
+    margin: 0;
+}
+.odd {
+    background-color: #f5f5f5;
+    margin-top: 4px;
+    //    border-left: 8px solid  #80D8FF
+
+}
+.even {
+    background-color: white;
+    margin-top: 4px;
+}
+.list-header {
+    background-color: #80D8FF;
+}
+.mmd-footer {
+    position: absolute;
+    bottom: 0;
+}
+.calendar {
+    .items{
+        background-color: palette('Blue', 200);
+    }
+
+    color: rgba(0, 0, 0, 0.64);
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.smooth-text{
+//    color:rgba(0, 0, 0, 0.58);
+    opacity: 0.57;
 }

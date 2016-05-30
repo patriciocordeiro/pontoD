@@ -1,131 +1,170 @@
-/* line 1, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
-
+/**
+ * google-material-color v1.2.6
+ * https://github.com/danlevan/google-material-color
+ */
+/* line 4, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
 .my-md-menu-button {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-}
-/* line 5, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
-
-.my-md-menu-button .md-button {
+  position: absolute;
+  top: 0;
+  bottom: 0; }
+  /* line 8, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+  .my-md-menu-button .md-button {
     border-radius: 0;
     margin: 0;
-    display: inherit;
-}
-/* line 11, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+    display: inherit; }
+  /* line 14, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+  .my-md-menu-button .md-button:hover {
+    border-bottom: solid 4px #FF5722; }
 
-.my-md-menu-button .md-button:hover {
-    border-bottom: solid 4px #FF5722;
-}
-/* line 15, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
-
-.active-menu {
-    border-bottom: solid 4px #FF5722;
-}
 /* line 18, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.active-menu {
+  border-bottom: solid 4px #FF5722; }
 
-.work-is-true {
-    background-color: aquamarine;
-}
 /* line 21, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.work-is-true {
+  background-color: aquamarine; }
 
-.work-is-fale {
-    background-color: red;
-}
 /* line 24, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.work-is-fale {
+  background-color: red; }
 
-.list-grey {
-    background-color: #E3F2FD !important;
-}
 /* line 27, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.list-grey {
+  background-color: #E3F2FD !important; }
 
+/* line 30, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
 .smooth-title {
-    color: rgba(0, 0, 0, 0.54) !important;
-}
-/* line 31, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+  color: rgba(0, 0, 0, 0.54) !important; }
 
+/* line 34, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
 .material-icons.md-18 {
-    font-size: 18px;
-    height: 18px;
-    width: 18px;
-}
-/* line 36, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+  font-size: 18px;
+  height: 18px;
+  width: 18px; }
 
+/* line 39, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
 .material-icons.md-24 {
-    font-size: 24px;
-    height: 24px;
-    width: 24px;
-}
-/* line 41, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+  font-size: 24px;
+  height: 24px;
+  width: 24px; }
 
+/* line 44, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
 .material-icons.md-36 {
-    font-size: 36px;
-    height: 36px;
-    width: 36px;
-}
-/* line 46, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+  font-size: 36px;
+  height: 36px;
+  width: 36px; }
 
+/* line 49, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
 .material-icons.md-48 {
-    font-size: 48px;
-    height: 48px;
-}
-/* line 50, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+  font-size: 48px;
+  height: 48px; }
 
+/* line 53, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
 .material-icons.md-60 {
-    font-size: 60px;
-    height: 60px;
-}
-/* line 54, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+  font-size: 60px;
+  height: 60px; }
 
+/* line 57, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
 .material-icons.md-96 {
-    font-size: 96px !important;
-    height: 96px;
-    width: 96px;
-}
-/* line 59, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+  font-size: 96px !important;
+  height: 96px;
+  width: 96px; }
 
-.material-icons.md-success {
-    color: #4CAF50;
-}
 /* line 62, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.material-icons.md-success {
+  color: #4CAF50; }
 
-.material-icons.md-warning {
-    color: #FF9800;
-}
 /* line 65, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.material-icons.md-warning {
+  color: #FF9800; }
 
-.material-icons.md-error {
-    color: #F44336;
-}
-.status-success {
-    color: #4CAF50;
-}
-.status-warning {
-    color: #FF9800;
-}
-.status-error {
-    color: #F44336;
-}
 /* line 68, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.material-icons.md-error {
+  color: #F44336; }
 
-.delayIn {
-    background-color: aqua;
-}
 /* line 71, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.delayIn {
+  background-color: aqua; }
 
-.antiOut {
-    background-color: orange;
-}
 /* line 74, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.antiOut {
+  background-color: orange; }
 
+/* line 77, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
 .legend-box {
-    height: 25px;
-    width: 25px;
-}
-/* line 78, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+  height: 25px;
+  width: 25px; }
 
+/* line 82, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.mmd-nopadding {
+  padding: 0; }
+
+/* line 85, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
 .mmd-nopadding_tb {
-    padding-bottom: 0 !important;
-    padding-top: 0 !important;
-}
+  padding-bottom: 0 !important;
+  padding-top: 0 !important; }
+
+/* line 89, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.list {
+  background-color: #ECEFF1;
+  margin: 4px; }
+
+/* line 93, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.no-text-transform {
+  text-transform: none; }
+
+/* line 96, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.no-shadow {
+  box-shadow: none; }
+
+/* line 99, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.mmd-input-container {
+  background-color: #80D8FF;
+  border-left: solid 4px red; }
+
+/* line 107, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.bg-grey {
+  background-color: #f5f5f5; }
+
+/* line 110, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.no-margin-tb {
+  margin-top: 0;
+  margin-bottom: 0; }
+
+/* line 115, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.no-margin {
+  margin: 0; }
+
+/* line 118, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.odd {
+  background-color: #f5f5f5;
+  margin-top: 4px; }
+
+/* line 124, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.even {
+  background-color: white;
+  margin-top: 4px; }
+
+/* line 128, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.list-header {
+  background-color: #80D8FF; }
+
+/* line 131, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.mmd-footer {
+  position: absolute;
+  bottom: 0; }
+
+/* line 135, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.calendar {
+  color: rgba(0, 0, 0, 0.64);
+  font-size: 18px;
+  font-weight: bold; }
+  /* line 136, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+  .calendar .items {
+    background-color: #90CAF9; }
+
+/* line 145, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.smooth-text {
+  opacity: 0.57; }
+
 /*# sourceMappingURL=style.css.map */

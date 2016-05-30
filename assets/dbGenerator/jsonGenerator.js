@@ -238,7 +238,7 @@ getNames(function(nomes, sobrenomes) {
     var data = []
     var nomes = nomes
     for (var i = 0; i < 1; i++) {
-        console.log(nomes[i]);
+//        console.log(nomes[i]);
         nomesIndex = Math.floor(Math.random() * ((maxNomes - minNomes) + 1) + minNomes);
         sobrenomesIndex = Math.floor(Math.random() * ((maxSobrenomes - minSobrenomes) + 1) + minSobrenomes);
         employee.name = nomes[nomesIndex] + ' ' + sobrenomes[sobrenomesIndex];
@@ -255,7 +255,7 @@ getNames(function(nomes, sobrenomes) {
 
     }
 
-    console.log('data: ', data);
+//    console.log('data: ', data);
     ///save file with data
     var fs = require('fs');
     fs.writeFile("db_employees.js", JSON.stringify(data), function(err) {
@@ -280,8 +280,8 @@ var turno2MaxInTime = new Date(2016, 0, 1, 14, 15, 0);
 var turno2MaxOutTime = new Date(2016, 0, 1, 18, 15, 0);
 
 
-var minYear = 2016;
-var maxYear = 2017;
+var minYear = 2010;
+var maxYear = 2018;
 
 var minMonth = 0;
 var maxMonth = 6;
@@ -318,6 +318,10 @@ var temp = {
     //    turno2: {}
 
 }
+
+var setor = ['Recursos humanos', 'Administração', 'Vendas', 'Assistencia Social', 'Pedagógico', 'Engenharia'];
+var minSetor = 0;
+var maxSetor = setor.length-1;
 
     function getHours(minYear, maxYear, minMonth, maxMonth, minDay, minHour, maxHour, minMin, maxMin, callback) {
         var hour = 0;
@@ -441,7 +445,7 @@ var temp = {
         var totalWorkedTimeString = new Date(totalWorkedTime).toUTCString().split(' ')[0] // convert to string format (00:00:00)
 
         var totalWorkedTimeString = moment(totalWorkedTime) // convert to string format (00:00:00)
-        console.log(totalWorkedTimeString.format());
+//        console.log(totalWorkedTimeString.format());
         return totalWorkedTimeString.format()
     }
     /*Verifica se o funcionário trabalhou ou não*/
@@ -480,7 +484,7 @@ var minNomes = 0;
 var maxNomes = nomes.length;
 var minSobrenomes = 0;
 var maxSobrenomes = sobrenomes.length;
-var maxEmployees = 4;
+var maxEmployees = 50;
 
 
 
@@ -496,6 +500,7 @@ async.series([
             employee.id = i + 100;
             employee.id = employee.id.toString();
             employee.working = false;
+            employee.setor = setor[ Math.floor(Math.random() * ((maxSetor - minSetor) + 1) + minSetor)];
             employee.ponto = [];
             employee.password = i + 100000;
             employee.password = employee.password.toString();
@@ -661,6 +666,6 @@ async.series([
         });
 
         console.log('Tarefas concuidas');
-        console.log(employee);
+//        console.log(employee);
     }
 ])

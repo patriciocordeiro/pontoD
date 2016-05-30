@@ -12,15 +12,11 @@
         }, {
             item: 'Bater ponto',
             url: 'app.ponto',
-            icone: 'assignment_ind'
+            icon: 'assignment_ind'
         }, {
             item: 'Pontos abertos',
             url: 'app.openPonto',
             icon: 'lock_open'
-        }, {
-            item: 'Pontos fechados',
-            url: 'app.openPonto',
-            icon: 'lock'
         }, {
             item: 'Relatórios',
             url: 'app.relatorios',

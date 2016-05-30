@@ -1,0 +1,36 @@
+<md-card>
+    <md-card-title>
+        <h2 class="md-display-1">Pontos abertos</h2>
+    </md-card-title>
+
+    <md-card-content>
+        <md-divider></md-divider>
+        <md-list>
+            <md-toolbar>
+                <md-list-item>
+                    <p>
+                        <md-icon class="material-icons md-36">person</md-icon>Colaborador
+                    </p>
+                    <p>
+                        <md-icon class="material-icons md-36">access_time</md-icon>Hora de entrada
+                    </p>
+                    <p>Departamento</p>
+                </md-list-item>
+            </md-toolbar>
+            <md-divider></md-divider>
+            <md-list-item ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="activeEmployee in vm.activeEmployees">
+                <md-card class="no-margin no-shadow">
+                    <md-card-content class="mmd-nopadding_tb ">
+                        <img ng-src="{{vm.rootPath + vm.imgPath[$index]}}" />
+                    </md-card-content>
+                </md-card>
+
+                <p><md-button class="md-primary no-text-transform" ui-sref="app.employee({id: activeEmployee._id})">{{activeEmployee.name}}</md-button></p>
+                <p>{{activeEmployee.ponto.turno2.inTime || activeEmployee.ponto.turno1.inTime | date:'hh:mm:ss a'}}</p>
+                <p>{{activeEmployee.setor}}</p>
+                <md-divider></md-divider>
+            </md-list-item>
+        </md-list>
+    </md-card-content>
+</md-card>
+

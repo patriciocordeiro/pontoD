@@ -15,11 +15,18 @@
                 });
             },
 
-            this.getAll(function(data) {
-                console.log(data);
-                self.data = data;
-            });
-            this.data =self.data;
+            this.getBySector = function(query, callback) {
+                http.employee.ponto(query, 'getEmployeesBySector', function(data) {
+                    return callback(data);
+                });
+            }
+
+            //            this.getAll(function(data) {
+            //                console.log(data);
+            //                self.data = data;
+            //            }),
+
+            //            this.data = self.data
         }
     ]);
 

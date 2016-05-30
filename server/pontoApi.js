@@ -210,7 +210,7 @@ module.exports = {
                     console.log('user', user);
                     if (!user) {
                         return callback(null, null, err);
-                    }else if(!user[0].working){
+                    } else if (!user[0].working) {
                         userData.name = user[0].name;
                         return callback(null, userData, err);
 
@@ -303,109 +303,36 @@ module.exports = {
 
             });
     },
-    getOpenedPonto: function() {
+    getOpenedPonto: function(callback) {
         employee.aggregate({
             $match: {
                 working: true
             }
-        }, {
-            $unwind: "$ponto"
-        }, {
-            $match: {
-                "ponto.day": "1"
-            }
-        }, function(err, data) {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log('result', data);
-            }
+        })
+            .unwind("$ponto")
+            .match({
+                "ponto.isActive": true
+            })
+        //            .group({
+        //                '_id': '$id',
+        //                'EmpName': {name:'$name'},
+        //                //                'inTime': '$ponto.inTime'
+        //            })
+        .project({
+            name: 1,
+            setor:1,
+            'ponto.turno1.inTime': 1,
+            'ponto.turno2.inTime': 1
+        })
+            .exec(function(err, data) {
+                if (err) {
+                    console.log(err);
+                    callback(err);
+                } else {
+                    console.log('result', data);
+                    callback(data);
+                }
 
-        });
+            });
     },
-
-
-    //    employee.find({
-    //        id: employeeData.empId
-    //    }, function(err, user) {
-    //        if (err)
-    //            console.log(err)
-    //        console.log('employee data', user);
-    //        if (!user[0]) {
-    //            console.log('user not found');
-    //            res.json({
-    //                res: 'noUser'
-    //            });
-    //        } else {
-    //            if (employeeData.password) {
-    //                if (user[0].password == employeeData.password) {
-    //                    employee.update({
-    //                        id: employeeData.empId
-    //                    }, {
-    //                        $set: {
-    //                            working: employeeData.working
-    //                        }
-    //                    }, function(err, data) {
-    //                        if (err)
-    //                            console.log(err);
-    //                        console.log(data);
-    //
-    //
-    //                        if (data.ok === 1) {
-    //                            if (data.nModified === 1) {
-    //                                console.log('Ponto Aberto');
-    //
-    //                                if (employeeData.working === true) {
-    //                                    /*Entrada*/
-    //                                    employee.update({
-    //                                        id: employeeData.empId
-    //                                    }, {
-    //                                        $push: {
-    //                                            ponto: employeeData.ponto
-    //                                        }
-    //                                    }, function(err, data) {
-    //                                        if (err) console.log(err);
-    //                                        console.log(data);
-    //
-    //                                    })
-    //                                } else if (employeeData.working === false) {
-    //                                    //                                    console.log(obj);
-    //                                    /*Saída*/
-    //                                    employee.update({
-    //                                        "ponto._id": ObjectId(user[0].ponto[0]._id)
-    //                                    }, {
-    //                                        $set: {
-    //                                            "ponto.$.horaSaida": employeeData.ponto.horaSaida
-    //                                        }
-    //                                    }, function(err, data) {
-    //                                        if (err) console.log(err);
-    //                                        console.log(user[0].ponto[0]._id);
-    //                                        console.log('Usúário saindo', data);
-    //
-    //                                    })
-    //
-    //                                }
-    //
-    //                            } else {
-    //                                console.log('O ponto já foi aberto');
-    //                            }
-    //                        }
-    //                        res.send(data[0]);
-    //                    })
-    //
-    //                } else {
-    //                    console.log('wrong password');
-    //                    res.json({
-    //                        res: 'wrongPass'
-    //                    });
-    //                }
-    //            } else {
-    //                console.log('NO password');
-    //                res.json({
-    //                    res: 'noPass'
-    //                });
-    //            }
-    //        }
-    //        //            }
-    //    });
-}
+};

@@ -1,91 +1,156 @@
 (function() {
     'use strict';
 
-    angular.module('pontoDApp').controller('relatorioCtrl', ['httpCallSrvc', 'relatorioSrvc', 'statisticsSrvc', 'employeeSrvc', relatorioCtrl]);
+    angular.module('pontoDApp').controller('relatorioCtrl', ['httpCallSrvc', 'relatorioSrvc', 'statisticsSrvc', 'employeeSrvc', '$filter', '$q', relatorioCtrl]);
 
-    function relatorioCtrl(httpCallSrvc, relatorioSrvc, statisticsSrvc, employeeSrvc) {
+    function relatorioCtrl(httpCallSrvc, relatorioSrvc, statisticsSrvc, employeeSrvc, $filter, $q) {
         var vm = this;
         vm.allEmployees = employeeSrvc.data;
         //Load statistics (load tabs)
         vm.statisticsTabs = statisticsSrvc.tabs;
-        console.log(vm.statisticsTabs);
         //Load http service
         var http = httpCallSrvc;
         var currentYear = moment().format('YYYY'); //stores the current year
         var currentMonth = moment().format('MM'); //stores the current month
-        vm.months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Agos', 'Set', 'Out', 'Nov', 'Dez'];
+        vm.months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+            'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+        ];
         vm.weekDays = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'];
         vm.years = ['2010', '2011', '2012', '2013', '2014', '2015', '2016'];
+        vm.sectors = ['Recursos humanos', 'Administração', 'Vendas', 'Assistencia Social', 'Pedagógico', 'Engenharia'];
         vm.currentYear = "2016"; //stores the current year
         vm.currentMonth = vm.months[0];
+        /*----------------------------------------------------------------------*/
         /*charts.js*/
+        /*----------------------------------------------------------------------*/
         vm.chartjs = {
-            labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
-                     'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'
-                    ],
-
+            labels: ['Janeiro', 'Fevereiro', 'Mar~co', 'Abril', 'Maio', 'Junho',
+                'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+            ],
             //                    series: ['Series A', 'Series B'],
             data: [12, 20, 30]
         };
-        console.log( vm.chartjs);
+        /*----------------------------------------------------------------------*/
+        /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
+        /*----------------------------------------------------------------------*/
         /*Tabs*/
+        /*----------------------------------------------------------------------*/
         //build relatório tabs
         vm.relatorioTabsTwoCols = relatorioSrvc.report.tabsTwoCols;
         vm.relatorioTabs = relatorioSrvc.report.tabs;
         console.log(relatorioSrvc.report.tabs);
+        /*----------------------------------------------------------------------*/
+
+        /*----------------------------------------------------------------------*/
+        /*Tabs*/
+        /*----------------------------------------------------------------------*/
+        vm.isViewSelectEmployee = false; // show hide the selected employee div
+        vm.getEmployeesBySector = function(query) {
+            employeeSrvc.getBySector(query, function(data) {
+                vm.allEmployees = data.res;
+                vm.isViewSelectEmployee = true;
+            });
+        };
+
+        /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
         /*----------------Employee Selection-------------------------------------------------------------*/
         //Select a employee
-        vm.isEmployeeSelected = false; //Verifica se um funcionaro foi selecionado e abre o resto das infos (tab e tal)
+        vm.isViewReport = false; //Verifica se um funcionaro foi selecionado e abre o resto das infos (tab e tal)
         vm.selectedEmployee = {
             //            name: ''
-        }; // selected emplyee for the report (ng-model)
+        }; // selected employee for the report (ng-model)
         vm.getSelectedEmployee = function(index) {
-            vm.SelectedEmployeeData = vm.allEmployees[index];
+            vm.selEmployeeData = vm.allEmployees[index];
+            console.log(vm.selEmployeeData);
             //Se for selecionado um colaborador
-            if (vm.SelectedEmployeeData.name) {
+            if (vm.selEmployeeData._id.name) {
                 //sinalize para que as tabs sejam visualizadas
-                vm.isEmployeeSelected = true;
+                vm.isViewReport = true;
             } else {
                 //Esconda as tabs
-                vm.isEmployeeSelected = false;
+                vm.isViewReport = false;
             }
-            vm.selEmployeePonto = vm.SelectedEmployeeData.ponto;
+            //            vm.selEmployeePonto = vm.selEmployeeData.ponto;
             //            console.log(vm.selEmployeePonto);
 
-            vm.SelectedEmployeeFiltData = _.filter(vm.selEmployeePonto, {
+            //            var test = _.filter(vm.selEmployeeData, {
+            //
+            //                date: {
+            //
+            //                    month: defaultMonth.toString()
+            //                }
+            //
+            //            });
 
-                date: {
-                    year: "2016",
-                    month: defaultMonth.toString()
-                }
 
-            });
+            //                                        console.log(test);
+            var startingMonth = "0"; //set firs month to show
+            filterByMonth(vm.selEmployeeData.pontos, startingMonth, function(data) {
+                console.log(data);
+                vm.employeePontoSingleMonth = data;
+            })
+            console.log(vm.employeePontoSingleMonth);
             //load statistics on employee selection
             getStatistics();
             //create chart for the first property (first tab)
-//            statisticsCreateChart(vm.statisticsTabs[0].total.value);
+            //            statisticsCreateChart(vm.statisticsTabs[0].total.value);
         };
-        /*---------------------------------------------------------------------------*/
+
+        function filterByMonth(data, month, callback) {
+            var filtData = $filter('filter')(data, {
+                date: {
+                    month: month
+                }
+            });
+            callback(filtData);
+        } /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
         vm.isListView = true;
-        vm.viewIconicon = 'view_comfy';
-        vm.buttonClass = 'md-primary';
-        vm.tooltip = 'Ver como Calendário'
+        //        vm.viewIconicon = 'view_comfy';
+        //        vm.buttonClass = 'md-primary';
+        //        vm.tooltip = 'Ver como Calendário'
+        vm.viewMode = {
+            icon: 'view_list',
+            buttonClass: 'md-primary',
+            tooltip: 'Ver como Lista',
+        };
         vm.toggleView = function() {
-            vm.isListView = !vm.isListView
-            if (vm.isListView == false) {
-                vm.viewIconicon = 'view_list';
-                vm.buttonClass = 'md-accent'
-                vm.tooltip = 'Ver como Lista'
+            vm.isListView = !vm.isListView;
+            if (vm.isListView) {
+                vm.viewMode = {
+                    icon: 'view_list',
+                    buttonClass: 'md-primary',
+                    tooltip: 'Ver como Lista',
+                };
             } else {
 
-                vm.viewIconicon = 'view_comfy';
-                vm.buttonClass = 'md-primary'
-                vm.tooltip = 'Ver como Calendário';
+                vm.viewMode = {
+                    icon: 'view_comfy',
+                    buttonClass: 'md-accent',
+                    tooltip: 'Ver como Calendário',
+                };
+                //                vm.viewIconicon = 'view_comfy';
+                //                vm.buttonClass = 'md-primary'
+                //                vm.tooltip = 'Ver como Calendário';
             }
         };
 
+        /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
+        /*--------------------- Report entry-------------------------------------------*/
+
+        //Handle report selection show/hide
+        vm.reportEntry = {
+            isShowYearSel: false
+        };
+        //Get report entry on selection
+        vm.getReportEntry = function(entry){
+            console.log('report entry', entry );
+            if(entry==='sector'){
+                vm.reportEntry.isShowYearSel=true;
+            }
+        };
+        /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
         //        var statisticsTypeArray = []; //statistics array data for each type of statistics
         /*---------------------STATISTIC-------------------------------------------*/
@@ -133,11 +198,11 @@
             var totalMin = 0;
             var totalSec = 0;
             var totalWorkedHourPerMonth = [];
-            var totalDelaydInPerMonth = [];
+            var totalDelayedInPerMonth = [];
             var totalAntiOutPerMonth = [];
             var totalExtraHoursPerMonth = [];
 
-            vm.pontoSingleYearData = _.filter(vm.SelectedEmployeeData.ponto, {
+            vm.pontoSingleYearData = _.filter(vm.selEmployeeData.ponto, {
                 date: {
                     year: currentYear
                 }
@@ -198,70 +263,91 @@
         }
 
         /*---------------------------------------------------------------------------*/
-
+        /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
         function statisticsCreateChart(value) {
-            console.log(value);
             //pass  mean values
-            console.log('statisticsCreateChart');
             vm.chartjs.mean = vm.statistics.mean[value];
             //pass total values to chart data
-
             vm.chartjs.data = [(vm.statistics.total[value])];
-            console.log(vm.chartjs);
-        };
+        }
 
         vm.createChart = function(value) {
             statisticsCreateChart(value);
-        }
+        };
 
-        var defaultYear = 2016;
-        var defaultMonth = 0; //janua
-        var prevYear = 2015;
-        var prevMonth = 11; //december
 
-        vm.currentMonth = vm.months[0] // 'Jan'; //stores the current month
+        /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
+        /*----------------get ponto by month-------------------------------------------------------------*/
 
+        var monthIndex = 0; //janeiro
+        //        var prevMonth = 11; //december
+
+        vm.currentMonth = vm.months[0]; // 'Jan'; //stores the current month
+        vm.isDataView = true; // show/hide the relatorio data
         vm.getPontoPerMonth = function(action) {
             if (action === 'next') {
-                prevMonth++;
-                defaultMonth++;
+                if (monthIndex < 11) {
+                    monthIndex++;
+                }
             } else if (action === 'prev') {
-                prevMonth--;
-                defaultMonth--;
+                if (monthIndex !== 0) {
+                    monthIndex--;
+                }
+            } else {
+                //Selection of month directlly
+                //                console.log(action);
+                monthIndex = action;
+                //                console.log('nennhum dos dois');
             }
-            vm.currentMonth = vm.months[defaultMonth];
-            console.log(defaultMonth.toString());
-            vm.SelectedEmployeeFiltData = _.filter(vm.selEmployeePonto, {
 
-                date: {
-                    year: vm.currentYear.toString,
-                    month: defaultMonth.toString()
+            vm.currentMonth = vm.months[monthIndex];
+            //
+            //            vm.employeePontoSingleMonth = _.filter(vm.selEmployeePonto, {
+            //                date: {
+            //                    month: startMonthindex.toString()
+            //                }
+            //            });
+
+            filterByMonth(vm.selEmployeeData.pontos, monthIndex.toString(), function(data) {
+                console.log(data);
+                vm.employeePontoSingleMonth = data;
+                if (data.length < 1) {
+                    vm.isDataView = false;
+                } else {
+                    vm.isDataView = true;
                 }
+
+                //Calculate totals
+                vm.turno1TotalDelayedIn = 0 //Total de entradas atrasadas
+                vm.turno2TotalDelayedIn = 0 //Total de entradas atrasadas
+                vm.turno1TotalDelayedOut = 0 //Total de saídas antecipadas
+                vm.turno2TotalDelayedOut = 0 //Total de saídas antecipadas
+                _(data).forEach(function(data) {
+                    if (data.turno1.isDelayedIn) {
+                        vm.turno1TotalDelayedIn++;
+                    }
+                    if (data.turno2.isDelayedIn) {
+                        vm.turno2TotalDelayedIn++;
+                    }
+                    if (data.turno1.isDelayedOut) {
+                        vm.turno1TotalDelayedOut++;
+                    }
+                    if (data.turno2.isDelayedOut) {
+                        vm.turno2TotalDelayedOut++;
+                    }
+                });
+
             });
-            console.log(vm.SelectedEmployeeFiltData);
 
-            vm.turno1TotalDelayedIn = 0 //Total de entradas atrasadas
-            vm.turno2TotalDelayedIn = 0 //Total de entradas atrasadas
-            vm.turno1TotalDelayedOut = 0 //Total de saídas antecipadas
-            vm.turno2TotalDelayedOut = 0 //Total de saídas antecipadas
-            _(vm.SelectedEmployeeFiltData).forEach(function(data) {
-                if (data.turno1.isDelayedIn) {
-                    vm.turno1TotalDelayedIn++
-                }
-                if (data.turno2.isDelayedIn) {
-                    vm.turno2TotalDelayedIn++
-                }
-                if (data.turno1.isDelayedOut) {
-                    vm.turno1TotalDelayedOut++
-                }
-                if (data.turno2.isDelayedOut) {
-                    vm.turno2TotalDelayedOut++
-                }
-            })
+
+            //            console.log(vm.SelectedEmployeeFiltData);
+
+
             //            console.log(vm.SelectedEmployeeFiltData);
 
             getStatistics();
-        }
+        };
+        /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 
     }

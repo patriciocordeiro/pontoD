@@ -1,9 +1,12 @@
 <div layout="row" layout-align="center center">
     <md-card flex="40">
-        <form name="vm.baterPontoForm" ng-submit="vm.baterPontoForm.$valid && vm.getPontoOpenClose(vm.employee)">
-        <md-card-title layout="row" layout-align="center center">
-            <h2 class="md-display-1">Registro de ponto</h2>
-        </md-card-title>
+        <md-toolbar>
+            <md-card-title layout="row" layout-align="center center">
+                <h2 class="md-display-1">Registro de ponto</h2>
+            </md-card-title>
+        </md-toolbar>
+        <form name="vm.baterPontoForm" ng-submit="vm.baterPontoForm.$valid && vm.getPontoOpenClose(vm.employee)" novalidate>
+
         <md-card-content layout="column" >
             <md-input-container>
                 <label>Entre aqui com o Seu Id</label>

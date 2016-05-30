@@ -20,8 +20,10 @@ angular.module('pontoDApp').service('httpCallSrvc', ['httpResSrvc',
                     acao: acao,
                 }, query, function(data) {
                     return callback(data);
-                })
-            }
+                });
+            },
+
+
             //            /*---------------------------------------------------------------------------*/
             //           ponto: function(query, acao, callback) {
             ////                var httpCall = new httpResource();
