@@ -5,6 +5,7 @@
     <md-card-content>
             <img ng-src="{{vm.rootPath + vm.imgPath[0]}}" />
         <md-list>
+
             <md-list-item ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="(key,val) in  vm.employeeData">
                 <p><b>{{key}}:</b></p>
                 <p class="smooth-text"><b>{{val}}</b></p>

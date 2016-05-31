@@ -1,1 +1,2 @@
-mongoimport --db pontoD --collection employees --jsonArray db_employees.js
+mongoimport --db pontoD --collection employees --jsonArray db_employees_ponto.js
+mongoimport --db pontoD --collection user --jsonArray db_employees.js

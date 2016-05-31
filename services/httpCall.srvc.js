@@ -4,19 +4,19 @@ angular.module('pontoDApp').service('httpCallSrvc', ['httpResSrvc',
 
         /*---------------------------------------------------------------------------*/
 
-        this.employee = {
+        this.api = {
             getAll: function(acao, callback) {
                 //                var httpCall = new httpResource();
-                httpResSrvc.ponto.get({
+                httpResSrvc.resource.get({
                     acao: acao
                 }, function(data) {
                     return callback(data);
                 });
             },
 
-            ponto: function(query, acao, callback) {
+            getByQuery: function(query, acao, callback) {
                 //                var httpCall = new httpResource();
-                httpResSrvc.ponto.save({
+                httpResSrvc.resource.save({
                     acao: acao,
                 }, query, function(data) {
                     return callback(data);

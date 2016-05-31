@@ -21,11 +21,11 @@
             <md-list-item ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="activeEmployee in vm.activeEmployees">
                 <md-card class="no-margin no-shadow">
                     <md-card-content class="mmd-nopadding_tb ">
-                        <img ng-src="{{vm.rootPath + vm.imgPath[$index]}}" />
+<!--                        <img ng-src="{{vm.rootPath + vm.imgPath[$index]}}" />-->
                     </md-card-content>
                 </md-card>
 
-                <p><md-button class="md-primary no-text-transform" ui-sref="app.employee({id: activeEmployee._id})">{{activeEmployee.name}}</md-button></p>
+                <p><md-button class="md-primary no-text-transform" ui-sref="app.employee({id: activeEmployee.id})">{{activeEmployee.name}}</md-button></p>
                 <p>{{activeEmployee.ponto.turno2.inTime || activeEmployee.ponto.turno1.inTime | date:'hh:mm:ss a'}}</p>
                 <p>{{activeEmployee.setor}}</p>
                 <md-divider></md-divider>

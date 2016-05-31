@@ -10,13 +10,18 @@
 
             this.getAll = function(callback) {
 
-                http.employee.getAll('getEmployees', function(data) {
+                http.api.getAll('getEmployees', function(data) {
                     return callback(data);
                 });
             },
 
             this.getBySector = function(query, callback) {
-                http.employee.ponto(query, 'getEmployeesBySector', function(data) {
+                http.api.getByQuery(query, 'getEmployeesBySector', function(data) {
+                    return callback(data);
+                });
+            },
+            this.getOne = function(query, callback) {
+                http.api.getByQuery(query, 'getEmployee', function(data) {
                     return callback(data);
                 });
             }

@@ -60,7 +60,7 @@ angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource', 'highchart
 //                                abstract: true,
                 url: "/employee/:id",
             templateUrl: '/views/employee.view.html',
-            controller: 'pontoCtrl as vm',
+            controller: 'employeeCtrl as vm',
             })
 //            .state('app.employee.id', {
 //                //                abstract: true,

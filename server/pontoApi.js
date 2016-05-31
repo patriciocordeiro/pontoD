@@ -313,17 +313,12 @@ module.exports = {
             .match({
                 "ponto.isActive": true
             })
-        //            .group({
-        //                '_id': '$id',
-        //                'EmpName': {name:'$name'},
-        //                //                'inTime': '$ponto.inTime'
-        //            })
-        .project({
-            name: 1,
-            setor:1,
-            'ponto.turno1.inTime': 1,
-            'ponto.turno2.inTime': 1
-        })
+            .project({
+                name: 1,
+                setor: 1,
+                id: 1, 'ponto.turno1.inTime': 1,
+                'ponto.turno2.inTime': 1
+            })
             .exec(function(err, data) {
                 if (err) {
                     console.log(err);

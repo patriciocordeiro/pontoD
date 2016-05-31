@@ -1,6 +1,7 @@
-(function() {
+//(function() {
     'use strict';
-    var employees = require('./ponto.models');
+    var User = require('./employees.model');
+//    console.log(user);
     module.exports = {
         all: function(req, res) {
             console.log('chegou do usuário');
@@ -42,13 +43,15 @@
         },
 
         one: function(req, res) {
-            console.log('chegou do usuário');
-            employees.find({
-                req.body._id
+            console.log('chegou do usuário', req.body);
+            var query = req.body.empId;
+            User.find({
+                'id': req.body.empId
             }, function(err, data) {
                 if (err) console.log(err);
-                res.send(data);
+                console.log('hello', data);
+                res.json({res:data});
             });
         },
     };
-})();
+//})();
