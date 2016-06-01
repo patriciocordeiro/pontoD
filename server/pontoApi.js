@@ -315,8 +315,10 @@ module.exports = {
             })
             .project({
                 name: 1,
-                setor: 1,
-                id: 1, 'ponto.turno1.inTime': 1,
+                imgPath: 1,
+                departamento: 1,
+                id: 1,
+                'ponto.turno1.inTime': 1,
                 'ponto.turno2.inTime': 1
             })
             .exec(function(err, data) {

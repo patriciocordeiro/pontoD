@@ -1,5 +1,5 @@
 <md-dialog aria-label="ponto" ng-cloak flex-gt-md="40" flex="60">
-    <md-toolbar layout="row" class="md-tall" ng-class="vm.headerClass" layout-align="center center" >
+    <md-toolbar layout="row" class="md-tall" ng-class="vm.headerClass" layout-align="center center">
         <div class="md-toolbar-tools" layout="row" layout-align="end center">
             <span style="text-transform: uppercase;" class="md-headline">{{vm.headTile}}</span>
             <span flex></span>
@@ -31,4 +31,12 @@
             </div>
         </div>
     </md-dialog-content>
+    <md-divider></md-divider>
+    <md-dialog-actions >
+<!--        <div layout="column" flex="80">-->
+            <md-button class="md-primary" ng-click="vm.closeDialog()">
+                Ok
+            </md-button>
+<!--        </div>-->
+    </md-dialog-actions>
 </md-dialog>

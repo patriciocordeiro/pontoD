@@ -1,16 +1,33 @@
-<md-card>
-    <md-card-title>
-        <span class="md-headline">Dados do colaborador</span>
-    </md-card-title>
-    <md-card-content>
-            <img ng-src="{{vm.rootPath + vm.imgPath[0]}}" />
-        <md-list>
-
-            <md-list-item ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="(key,val) in  vm.employeeData">
-                <p><b>{{key}}:</b></p>
-                <p class="smooth-text"><b>{{val}}</b></p>
-            </md-list-item>
-
-        </md-list>
-    </md-card-content>
-</md-card>
+<md-content layout="row" layout-align="center center">
+    <md-card class="no-margin" flex="100" flex-gt-xs="60">
+        <md-card-content class="bg-grey no-margin mmd-nopadding">
+            <md-card class="no-margin no-shadow">
+                <md-card-title>
+                    <md-card-title-media>
+                        <div class="md-media-md card-media" layout layout-align="center center">
+                            <img ng-src="{{vm.rootPath + vm.employeeData.imgPath + '.png'}}" />
+                        </div>
+                    </md-card-title-media>
+                    <md-card-title-text class="mmd-paddingleft">
+                        <span class="md-headline">{{vm.employeeData['Nome completo']}}</span>
+                        <span class="md-subhead">{{vm.employeeData['Cargo/Função']}}</span>
+                    </md-card-title-text>
+                </md-card-title>
+            </md-card>
+            <md-card-title class="mmd-border-bt">
+                <span class="md-title">Dados cadastrados</span>
+            </md-card-title>
+            <md-content>
+                <md-list class="mmd-nopadding">
+                    <md-list-item ng-repeat="(key,val) in  vm.employeeData">
+                        <p><b>{{key}}:</b>
+                        </p>
+                        <p class="smooth-text"><b>{{val}}</b>
+                        </p>
+                        <md-divider></md-divider>
+                    </md-list-item>
+                </md-list>
+            </md-content>
+        </md-card-content>
+    </md-card>
+</md-content>

@@ -8,6 +8,7 @@ var mongoose = require('mongoose');
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var path = require('path');
+var passport = require('passport');
 
 //----------------------------------------------------------------------
 //my methods
@@ -39,10 +40,15 @@ app.use(bodyParser.urlencoded({
 //use static files
 app.use(express.static(path.join(__dirname, '/')));
 
+
+/*Passport*/
+app.use(passport.initialize());
+require('./server/employees.auth')(passport);
+
 /*Routes*/
 //load my rouxtes
 require('./server/ponto.routes')(app, express, pontoWeb);
-require('./server/employees.routes')(app, express, employeesWeb);
+require('./server/employees.routes')(app, express, passport, employeesWeb);
 
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));

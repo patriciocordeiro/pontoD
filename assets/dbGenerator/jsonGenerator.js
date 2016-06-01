@@ -485,7 +485,7 @@ var minNomes = 0;
 var maxNomes = nomes.length;
 var minSobrenomes = 0;
 var maxSobrenomes = sobrenomes.length;
-var maxEmployees = 25;
+var maxEmployees = 26;
 
 
 var employees = require('./employeeGen');
@@ -524,7 +524,8 @@ async.series([
             //            console.log(i, employeesData[i]);
             employee.name = employeesData[i]['Nome completo'];
             employee.id = employeesData[i].id;
-            employee.Departamento = employeesData.Departamento;
+            employee.departamento = employeesData[i].Departamento;
+            employee.imgPath = employeesData[i].imgPath;
             employee.working = false;
             //            employee.setor = setor[Math.floor(Math.random() * ((maxSetor - minSetor) + 1) + minSetor)];
             employee.ponto = [];

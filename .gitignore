@@ -31,3 +31,7 @@ bower_components
 
 # Optional REPL history
 .node_repl_history
+
+
+db_employees_ponto.js
+/assets/dbGenerator/db_employees.js

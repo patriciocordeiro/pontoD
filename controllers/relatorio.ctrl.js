@@ -8,6 +8,8 @@
         vm.allEmployees = employeeSrvc.data;
         //Load statistics (load tabs)
         vm.statisticsTabs = statisticsSrvc.tabs;
+        //root path for images
+        vm.rootPath = '/assets/img/employees/';
         //Load http service
         var http = httpCallSrvc;
         var currentYear = moment().format('YYYY'); //stores the current year
@@ -17,7 +19,9 @@
         ];
         vm.weekDays = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'];
         vm.years = ['2010', '2011', '2012', '2013', '2014', '2015', '2016'];
-        vm.sectors = ['Recursos humanos', 'Administração', 'Vendas', 'Assistencia Social', 'Pedagógico', 'Engenharia'];
+       vm.departamentos = ['Engenharia', 'Planejamento', 'Administrativo', 'Pedagógico',
+            'Jurídico'
+        ];
         vm.currentYear = "2016"; //stores the current year
         vm.currentMonth = vm.months[0];
         /*----------------------------------------------------------------------*/
@@ -49,6 +53,7 @@
         vm.getEmployeesBySector = function(query) {
             employeeSrvc.getBySector(query, function(data) {
                 vm.allEmployees = data.res;
+                console.log(data );
                 vm.isViewSelectEmployee = true;
             });
         };
@@ -144,10 +149,10 @@
             isShowYearSel: false
         };
         //Get report entry on selection
-        vm.getReportEntry = function(entry){
-            console.log('report entry', entry );
-            if(entry==='sector'){
-                vm.reportEntry.isShowYearSel=true;
+        vm.getReportEntry = function(entry) {
+            console.log('report entry', entry);
+            if (entry === 'sector') {
+                vm.reportEntry.isShowYearSel = true;
             }
         };
         /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/

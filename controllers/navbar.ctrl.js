@@ -25,6 +25,10 @@
             item: 'Estatísticas',
             url: 'app.estatisticas',
             icon: 'insert_chart'
+        }, {
+            item: 'Cadastro',
+            url: 'app.cadastro',
+            icon: 'insert_chart'
         }];
     }
 })();

@@ -6,29 +6,28 @@
     var maleNames = names.male;
     var familyNames = names.familyname;
 
-
     //nconsole.log(names);
     var employee = {};
     var civil = ['Casado', 'Solteiro'];
     var cursos = [{
         curso: 'Engenharia Elétrica',
-        setor: 'Engenharia',
+        departamento: 'Engenharia',
         funcao: ['Projetista', 'Designer', 'Coordenador técnico', 'Estagiário']
     }, {
         curso: 'Serviço social',
-        setor: 'Planejamento',
+        departamento: 'Planejamento',
         funcao: ['Assistente social', 'Coordenador', 'Diretor(a)', 'Estagiário']
     }, {
         curso: 'Administração',
-        setor: 'Administrativo',
+        departamento: 'Administrativo',
         funcao: ['Assistente', 'Coordenador', 'Diretor', 'Estagiário']
     }, {
         curso: 'Pedagogia',
-        setor: 'Pedagógico',
+        departamento: 'Pedagógico',
         funcao: ['Assistente', 'Assistente', 'Coordenador', 'Estagiário']
     }, {
         curso: 'Direito',
-        setor: 'Jurídico',
+        departamento: 'Jurídico',
         funcao: ['Assistente', 'Advogado', 'Coordenador', 'Estagiário']
     }];
 
@@ -38,14 +37,14 @@
         'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
     ];
 
-    var maxEmployees = 25;
+    var maxEmployees = 26;
     var employeeData = [];
     module.exports = {
         createEmployees: function(callback) {
             var gender;
             var data = [];
             for (var i = 0; i < maxEmployees; i++) {
-                if (i < 10) {
+                if (i < 14) {
                     gender = 'F';
                 } else {
                     gender = 'M';
@@ -53,12 +52,13 @@
                 if (gender === 'F') {
                     employee['Nome completo'] = femaleNames[i] + ' ' + familyNames[i];
                     employee.sexo = 'Feminino';
-                    employee.imgPath = 'employeeF' + i + '.png';
+                    employee.imgPath = 'employeeF' + i;
                     employee.email = femaleNames[i].toLowerCase() + '@' + email[Math.floor(Math.random() * ((email.length - 1) + 1) + 0)] + '.com';
                 } else {
                     employee['Nome completo'] = maleNames[i] + ' ' + familyNames[i];
                     employee.sexo = 'Masculino';
-                    employee.imgPath = 'employeeM' + i + '.png';
+                    var idx = i-14
+                    employee.imgPath = 'employeeM' + idx;
                     employee.email = maleNames[i].toLowerCase() + '@' + email[Math.floor(Math.random() * ((email.length - 1) + 1) + 0)] + '.com';
                 }
                 employee.id = employee.id = (i + 100).toString();
@@ -73,7 +73,7 @@
                 //        console.log(employee);
                 var index = (Math.floor(Math.random() * ((cursos.length - 1 - 0) + 1) + 0));
                 employee['Formação'] = cursos[index].curso;
-                employee.Departamento = cursos[index].setor;
+                employee.Departamento = cursos[index].departamento;
                 employee['Cargo/Função'] = cursos[index].funcao[(Math.floor(Math.random() * 4))];
 //                console.log(employee);
                 employeeData.push(employee);

@@ -1,32 +1,40 @@
-<div layout="row" layout-align="center center">
-    <md-card flex="40">
+<md-content flex class="bg-grey" layout="row" layout-align="center center">
+    <!--    <md-content layout="column" flex>-->
+    <md-card flex-gt-md="30">
         <md-toolbar>
             <md-card-title layout="row" layout-align="center center">
                 <h2 class="md-display-1">Registro de ponto</h2>
             </md-card-title>
         </md-toolbar>
-        <form name="vm.baterPontoForm" ng-submit="vm.baterPontoForm.$valid && vm.getPontoOpenClose(vm.employee)" novalidate>
+        <form name="vm.baterPontoForm" ng-submit="vm.baterPontoForm.$valid && vm.getPontoOpenClose(vm.employee,$event)" novalidate>
 
-        <md-card-content layout="column" >
-            <md-input-container>
-                <label>Entre aqui com o Seu Id</label>
-                <input type="text" name="id" ng-model="vm.employee.empId"  maxlength="4" required/>
-                <div ng-messages="vm.baterPontoForm.id.$error"  role="alert">
-                    <div ng-message="required">Por favor, entre com o seu ID</div>
+            <md-card-content layout="column">
+                <md-input-container>
+                    <label>Entre aqui com o Seu Id</label>
+                    <input type="text" name="id" ng-model="vm.employee.empId" maxlength="4" required/>
+                    <div ng-messages="vm.baterPontoForm.id.$error" role="alert">
+                        <div ng-message="required">Por favor, entre com o seu ID</div>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <label>Entre aqui com a sua senha</label>
+                    <input type="password" name="password" ng-model="vm.employee.password" maxlength="6" required/>
+                    <div ng-messages="vm.baterPontoForm.password.$error" role="alert">
+                        <div ng-message="required">Por favor, entre com a senha</div>
+                    </div>
+                </md-input-container>
+            </md-card-content>
+            <md-divider></md-divider>
+            <md-card-actions layout="row" layout-align="space-between">
+                <div layout="column" flex="30">
+                    <md-button ng-click="vm.employee.action='openPonto'" type="submit" class="md-primary md-raised lg-button">Entrada</md-button>
                 </div>
-            </md-input-container>
-            <md-input-container>
-                <label>Entre aqui com a sua senha</label>
-                <input type="password" name="password" ng-model="vm.employee.password"  maxlength="6" required/>
-                <div ng-messages="vm.baterPontoForm.password.$error" role="alert">
-                    <div ng-message="required">Por favor, entre com a senha</div>
+                <div layout="column" flex="30">
+                    <md-button ng-click="vm.employee.action='closePonto'" type="submit" class="md-warn md-raised lg-button">Saída</md-button>
                 </div>
-            </md-input-container>
-        </md-card-content>
-        <md-card-actions layout="row" layout-padding layout-align="space-between">
-            <md-button ng-click="vm.employee.action='openPonto'" type="submit" class="md-primary md-raised">Entrada</md-button>
-            <md-button ng-click="vm.employee.action='closePonto'" type="submit"  class="md-warn md-raised">Saída</md-button>
-        </md-card-actions>
+            </md-card-actions>
         </form>
     </md-card>
-</div>
+    <!--    </md-content>-->
+</md-content>
+

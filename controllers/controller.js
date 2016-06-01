@@ -21,8 +21,6 @@
         console.log('Starting the Controller');
 
 
-
-
         //Setor de trabalho
         vm.employee = {
             setor: ''

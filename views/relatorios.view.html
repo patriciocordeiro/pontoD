@@ -18,7 +18,7 @@
                             <md-input-container class="md-block">
                                 <label>Selecione o setor</label>
                                 <md-select ng-model="vm.employee.setor" name="setor" required>
-                                    <md-option ng-repeat="setor in  vm.sectors" ng-value="setor" ng-click="vm.getReportEntry('sector')">
+                                    <md-option ng-repeat="setor in vm.departamentos" ng-value="setor" ng-click="vm.getReportEntry('sector')">
                                         {{setor}}
                                     </md-option>
                                 </md-select>
@@ -46,7 +46,9 @@
                         </div>
                     </div>
                     <md-divider></md-divider>
+                    <div class="bg-grey" layout-padding>
                     <md-button type="submit" class="md-primary md-raised" ng-disabled="employeeReportForm.$invalid">Enviar</md-button>
+                    </div>
                 </form>
             </md-card-content>
         </md-card>
@@ -70,8 +72,8 @@
             </md-card-content>
         </md-card>
     </div>
-    <div ng-show="true">
-<!--    <div ng-show="vm.isViewReport">-->
+<!--    <div ng-show="true">-->
+            <div ng-show="vm.isViewReport">
 
         <md-tabs class="" md-dynamic-height md-border-bottom md-border-top>
             <md-tab label="{{report.label}}" ng-repeat="report in vm.relatorioTabsTwoCols">
@@ -82,20 +84,33 @@
                     <md-divider></md-divider>
                 </md-card>
 
-                <md-card layout-gt-xs="row" class="no-shadow bg-grey no-margin">
+                <md-card layout-gt-xs="row" class="no-shadow no-margin">
                     <md-list flex>
                         <md-list-item class="md-3-line">
+                            <md-card-title>
+                                <md-card-title-media>
+                                    <div class="md-media-md card-media" layout layout-align="center center">
+                                        <img ng-src="{{vm.rootPath + vm.selEmployeeData._id.imgPath + '.png'}}" />
+                                    </div>
+                                </md-card-title-media>
+                                <md-card-title-text class="mmd-paddingleft">
+                                    <span class="md-headline">{{vm.employee.name}}</span>
+                                    <span class="md-subhead">{{vm.employee.setor}}</span>
+                                </md-card-title-text>
+                            </md-card-title>
+                            <!--
                             <div class="md-list-item-text" layout="column">
                                 <h2 flex class="md-title smooth-title">Colaborador:&nbsp;<span style="color:initial">{{vm.employee.name}}</span></h2>
                                 <h3 flex class="md-title smooth-title">Setor: <span><b>{{vm.employee.setor}}</b></span></h3>
                                 <p>Data processada: <span><b>{{vm.currentMonth}} de {{vm.currentYear}}</b></span>
                                 </p>
                             </div>
+-->
                         </md-list-item>
                     </md-list>
                     <span flex></span>
                     <div ng-show="vm.isViewReport">
-                        <md-button class="md-raised md-accent no-text-transform" ng-click="vm.isViewReport=false">Selecionar outro(a) colaborador(a)</md-button>
+                        <md-button class="md-raised md-primary no-text-transform" ng-click="vm.isViewReport=false">Nova seleção</md-button>
                     </div>
 
                 </md-card>
@@ -105,38 +120,41 @@
                 <!--                </div>-->
 
                 <md-card class="no-margin">
-                    <md-card-content>
-                        <div flex label="viewMode">
-                            <md-button style="text-transform:none" class="md-raised" ng-class="vm.viewMode.buttonClass" ng-click="vm.toggleView()">Visualizar
-                                <md-icon class="material-icons md-36">
-                                    <md-tooltip md-direction="bottom">
-                                        {{vm.viewMode.tooltip}}
-                                    </md-tooltip>
-                                    {{vm.viewMode.icon}}</md-icon>
-                            </md-button>
-                        </div>
+                    <md-card-content class="mmd-nopadding">
                         <md-divider></md-divider>
-                        <md-toolbar class="md-hue-2">
-                            <div label="navigationMonth" layout="row" layout-align="center center" flex="100">
-                                <!--                            <h2 class="md-title">-->
-                                <md-button class="md-icon-button" ng-click="vm.getPontoPerMonth('prev')">
-                                    <md-icon class="material-icons ">navigate_before</md-icon>
-                                </md-button>
-                                <md-input-container>
-                                    <md-select ng-model="vm.currentMonth">
-                                        <md-option ng-repeat="month in vm.months" value="{{month}}" ng-click="vm.getPontoPerMonth($index)"><span class="md-title">{{month}}</span>
-                                        </md-option>
-                                    </md-select>
-                                </md-input-container>, &nbsp;
-                                <span class="md-title">{{vm.employee.reportYear}}</span>
-                                <md-button class="md-icon-button" ng-click=" vm.getPontoPerMonth('next')">
-                                    <md-icon class="material-icons">navigate_next</md-icon>
-                                </md-button>
-                                <!--                    </h2>-->
+<!--                        <md-toolbar class="md-hue-2">-->
+                            <div class="md-toolbar-tools mmd-border-bt" layout="row">
+                                <div flex   label="viewMode">
+                                    <md-button style="text-transform:none" ng-class="vm.viewMode.buttonClass" ng-click="vm.toggleView()">Visualizar
+                                        <md-icon class="material-icons md-36">
+                                            <md-tooltip md-direction="bottom">
+                                                {{vm.viewMode.tooltip}}
+                                            </md-tooltip>
+                                            {{vm.viewMode.icon}}</md-icon>
+                                    </md-button>
+                                </div>
+                                <div label="navigationMonth" layout="row" layout-align="center center" flex="100">
+                                    <!--                            <h2 class="md-title">-->
+                                    <md-button class="md-icon-button" ng-click="vm.getPontoPerMonth('prev')">
+                                        <md-icon class="material-icons md-36 ">navigate_before</md-icon>
+                                    </md-button>
+                                    <md-input-container>
+                                        <md-select ng-model="vm.currentMonth">
+                                            <md-option ng-repeat="month in vm.months" value="{{month}}" ng-click="vm.getPontoPerMonth($index)"><span class="md-headline">{{month}}</span>
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>, &nbsp;
+                                    <span class="md-headline">{{vm.employee.reportYear}}</span>
+                                    <md-button class="md-icon-button" ng-click=" vm.getPontoPerMonth('next')">
+                                        <md-icon class="material-icons md-36">navigate_next</md-icon>
+                                    </md-button>
+                                    <!--                    </h2>-->
+                                </div>
+                                <span flex></span>
                             </div>
-                        </md-toolbar>
-                        <div ng-show="vm.isDataView" layout-sm="column" layout-gt-sm="row" layout-align-gt-sm="center start">
-                            <md-card class="no-shadow" flex="100" ng-repeat="turno in report.turno track by $index">
+<!--                        </md-toolbar>-->
+                        <div flex ng-show="vm.isDataView" layout-sm="column" layout-gt-sm="row" layout-align-gt-sm="center start">
+                            <md-card class="no-shadow bg-grey mmd-nopadding no-margin" flex="100" ng-repeat="turno in report.turno track by $index">
                                 <md-card-title layout="column" class="mmd-nopadding_tb bg-grey">
                                     <!--                                    <md-card-title-text>-->
                                     <h3 class="md-title">{{turno.title}}</h3>
@@ -146,11 +164,11 @@
                                     </div>
                                     <!--                                    </md-card-title-text>-->
                                 </md-card-title>
-                                <md-card ng-show="!vm.isListView">
+                                <md-card class="mmd-nopadding no-margin" ng-show="!vm.isListView">
                                     <md-card-content layout="row">
-                                        <md-list flex ng-repeat="header in turno.cols">
+                                        <md-list  flex ng-repeat="header in turno.cols">
                                             <md-list-item>
-                                                <p>{{header.title}}</p>
+                                                <p><b>{{header.title}}</b></p>
                                             </md-list-item>
                                             <md-divider></md-divider>
                                             <md-list-item ng-show="employeeData[turno.index][header.property]" ng-repeat="employeeData in  vm.employeePontoSingleMonth" class="md-2-line">
@@ -165,12 +183,12 @@
                                     </md-card-content>
                                 </md-card>
 
-                                <div class="view-calendar" layout="row" layout-align="center center" ng-show="true">
-<!--                                    <div class="view-calendar" layout="row" layout-align="center center" ng-show="vm.isListView">-->
+<!--                                <div class="view-calendar" layout="row" layout-align="start center" ng-show="true">-->
+                                                                        <div class="view-calendar" layout="row" layout-align="center center" ng-show="vm.isListView">
                                     <md-card flex="100" flex-gt-xs="80">
-                                        <md-card-content>
+                                        <md-card-content class="mmd-nopadding">
                                             <md-grid-list class="calendar" md-cols="7" md-row-height="2:2" md-gutter="0px">
-                                                <md-grid-tile  class="items" ng-repeat="weekDay in  vm.weekDays">
+                                                <md-grid-tile class="items" ng-repeat="weekDay in  vm.weekDays">
                                                     {{weekDay}}
                                                 </md-grid-tile>
                                                 <md-divider></md-divider>
@@ -245,7 +263,7 @@
                         <md-divider></md-divider>
                         <div label="navigationMonth" layout="row" layout-align="center center" flex="100">
                             <h2>
-                    <md-button class="md-primary md-icon-button" ng-click="vm.getPontoPerMonth('prev')"><md-icon class="material-icons ">navigate_before</md-icon></md-button>
+                    <md-button class="md-primary md-icon-button" ng-click="vm.getPontoPerMonth('prev')"><md-icon class="material-icons md-48 ">navigate_before</md-icon></md-button>
                     <md-input-container>
                         <md-select ng-model="vm.currentMonth" >
                             <md-option  ng-repeat="month in vm.months" value="{{month}}" ng-click="vm.getPontoPerMonth($index)">{{month}}</md-option>

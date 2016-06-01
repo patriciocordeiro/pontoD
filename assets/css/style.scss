@@ -78,8 +78,7 @@
     height: 25px;
     width: 25px;
 }
-
-.mmd-nopadding{
+.mmd-nopadding {
     padding: 0;
 }
 .mmd-nopadding_tb {
@@ -133,16 +132,39 @@
     bottom: 0;
 }
 .calendar {
-    .items{
+    .items {
         background-color: palette('Blue', 200);
     }
-
-    color: rgba(0, 0, 0, 0.64);
-    font-size: 18px;
-    font-weight: bold;
+    color:rgba(0,
+    0,
+    0,
+    0.64);
+    font-size:18px;
+    font-weight:bold;
+}
+.smooth-text {
+    //    color:rgba(0, 0, 0, 0.58);
+    opacity: 0.54;
+}
+.employee-avatar {
+    width: 60px;
+    height: 60px;
+    max-height: 60px;
+    max-width: 60px;
 }
 
-.smooth-text{
-//    color:rgba(0, 0, 0, 0.58);
-    opacity: 0.57;
+.mmd-list-item{
+//    border-bottom: solid 2px  palette('Blue', 700);
+    border-left: 8px solid palette('Blue', 700)
+}
+.mmd-paddingleft{
+  padding-left: 8px;
+}
+
+.lg-button{
+    padding:6px;
+}
+
+.mmd-border-bt{
+    border-bottom:  solid 4px palette('Blue', 700);
 }

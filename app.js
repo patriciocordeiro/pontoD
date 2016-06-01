@@ -1,5 +1,5 @@
 'use strict'
-angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource', 'highcharts-ng', 'chart.js', 'angularMoment'])
+angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource', 'highcharts-ng', 'chart.js', 'angularMoment', 'ui.mask', 'ngFileUpload'])
     .run(function(employeeSrvc) {
 
     })
@@ -9,10 +9,10 @@ angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource', 'highchart
 
         /*Angular theme configuration*/
         $mdThemingProvider.theme('default')
-            //            .primaryPalette('teal')
-            .primaryPalette('blue')
-            //        .primaryPalette('indigo')
-            .accentPalette('red');
+        //            .primaryPalette('teal')
+        .primaryPalette('blue')
+        //        .primaryPalette('indigo')
+        .accentPalette('red');
 
 
         ChartJsProvider.setOptions({
@@ -50,6 +50,12 @@ angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource', 'highchart
                 templateUrl: '/views/relatorios.view.html',
                 controller: 'relatorioCtrl as vm',
             })
+            .state('app.cadastro', {
+                //                abstract: true,
+                url: "/cadastro",
+                templateUrl: '/views/cadastro.view.html',
+            controller: 'employeeCtrl as vm',
+            })
             .state('app.estatisticas', {
                 //                abstract: true,
                 url: "/estatisticas",
@@ -57,17 +63,17 @@ angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource', 'highchart
                 controller: 'relatorioCtrl as vm',
             })
             .state('app.employee', {
-//                                abstract: true,
+                //                                abstract: true,
                 url: "/employee/:id",
-            templateUrl: '/views/employee.view.html',
-            controller: 'employeeCtrl as vm',
+                templateUrl: '/views/employee.view.html',
+                controller: 'employeeCtrl as vm',
             })
-//            .state('app.employee.id', {
-//                //                abstract: true,
-//                url: "/:id",
-//                templateUrl: '/views/estatisticas.view.html',
-//                controller: 'relatorioCtrl as vm',
-//            });
+        //            .state('app.employee.id', {
+        //                //                abstract: true,
+        //                url: "/:id",
+        //                templateUrl: '/views/estatisticas.view.html',
+        //                controller: 'relatorioCtrl as vm',
+        //            });
 
         //if no state redirect to home
         $urlRouterProvider.otherwise("app.home");

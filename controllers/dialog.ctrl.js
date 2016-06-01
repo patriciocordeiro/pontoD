@@ -137,7 +137,7 @@
         }
 
         vm.closeDialog = function() {
-            $mdDialog.hide();
+            $mdDialog.cancel();
         };
 
     }
