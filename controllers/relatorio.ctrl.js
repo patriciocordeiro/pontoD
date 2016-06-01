@@ -19,7 +19,7 @@
         ];
         vm.weekDays = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'];
         vm.years = ['2010', '2011', '2012', '2013', '2014', '2015', '2016'];
-       vm.departamentos = ['Engenharia', 'Planejamento', 'Administrativo', 'Pedagógico',
+        vm.departamentos = ['Engenharia', 'Planejamento', 'Administrativo', 'Pedagógico',
             'Jurídico'
         ];
         vm.currentYear = "2016"; //stores the current year
@@ -53,7 +53,7 @@
         vm.getEmployeesBySector = function(query) {
             employeeSrvc.getBySector(query, function(data) {
                 vm.allEmployees = data.res;
-                console.log(data );
+                console.log(data);
                 vm.isViewSelectEmployee = true;
             });
         };
@@ -149,11 +149,17 @@
             isShowYearSel: false
         };
         //Get report entry on selection
-        vm.getReportEntry = function(entry) {
-            console.log('report entry', entry);
+        var prevSector ='';
+        vm.getReportEntry = function(entry, value) {
+            console.log(vm.employee);
+            console.log('report entry', entry,value);
             if (entry === 'sector') {
                 vm.reportEntry.isShowYearSel = true;
+                if (prevSector !== value) {
+                    vm.isViewSelectEmployee = false;
+                }
             }
+            prevSector = value;
         };
         /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 

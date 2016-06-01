@@ -190,4 +190,13 @@
 .mmd-border-bt {
   border-bottom: solid 4px #1976D2; }
 
+/* line 173, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+.thumb {
+  width: 120px;
+  height: 120px;
+  float: none;
+  position: relative;
+  top: 7px;
+  background-color: antiquewhite; }
+
 /*# sourceMappingURL=style.css.map */

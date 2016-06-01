@@ -18,7 +18,7 @@
                             <md-input-container class="md-block">
                                 <label>Selecione o setor</label>
                                 <md-select ng-model="vm.employee.setor" name="setor" required>
-                                    <md-option ng-repeat="setor in vm.departamentos" ng-value="setor" ng-click="vm.getReportEntry('sector')">
+                                    <md-option ng-repeat="setor in vm.departamentos" ng-value="setor" ng-click="vm.getReportEntry('sector', vm.employee.setor)">
                                         {{setor}}
                                     </md-option>
                                 </md-select>
@@ -36,7 +36,7 @@
                                 <md-input-container class="md-block">
                                     <label>Selecione o ano</label>
                                     <md-select ng-model="vm.employee.reportYear" name="reportYear" required>
-                                        <md-option ng-repeat="years in vm.years" value="{{years}}" ng-click="vm.getReportEntry('year')">{{years}}</md-option>
+                                        <md-option ng-repeat="years in vm.years" value="{{years}}" ng-click="vm.getReportEntry('year', vm.employee.reportYear)">{{years}}</md-option>
                                     </md-select>
                                     <div ng-messages="employeeReportForm.reportYear.$error" role="alert">
                                         <div ng-message="required">Escolha o ano</div>
