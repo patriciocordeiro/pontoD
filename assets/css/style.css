@@ -1,196 +1,200 @@
+/* line 3, D:/myApps/pontoD/assets/css/style.scss */
+body {
+  color: #6a6c6e !important; }
+
 /**
  * google-material-color v1.2.6
  * https://github.com/danlevan/google-material-color
  */
-/* line 4, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 8, D:/myApps/pontoD/assets/css/style.scss */
 .my-md-menu-button {
   position: absolute;
   top: 0;
   bottom: 0; }
-  /* line 8, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+  /* line 12, D:/myApps/pontoD/assets/css/style.scss */
   .my-md-menu-button .md-button {
     border-radius: 0;
     margin: 0;
     display: inherit; }
-  /* line 14, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+  /* line 18, D:/myApps/pontoD/assets/css/style.scss */
   .my-md-menu-button .md-button:hover {
     border-bottom: solid 4px #FF5722; }
 
-/* line 18, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 23, D:/myApps/pontoD/assets/css/style.scss */
 .active-menu {
   border-bottom: solid 4px #FF5722; }
 
-/* line 21, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 27, D:/myApps/pontoD/assets/css/style.scss */
 .work-is-true {
   background-color: aquamarine; }
 
-/* line 24, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 31, D:/myApps/pontoD/assets/css/style.scss */
 .work-is-fale {
   background-color: red; }
 
-/* line 27, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 35, D:/myApps/pontoD/assets/css/style.scss */
 .list-grey {
   background-color: #E3F2FD !important; }
 
-/* line 30, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 39, D:/myApps/pontoD/assets/css/style.scss */
 .smooth-title {
   color: rgba(0, 0, 0, 0.54) !important; }
 
-/* line 34, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 44, D:/myApps/pontoD/assets/css/style.scss */
 .material-icons.md-18 {
   font-size: 18px;
   height: 18px;
   width: 18px; }
 
-/* line 39, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 50, D:/myApps/pontoD/assets/css/style.scss */
 .material-icons.md-24 {
   font-size: 24px;
   height: 24px;
   width: 24px; }
 
-/* line 44, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 56, D:/myApps/pontoD/assets/css/style.scss */
 .material-icons.md-36 {
   font-size: 36px;
   height: 36px;
   width: 36px; }
 
-/* line 49, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 62, D:/myApps/pontoD/assets/css/style.scss */
 .material-icons.md-48 {
   font-size: 48px;
   height: 48px; }
 
-/* line 53, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 67, D:/myApps/pontoD/assets/css/style.scss */
 .material-icons.md-60 {
   font-size: 60px;
   height: 60px; }
 
-/* line 57, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 72, D:/myApps/pontoD/assets/css/style.scss */
 .material-icons.md-96 {
   font-size: 96px !important;
   height: 96px;
   width: 96px; }
 
-/* line 62, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 78, D:/myApps/pontoD/assets/css/style.scss */
 .material-icons.md-success {
   color: #4CAF50; }
 
-/* line 65, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 82, D:/myApps/pontoD/assets/css/style.scss */
 .material-icons.md-warning {
   color: #FF9800; }
 
-/* line 68, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 86, D:/myApps/pontoD/assets/css/style.scss */
 .material-icons.md-error {
   color: #F44336; }
 
-/* line 71, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 90, D:/myApps/pontoD/assets/css/style.scss */
 .delayIn {
   background-color: aqua; }
 
-/* line 74, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 94, D:/myApps/pontoD/assets/css/style.scss */
 .antiOut {
   background-color: orange; }
 
-/* line 77, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 98, D:/myApps/pontoD/assets/css/style.scss */
 .legend-box {
   height: 25px;
   width: 25px; }
 
-/* line 81, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 103, D:/myApps/pontoD/assets/css/style.scss */
 .mmd-nopadding {
   padding: 0; }
 
-/* line 84, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 107, D:/myApps/pontoD/assets/css/style.scss */
 .mmd-nopadding_tb {
   padding-bottom: 0 !important;
   padding-top: 0 !important; }
 
-/* line 88, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 112, D:/myApps/pontoD/assets/css/style.scss */
 .list {
   background-color: #ECEFF1;
   margin: 4px; }
 
-/* line 92, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 117, D:/myApps/pontoD/assets/css/style.scss */
 .no-text-transform {
   text-transform: none; }
 
-/* line 95, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 121, D:/myApps/pontoD/assets/css/style.scss */
 .no-shadow {
   box-shadow: none; }
 
-/* line 98, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 125, D:/myApps/pontoD/assets/css/style.scss */
 .mmd-input-container {
   background-color: #80D8FF;
   border-left: solid 4px red; }
 
-/* line 106, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 134, D:/myApps/pontoD/assets/css/style.scss */
 .bg-grey {
   background-color: #f5f5f5; }
 
-/* line 109, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 138, D:/myApps/pontoD/assets/css/style.scss */
 .no-margin-tb {
   margin-top: 0;
   margin-bottom: 0; }
 
-/* line 114, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 144, D:/myApps/pontoD/assets/css/style.scss */
 .no-margin {
   margin: 0; }
 
-/* line 117, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 148, D:/myApps/pontoD/assets/css/style.scss */
 .odd {
   background-color: #f5f5f5;
   margin-top: 4px; }
 
-/* line 123, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 154, D:/myApps/pontoD/assets/css/style.scss */
 .even {
   background-color: white;
   margin-top: 4px; }
 
-/* line 127, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 159, D:/myApps/pontoD/assets/css/style.scss */
 .list-header {
   background-color: #80D8FF; }
 
-/* line 130, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 163, D:/myApps/pontoD/assets/css/style.scss */
 .mmd-footer {
   position: absolute;
   bottom: 0; }
 
-/* line 134, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 168, D:/myApps/pontoD/assets/css/style.scss */
 .calendar {
   color: rgba(0, 0, 0, 0.64);
   font-size: 18px;
   font-weight: bold; }
-  /* line 135, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+  /* line 169, D:/myApps/pontoD/assets/css/style.scss */
   .calendar .items {
     background-color: #90CAF9; }
 
-/* line 145, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 177, D:/myApps/pontoD/assets/css/style.scss */
 .smooth-text {
   opacity: 0.54; }
 
-/* line 149, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 182, D:/myApps/pontoD/assets/css/style.scss */
 .employee-avatar {
   width: 60px;
   height: 60px;
   max-height: 60px;
   max-width: 60px; }
 
-/* line 156, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 189, D:/myApps/pontoD/assets/css/style.scss */
 .mmd-list-item {
   border-left: 8px solid #1976D2; }
 
-/* line 160, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 194, D:/myApps/pontoD/assets/css/style.scss */
 .mmd-paddingleft {
   padding-left: 8px; }
 
-/* line 164, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 198, D:/myApps/pontoD/assets/css/style.scss */
 .lg-button {
   padding: 6px; }
 
-/* line 168, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 202, D:/myApps/pontoD/assets/css/style.scss */
 .mmd-border-bt {
-  border-bottom: solid 4px #1976D2; }
+  border-bottom: solid 3px #2196F3; }
 
-/* line 173, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/style.scss */
+/* line 207, D:/myApps/pontoD/assets/css/style.scss */
 .thumb {
   width: 120px;
   height: 120px;
@@ -198,5 +202,27 @@
   position: relative;
   top: 7px;
   background-color: antiquewhite; }
+
+/* line 216, D:/myApps/pontoD/assets/css/style.scss */
+.img-placeholder {
+  text-align: center;
+  vertical-align: middlent;
+  width: 150px;
+  height: 150px;
+  background-color: #f5f5f5;
+  border: 1px solid #cccaca;
+  border-radius: 2px; }
+
+/* line 227, D:/myApps/pontoD/assets/css/style.scss */
+.fotoArea {
+  margin-top: 8px;
+  padding: 16px; }
+
+/* line 232, D:/myApps/pontoD/assets/css/style.scss */
+.cropArea {
+  background: #E4E4E4;
+  overflow: hidden;
+  width: 152px;
+  height: 152px; }
 
 /*# sourceMappingURL=style.css.map */

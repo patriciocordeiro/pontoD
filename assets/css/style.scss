@@ -1,7 +1,11 @@
 //Google material design palete import (see https://github.com/danlevan/google-material-color)
 //Allow the use of material color palette inside my css
+body {
+    color: #6a6c6e!important
+}
+
 @import 'palette.scss';
- .my-md-menu-button {
+.my-md-menu-button {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -15,86 +19,109 @@
         border-bottom: solid 4px #FF5722;
     }
 }
+
 .active-menu {
     border-bottom: solid 4px #FF5722;
 }
+
 .work-is-true {
     background-color: aquamarine;
 }
+
 .work-is-fale {
     background-color: red;
 }
+
 .list-grey {
     background-color: #E3F2FD !important;
 }
+
 .smooth-title {
     color: rgba(0, 0, 0, 0.54) !important;
 }
+
 // Rules for sizing the icon.
 .material-icons.md-18 {
     font-size: 18px;
     height: 18px;
     width: 18px;
 }
+
 .material-icons.md-24 {
     font-size: 24px;
     height: 24px;
     width: 24px;
 }
+
 .material-icons.md-36 {
     font-size: 36px;
     height: 36px;
     width: 36px;
 }
+
 .material-icons.md-48 {
     font-size: 48px;
     height: 48px;
 }
+
 .material-icons.md-60 {
     font-size: 60px;
     height: 60px;
 }
+
 .material-icons.md-96 {
     font-size: 96px !important;
     height: 96px;
     width: 96px;
 }
+
 .material-icons.md-success {
     color: #4CAF50;
 }
+
 .material-icons.md-warning {
     color: #FF9800;
 }
+
 .material-icons.md-error {
     color: #F44336;
 }
+
 .delayIn {
     background-color: aqua;
 }
+
 .antiOut {
     background-color: orange;
 }
+
 .legend-box {
     height: 25px;
     width: 25px;
 }
+
 .mmd-nopadding {
     padding: 0;
 }
+
 .mmd-nopadding_tb {
     padding-bottom: 0 !important;
     padding-top: 0 !important;
 }
+
 .list {
     background-color: #ECEFF1;
     margin: 4px;
 }
+
 .no-text-transform {
     text-transform: none;
 }
+
 .no-shadow {
     box-shadow: none;
 }
+
 .mmd-input-container {
     //    border: solid 2px #448AFF ;
     //    border-radius: 4px;
@@ -103,49 +130,55 @@
     ;
     border-left: solid 4px red;
 }
+
 .bg-grey {
     background-color: #f5f5f5;
 }
+
 .no-margin-tb {
     //no margin top-bottom
     margin-top: 0;
     margin-bottom: 0;
 }
+
 .no-margin {
     margin: 0;
 }
+
 .odd {
     background-color: #f5f5f5;
     margin-top: 4px;
     //    border-left: 8px solid  #80D8FF
-
 }
+
 .even {
     background-color: white;
     margin-top: 4px;
 }
+
 .list-header {
     background-color: #80D8FF;
 }
+
 .mmd-footer {
     position: absolute;
     bottom: 0;
 }
+
 .calendar {
     .items {
         background-color: palette('Blue', 200);
     }
-    color:rgba(0,
-    0,
-    0,
-    0.64);
+    color:rgba(0, 0, 0, 0.64);
     font-size:18px;
     font-weight:bold;
 }
+
 .smooth-text {
     //    color:rgba(0, 0, 0, 0.58);
     opacity: 0.54;
 }
+
 .employee-avatar {
     width: 60px;
     height: 60px;
@@ -153,20 +186,21 @@
     max-width: 60px;
 }
 
-.mmd-list-item{
-//    border-bottom: solid 2px  palette('Blue', 700);
+.mmd-list-item {
+    //    border-bottom: solid 2px  palette('Blue', 700);
     border-left: 8px solid palette('Blue', 700)
 }
-.mmd-paddingleft{
-  padding-left: 8px;
+
+.mmd-paddingleft {
+    padding-left: 8px;
 }
 
-.lg-button{
-    padding:6px;
+.lg-button {
+    padding: 6px;
 }
 
-.mmd-border-bt{
-    border-bottom:  solid 4px palette('Blue', 700);
+.mmd-border-bt {
+    border-bottom: solid 3px palette('Blue', 500);
 }
 
 //APAGAR
@@ -177,4 +211,27 @@
     position: relative;
     top: 7px;
     background-color: antiquewhite;
+}
+
+.img-placeholder {
+    text-align: center;
+    vertical-align: middlent;
+    width: 150px;
+    height: 150px;
+    background-color: #f5f5f5;
+    //    margin-bottom: 8px;
+    border: 1px solid #cccaca;
+    border-radius: 2px;
+}
+
+.fotoArea {
+    margin-top: 8px;
+    padding: 16px;
+}
+
+.cropArea {
+    background: #E4E4E4;
+    overflow: hidden;
+    width: 152px;
+    height: 152px;
 }

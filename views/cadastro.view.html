@@ -1,20 +1,4 @@
 <md-content layout="column">
-
-    <form  name="form">
-        Single Image with validations
-<md-input-container>
-        <input type="file" ngf-select ng-model="picFile" name="file"
-               accept="image/*" ngf-max-size="2MB" required
-               ngf-model-invalid="errorFile">
-        </md-input-container>
-
-        <div class="button" >Select</div>
-        <md-button ngf-select ng-model="picFile" name="file" ngf-pattern="'image/*'"
-                   ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
-                   ngf-resize="{width: 100, height: 100}">Escolher</md-button>
-        <img ng-show="form.file.$valid" ngf-thumbnail="picFile" class="thumb">
-
-    </form>
     <div layout="row">
         <div layout="row" layout-align="center center">
             <div layout="column" flex-gt-md="100">
@@ -23,15 +7,15 @@
                         <h2 class="md-headline">Cadastro de colaborador(a)</h2>
                     </md-card-title>
                     <md-card-content>
-                        <form name="signupForm"   novalidate>
+                        <form name="signupForm" novalidate>
                             <md-divider></md-divider>
                             <md-divider></md-divider>
                             <md-card class="my-md-no-margin my-md-no-shadow">
-                                <md-card-title>
+                                <md-card-title class="bg-grey mmd-border-bt">
                                     <span class="md-title"><md-icon class="material-icons md-36 md-primary">person</md-icon>Dados pessoais</span>
                                 </md-card-title>
-                                <md-card-content>
-                                    <div layout="column">
+                                <md-card-content layout="row">
+                                    <div flex="60" layout="column">
                                         <md-input-container class="md-block" flex-gt-sm>
                                             <label>Nome completo</label>
                                             <input type="text" name="fullName" ng-model="vm.newUser.fullName" required>
@@ -78,6 +62,38 @@
                                                 <div ng-message="required">Entre com a sua formação</div>
                                             </div>
                                         </md-input-container>
+
+                                    </div>
+                                    <div flex class="employeeImg" layout="column" layout-align="start center">
+                                        <!--                                        <md-input-container>-->
+
+                                        <!--                                        </md-input-container>-->
+
+                                        <!--                                      <md-button ngf-select ng-model="picFile" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100" ngf-resize="{width: 100, height: 100}">Escolher</md-button>-->
+                                        <div class="fotoArea" layout="column" layout-align="center center">
+<!--
+                                         <span class="md-subhead">Foto</span>
+
+<div class="img-placeholder">
+    <img ng-show="form.file.$valid" ngf-thumbnail="picFile" class="thumb">
+</div>
+<input class="ng-hide" id="input-file-id" type="file" ngf-select ng-model="picFile" ngf-pattern="'image/*'" name="file" accept="image/*" ngf-max-size="2MB" ngf-min-height="120" ngf-resize="{width: 120, height: 120}" required ngf-model-invalid="errorFile">
+<input class="ng-hide" id="input-file-id" type="file" />
+<label for="input-file-id" class="md-button md-primary no-text-transform">Escolha o arquivo (tam. max: 60kB)</label>
+-->
+
+
+                                            <div>Crop Image and Upload</div>
+                                            <button ngf-select ng-model="picFile" accept="image/*">
+                                                Select Picture</button>
+                                            <div ngf-drop ng-model="picFile" ngf-pattern="image/*" class="cropArea">
+                                                <img-crop image="picFile  | ngfDataUrl" result-image="croppedDataUrl" ng-init="croppedDataUrl=''">
+                                                </img-crop>
+                                            </div>
+                                            <div>
+                                                <img ng-src="{{croppedDataUrl}}" />
+                                            </div>
+                                        </div>
 
                                     </div>
                                 </md-card-content>
@@ -171,7 +187,6 @@
                                                 <div ng-message="required">Selecione o cargo</div>
                                             </div>
                                         </md-input-container>
-
                                     </div>
                                 </md-card-content>
                             </md-card>
@@ -180,7 +195,7 @@
                             <md-card class="my-md-no-margin my-md-no-shadow">
                                 <!--                <md-card-actions layout="row" layout-align="center center">-->
                                 <div layout="row" layout-margin layout-align="center center">
-                                    <md-button flex="50" type="submit" ng-click="vm.createEmployee(vm.newUser)" class="md-primary md-raised" >Cadastrar</md-button>
+                                    <md-button flex="50" type="submit" ng-click="vm.createEmployee(vm.newUser)" class="md-primary md-raised">Cadastrar</md-button>
                                 </div>
                                 <!--                </md-card-actions>-->
                             </md-card>

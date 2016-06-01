@@ -1,5 +1,5 @@
 'use strict'
-angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource', 'highcharts-ng', 'chart.js', 'angularMoment', 'ui.mask', 'ngFileUpload'])
+angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource', 'highcharts-ng', 'chart.js', 'angularMoment', 'ui.mask', 'ngFileUpload', 'ngImgCrop'])
     .run(function(employeeSrvc) {
 
     })

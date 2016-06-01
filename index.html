@@ -21,6 +21,7 @@
     <script src="bower_components/angular-ui-mask/dist/mask.min.js"></script>
     <script src="bower_components/ng-file-upload-shim/ng-file-upload-shim.min.js"></script>
     <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+    <script src="bower_components/ng-img-crop/compile/minified/ng-img-crop.js"></script>
 
 
 
@@ -48,6 +49,7 @@
     <link rel="stylesheet" href="bower_components/google-material-color/dist/palette.scss">
     <!--    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
     <link rel="stylesheet" href="bower_components/angular-chart.js/dist/angular-chart.css">
+    <link rel="stylesheet" href="bower_components/ng-img-crop/compile/minified/ng-img-crop.css">
 </head>
 
 <body ng-app="pontoDApp">
@@ -59,14 +61,14 @@
     <div>
         <div layout="row" layout-align="center center">
             <div flex="100" flex-gt-md="80" class="md-whiteframe-8dp" layout="column" layout-fill style="min-height: 224px;">
-                <md-toolbar class="md-toolbar-tools md-hue-2 md-tall"  ng-controller="navBarCtrl as vm" style="padding:0">
+                <md-toolbar class="md-toolbar-tools md-hue-2 md-tall" ng-controller="navBarCtrl as vm" style="padding:0">
                     <div class="my-md-menu-button" layout="row" layout-fill>
                         <md-button style="padding-top:6px" flex layout="column" ng-class="{'active-menu':$index==vm.isActive}" ng-repeat="navbar in vm.navbarItems" ui-sref="{{navbar.url}}" ng-click="vm.getUserOnWork();vm.getIndex($index)">
                             <md-icon class="material-icons md-36 no-margin">{{navbar.icon}}</md-icon><span style="line-height:normal">{{navbar.item}}</span></md-button>
                     </div>
                 </md-toolbar>
                 <ui-view></ui-view>
-<!--
+                <!--
                 <span flex></span>
                 <div flex>
                     <span>hellloo</span>
