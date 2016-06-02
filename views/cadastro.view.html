@@ -55,13 +55,28 @@
                                                 <div ng-message="required">Selecione o sexo</div>
                                             </div>
                                         </md-input-container>
-                                        <md-input-container class="md-block" flex-gt-sm>
-                                            <label>Formação</label>
-                                            <input type="text" name="formacao" ng-model="vm.newUser.formacao" required>
-                                            <div ng-messages="signupForm.formacao.$error">
-                                                <div ng-message="required">Entre com a sua formação</div>
-                                            </div>
-                                        </md-input-container>
+                                        <div layout="row" layout-align="start start">
+                                            <md-input-container flex="80" class="md-block" flex-gt-sm>
+                                                <label>Formação</label>
+                                                <md-select name="fomacao" ng-model="vm.newUser.formacao" required>
+                                                    <md-option value="Engenharia">
+                                                        Engenharia
+                                                    </md-option>
+                                                    <md-option value="Serviço social">
+                                                        Serviço social
+                                                    </md-option>
+                                                </md-select>
+                                                <div ng-messages="signupForm.formacao.$error">
+                                                    <div ng-message="required">Selecione a formacao</div>
+                                                </div>
+                                            </md-input-container>
+                                            <md-button class="md-icon-button" ng-click="vm.addNewField($event)">
+                                                <md-icon class="material-icons">add_box</md-icon>
+                                                <md-tooltip>Adicionar
+                                                    nova formação</md-tooltip>
+                                            </md-button>
+                                        </div>
+
 
                                     </div>
                                     <div flex class="employeeImg" layout="column" layout-align="start center">
@@ -71,29 +86,70 @@
 
                                         <!--                                      <md-button ngf-select ng-model="picFile" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100" ngf-resize="{width: 100, height: 100}">Escolher</md-button>-->
                                         <div class="fotoArea" layout="column" layout-align="center center">
-<!--
-                                         <span class="md-subhead">Foto</span>
 
-<div class="img-placeholder">
-    <img ng-show="form.file.$valid" ngf-thumbnail="picFile" class="thumb">
-</div>
-<input class="ng-hide" id="input-file-id" type="file" ngf-select ng-model="picFile" ngf-pattern="'image/*'" name="file" accept="image/*" ngf-max-size="2MB" ngf-min-height="120" ngf-resize="{width: 120, height: 120}" required ngf-model-invalid="errorFile">
-<input class="ng-hide" id="input-file-id" type="file" />
-<label for="input-file-id" class="md-button md-primary no-text-transform">Escolha o arquivo (tam. max: 60kB)</label>
+                                            <span class="md-subhead">Foto</span>
+                                            <!--
+
+                                            <div class="img-placeholder">
+                                                <img ng-show="form.file.$valid" ngf-thumbnail="picFile" class="thumb">
+                                            </div>
 -->
+                                            <!--                                            <input class="ng-hide" id="input-file-id" type="file" ngf-select ng-model="picFile" ngf-pattern="'image/*'" name="file" accept="image/*" ngf-max-size="2MB" ngf-min-height="120" ngf-resize="{width: 120, height: 120}" required ngf-model-invalid="errorFile">-->
+
+                                            <div ng-init="isViewOriginalImg =true" ng-show="isViewOriginalImg">
+                                                <input class="ng-hide" id="input-file-id" ngf-select ng-model="vm.file" name="file" ngf-pattern="'image/*'" accept="image/*">
+                                                <div ngf-drop ng-model="vm.file" ngf-pattern="image/*" class="cropArea">
+                                                    <img-crop image="vm.file  | ngfDataUrl" result-image="croppedDataUrl" ng-init="croppedDataUrl=''">
+                                                    </img-crop>
+                                                </div>
+                                            </div>
+                                            <label ng-show="isViewOriginalImg" for="input-file-id" class="md-button md-primary no-text-transform">Escolha o arquivo (tam. max: 60kB)</label>
+                                            <div class="cropArea">
+                                                <img ng-src="{{croppedDataUrl}}" />
+                                            </div>
+                                            <label ng-show="!isViewOriginalImg" for="input-file-id" class="md-button md-primary no-text-transform" ng-click="isViewOriginalImg=true">Substituir arquivo (tam. max: 60kB)</label>
+                                            <!--                                            <input class="ng-hide" id="input-file-id" type="file" />-->
+
+                                            <md-button ng-show="isViewOriginalImg" class="md-warn" ng-click="isViewOriginalImg=false">Salvar</md-button>
 
 
-                                            <div>Crop Image and Upload</div>
-                                            <button ngf-select ng-model="picFile" accept="image/*">
-                                                Select Picture</button>
-                                            <div ngf-drop ng-model="picFile" ngf-pattern="image/*" class="cropArea">
-                                                <img-crop image="picFile  | ngfDataUrl" result-image="croppedDataUrl" ng-init="croppedDataUrl=''">
-                                                </img-crop>
+
+                                            <!--
+                                            <div ng-init="isViewOriginalImg =true" ng-show="isViewOriginalImg">
+                                                <div>Crop Image and Upload</div>
+                                                <form name="vm.upload_form">
+                                                    <button ngf-select ng-model="vm.file" name="file" ngf-pattern="'image/*'" accept="image/*">
+                                                        Select Picture</button>
+                                                    <div ngf-drop ng-model="vm.file" ngf-pattern="image/*" class="cropArea">
+                                                        <img-crop image="vm.file  | ngfDataUrl" result-image="croppedDataUrl" ng-init="croppedDataUrl=''">
+                                                        </img-crop>
+                                                    </div>
+                                                </form>
                                             </div>
                                             <div>
                                                 <img ng-src="{{croppedDataUrl}}" />
                                             </div>
+                                            <md-button ng-click="isViewOriginalImg=false">Usar</md-button>
+                                                                                        <button type="submit" ng-click="vm.submit()">submit</button>
+                                            <button type="submit" ng-click="vm.upload(croppedDataUrl, vm.file.name)">Submit</button>
+-->
                                         </div>
+
+                                        <!--
+
+                                        <h1>Angular Node File Upload</h1>
+                                        <form name="vm.upload_form">
+                                            Single Image with validations
+                                            <input type="file" ngf-select ng-model="vm.file" name="file" ngf-pattern="'image/*'" accept="image/*" ngf-max-size="20MB" />Image thumbnail:
+                                            <img style="width:100px;" ngf-thumbnail="vm.file" />
+                                            <i ngshow="vm.upload_form.file.$error.required">*required</i>
+                                            <br>
+                                            <i ng-show="vm.upload_form.file.$error.maxSize">File too large
+                                                {{vm.file.size / 1000000|number:1}}MB: max 20M</i>
+                                            <button type="submit" ng-click="vm.submit()">submit</button>
+                                            <p>{{vm.progress}}</p>
+                                        </form>
+-->
 
                                     </div>
                                 </md-card-content>

@@ -59,7 +59,7 @@ app.get('/', function (req, res) {
 //Image upload
 var storage = multer.diskStorage({
     destination: function (req, file, callback) {
-        cb(null, './assets/img')
+        callback(null, './assets/img');
     },
     filename: function (req, file, callback) {
         var datetimestamp = Date.now();
