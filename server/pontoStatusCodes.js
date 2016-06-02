@@ -31,6 +31,10 @@ module.exports = {
         userNotUpdated: {
             code: '005',
             text: 'user not updated'
+        },
+        userNotSaved: {
+            code: '006',
+            text: 'user not saved'
         }
 
     },
@@ -39,6 +43,10 @@ module.exports = {
         userUpdatedOk: {
             code: '1000',
             text: 'updated ok'
+        }, //Atualizado com sucesso 
+        userSavedOk: {
+            code: '1001',
+            text: 'saved ok'
         }, //Atualizado com sucesso
     }
 

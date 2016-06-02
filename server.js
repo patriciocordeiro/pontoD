@@ -57,13 +57,16 @@ app.get('/', function (req, res) {
 
 
 //Image upload
+var imgFileName = ''
 var storage = multer.diskStorage({
     destination: function (req, file, callback) {
         callback(null, './assets/img');
     },
     filename: function (req, file, callback) {
         var datetimestamp = Date.now();
-        callback(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1])
+        imgFileName = file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1]
+        callback(null, imgFileName)
+            //        callback(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1])
     }
 });
 
@@ -73,6 +76,7 @@ var upload = multer({
 
 /** API path that will upload the files */
 app.post('/upload', function (req, res) {
+    console.log(req.body);
     upload(req, res, function (err) {
         if (err) {
             res.json({
@@ -81,9 +85,11 @@ app.post('/upload', function (req, res) {
             });
             return;
         }
+        console.log(imgFileName);
         res.json({
             error_code: 0,
-            err_desc: null
+            err_desc: null,
+            fileName: imgFileName
         });
     })
 

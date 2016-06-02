@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
 
@@ -7,18 +7,18 @@
 
     //Parameters
 
-    module.exports = function(passport) {
-//        passport.serializeUser(function(user, done) {
-//            console.log('serializing user', user);
-//            done(null, user.id);
-//        });
-//
-//        passport.deserializeUser(function(id, done) {
-//            Employee.findById(id, function(err, user) {
-//                console.log('deserializing user', user);
-//                done(err, user);
-//            });
-//        });
+    module.exports = function (passport) {
+        //        passport.serializeUser(function(user, done) {
+        //            console.log('serializing user', user);
+        //            done(null, user.id);
+        //        });
+        //
+        //        passport.deserializeUser(function(id, done) {
+        //            Employee.findById(id, function(err, user) {
+        //                console.log('deserializing user', user);
+        //                done(err, user);
+        //            });
+        //        });
         /*LOCAL SIGNUP*/
         //     we are using named strategies since we have one for login and one for signup
         //     by default, if there was no name, it would just be called 'local'
@@ -27,16 +27,15 @@
                 passwordField: 'password',
                 passReqToCallback: true,
             },
-            function(req, email, password, done) {
+            function (req, email, password, done) {
                 console.log('chegou do cliente', req.body);
                 // asynchronous
                 // User.findOne wont fire unless data is sent back
-                process.nextTick(function() {
+                process.nextTick(function () {
 
                     Employee.findOne({
-                        'email': email
-                    }, function(err, user) {
-
+                        'empId': email
+                    }, function (err, user) {
                         if (err) {
                             return done(err);
                         }
@@ -49,40 +48,51 @@
                             // if there is no user with that email
                             // create the user
                             var newEmployee = new Employee();
-                            var endereco = {};
+                            //                            var endereco = {};
                             // set the user's local credentials
-                            newEmployee.nome = req.body.fullName;
-                            newEmployee.sobrenome = req.body.sobrenome;
-                            newEmployee.email = req.body.email;
+                            newEmployee.fullName = req.body.fullName;
+                            //                            newEmployee.sobrenome = req.body.sobrenome;
+                            newEmployee.empId = req.body.email; //take email as id (beacause passport requires email field)
                             newEmployee.password = newEmployee.generateHash(password);
-                            newEmployee.sexo = req.body.sexo;
-                            newEmployee.birthDate = req.body.birthDate;
-                            newEmployee.telefone = req.body.telefone;
-//                            newEmployee.local.celular = req.body.celular;
+                            //                            newEmployee.sex = req.body.sex;
+                            //                            newEmployee.birthDate = req.body.birthDate;
+                            //                            newEmployee.phone = req.body.phone;
+                            //                            newEmployee.maritalStatus = req.body.maritalStatus;
+                            //                            newEmployee.age: req.body.age;
+                            //                            newEmployee.admissionDate: req.body.admissionDate;
+                            //                            newEmployee.education: req.body.admissionDate;
+                            //                            newEmployee.department: req.body.admissionDate;
+                            //                            newEmployee.function: req.body.admissionDate;
+                            //                            newEmployee.imgPath: req.body.admissionDate;
 
                             //Endereco
-//                            endereco.destinatario = req.body.destinatario;
-//                            endereco.tipoEndereco = req.body.tipoEndereco;
-//                            endereco.cep = req.body.cep;
-//                            endereco.endereco = req.body.endereco;
-//                            endereco.complemento = req.body.complemento;
-//                            endereco.numero = req.body.numero;
+                            //                            endereco.destinatario = req.body.destinatario;
+                            //                            endereco.tipoEndereco = req.body.tipoEndereco;
+                            //                            endereco.cep = req.body.cep;
+                            //                            endereco.endereco = req.body.endereco;
+                            //                            endereco.complemento = req.body.complemento;
+                            //                            endereco.numero = req.body.numero;
                             // endereco.referencia = req.body.referencia;
-//                            endereco.bairro = req.body.bairro;
-//                            endereco.cidade = req.body.cidade;
-//                            endereco.estado = req.body.estado;
-//                            endereco.principal = req.body.principal;
+                            //                            endereco.bairro = req.body.bairro;
+                            //                            endereco.cidade = req.body.cidade;
+                            //                            endereco.estado = req.body.estado;
+                            //                            endereco.principal = req.body.principal;
 
                             //Push to endereco Array
-//                            newEmployee.local.endereco.push(endereco);
+                            //                            newEmployee.local.endereco.push(endereco);
 
                             //Save the user in the database
-                            newEmployee.save(function(err) {
+                            newEmployee.save(function (err) {
                                 if (err) {
                                     console.log('Error in Saving user: ' + err);
-                                    throw err;
+                                    //                                    throw err;
+                                    return done(null, {
+                                        message: 'user not saved' + err
+                                    });
                                 }
-                                return done(null, newEmployee);
+                                return done(null, {
+                                    message: 'user saved'
+                                });
                             });
                         }
                     });
@@ -97,13 +107,13 @@
             passwordField: 'password',
             passReqToCallback: true // allows us to pass back the entire request to the callback
 
-        }, function(req, email, password, done) {
+        }, function (req, email, password, done) {
             console.log(email);
             //find a user whose email is the same as the forms email
             //we are checking to see if the user trying to login already exists
             Employee.findOne({
                 'local.email': email
-            }, function(err, employee) {
+            }, function (err, employee) {
                 console.log(employee);
                 //              console.log('ola', user.validPassword(password))
                 if (err) {
