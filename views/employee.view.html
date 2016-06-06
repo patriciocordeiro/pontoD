@@ -1,28 +1,36 @@
-<md-content layout="row" layout-align="center center">
+<div layout="row" layout-align="center center">
     <md-card class="no-margin" flex="100" flex-gt-xs="60">
+        <md-card-title>
+            <span class="md-display-1"><b>Detalhes do colaborador</b></span>
+        </md-card-title>
         <md-card-content class="bg-grey no-margin mmd-nopadding">
             <md-card class="no-margin no-shadow">
                 <md-card-title>
                     <md-card-title-media>
                         <div class="md-media-md card-media" layout layout-align="center center">
-                            <img ng-src="{{vm.rootPath + vm.employeeData.imgPath + '.png'}}" />
+                            <img ng-src="{{vm.rootPath + vm.employeeData.imgPath}}" />
                         </div>
                     </md-card-title-media>
                     <md-card-title-text class="mmd-paddingleft">
-                        <span class="md-headline">{{vm.employeeData['Nome completo']}}</span>
-                        <span class="md-subhead">{{vm.employeeData['Cargo/Função']}}</span>
+                        <span class="md-headline mmd-capitalize"><b>{{vm.employeeData.fullName}}</b></span>
+                        <span ><b>{{vm.employeeData.jobTitle}}</b></span>
                     </md-card-title-text>
+                    <md-button  class="md-primary">Relatórios<md-tooltip>Ver relatórios de ponto de <span class="mmd-capitalize">{{vm.employeeData.fullName}}</span> </md-tooltip></md-button>
+                    <md-button class="md-primary">Estatísticas<md-tooltip> Ver estatísticas de ponto de <span class="mmd-capitalize">{{vm.employeeData.fullName}}</span></md-tooltip></md-button>
                 </md-card-title>
+
             </md-card>
             <md-card-title class="mmd-border-bt">
                 <span class="md-title">Dados cadastrados</span>
             </md-card-title>
             <md-content>
                 <md-list class="mmd-nopadding">
-                    <md-list-item ng-repeat="(key,val) in  vm.employeeData">
-                        <p><b>{{key}}:</b>
+                    <md-list-item ng-repeat="employee in    vm.employeeDetails">
+                        <p><b>{{employee.property}}:</b>
                         </p>
-                        <p class="smooth-text"><b>{{val}}</b>
+                        <p ng-show="employee.type=='String'" class="smooth-text mmd-capitalize"><b>{{vm.employeeData[employee.value]}}</b>
+                        </p>
+                        <p ng-show="employee.type=='Date'" class="smooth-text mmd-capitalize"><b>{{vm.employeeData[employee.value] | date:'dd/MM/yyyy'}}</b>
                         </p>
                         <md-divider></md-divider>
                     </md-list-item>
@@ -30,4 +38,4 @@
             </md-content>
         </md-card-content>
     </md-card>
-</md-content>
+</div>

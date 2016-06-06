@@ -20,7 +20,7 @@
             query = employee;
             query.empId = query.empId.toString();
             query.date = moment().format(); //get nou time
-            http.api.getByQuery(query, employee.action, function(resData) {
+            http.api.getByQuery(query, employee.action, function(resp) {
                 //Reset ponto form---------------
                 vm.baterPontoForm.$setPristine();
                 vm.baterPontoForm.$setUntouched();
@@ -36,7 +36,10 @@
                     controller: 'DialogCtrl as vm',
                     templateUrl: '/views/ponto.diag.html',
                     locals: {
-                        message: resData.res
+                        data: {
+                            message: resp.res,
+                            diag: 'ponto'
+                        }
                     }
                 });
             });

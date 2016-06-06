@@ -1,0 +1,48 @@
+<md-dialog aria-label="ponto" ng-cloak flex-gt-md="40" flex="60">
+    <form name="ewInputFieldsForm" ng-submit="vm.submitNewInputFields(vm.newEmployee, vm.inputField.property)">
+        <md-toolbar layout="row" class="md-tall" ng-class="vm.headerClass" layout-align="center center">
+            <div class="md-toolbar-tools" layout="row" layout-align="end center">
+                <h2><b>Inserção de novos itens para  {{vm.inputField.name}}</b> </h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="vm.cancelDialg()">
+                    <md-icon class="material-icons">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <div ng-repeat="inputField in vm.inputField.items">
+                    <div layout="row" flex layout-align="start start">
+                        <div class="input-text-align" >
+                            <span class="input-button">Item {{$index+1}}:&nbsp;</span>
+                        </div>
+                        <!--                    <div flex>-->
+                        <md-input-container class="md-block" flex>
+                            <label>{{vm.inputField.name}}</label>
+                            <input class="mmd-form-input mmd-input-border" type="text" name="{{vm.inputField.name}} + $index " ng-model="vm.newEmployee[vm.inputField.name+$index]" required>
+                            <div ng-messages="vm.signupForm.fullName.$error" role="alert">
+                                <div ng-message="required">Campo obrigatório</div>
+                            </div>
+                        </md-input-container>
+                        <!--                    </div>-->
+                        <div class="input-button">
+                            <md-button aria-label="{{vm.inputField.name+$index}}" class="md-icon-button md-accent" ng-click="vm.cancelDialg()">
+                                <md-icon class="material-icons">close</md-icon>
+                            </md-button>
+                            <md-tooltip md-direction="bottom">Remover Item</md-tooltip>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-divider></md-divider>
+        <md-dialog-actions>
+            <md-button type="submit" class="md-primary md-raised">
+                Enviar
+            </md-button>
+            <md-button class="md-primary" ng-click="vm.cancelDialg()">
+                Cancelar
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

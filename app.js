@@ -1,6 +1,9 @@
 'use strict'
-angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource', 'highcharts-ng', 'chart.js', 'angularMoment', 'ui.mask', 'ngFileUpload', 'ngImgCrop'])
-    .run(function(employeeSrvc) {
+angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngMessages','validation.match', 'ngResource', 'highcharts-ng', 'chart.js', 'angularMoment', 'ui.mask', 'ngFileUpload', 'ngImgCrop'])
+    .run(function(employeeSrvc, amMoment) {
+
+    //Moment config
+    amMoment.changeLocale('pt-br');//local to pt br
 
     })
     .config(function($stateProvider, $urlRouterProvider, ChartJsProvider, $mdThemingProvider) {
@@ -67,7 +70,7 @@ angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngResource', 'highchart
                 url: "/employee/:id",
                 templateUrl: '/views/employee.view.html',
                 controller: 'employeeCtrl as vm',
-            })
+            });
         //            .state('app.employee.id', {
         //                //                abstract: true,
         //                url: "/:id",

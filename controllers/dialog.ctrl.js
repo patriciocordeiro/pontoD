@@ -19,7 +19,7 @@
         //        vm.delayText = 'Não'; //if the employee is delay
         if (diag === 'ponto') {
             //logic for ponto dialog
-            if (vm.mesage.type === 'entrada') {
+            if (vm.message.type === 'entrada') {
                 vm.headTile = 'Abertura de ponto';
             } else if (vm.message.type === 'saida') {
                 vm.headTile = 'Fechamento de ponto';
@@ -43,7 +43,7 @@
                             class: 'md-success'
                         },
                         text: {
-                            title: 'Bem vindo, ' + vm.message.user.name,
+                            title: 'Bem vindo, ' + vm.message.user.fullName.toUpperCase(),
                             time: {
                                 title: 'Hora de entrada: ',
                                 value: $filter('date')(vm.message.user.inTime, 'hh:mm:ss a')
@@ -68,8 +68,9 @@
                             type: 'check_circle',
                             class: 'md-success'
                         },
+
                         text: {
-                            title: 'Até logo, ' + vm.message.user.name,
+                            title: 'Até logo, ' +  vm.message.user.fullName.toUpperCase(),
                             time: {
                                 title: 'Hora de saída: ',
                                 value: $filter('date')(vm.message.user.outTime, 'hh:mm:ss a')
@@ -99,7 +100,7 @@
                     },
 
                     text: {
-                        title: 'Olá, ' + vm.message.user.name,
+                        title: 'Olá, ' + vm.message.user.fullName,
                         content: 'O seu ponto já foi aberto'
                     }
                 };
@@ -114,7 +115,7 @@
                         class: 'md-warning'
                     },
                     text: {
-                        title: 'Olá, ' + vm.message.user.name,
+                        title: 'Olá, ' + vm.message.user.fullName,
                         content: 'O seu ponto já foi fechado'
                     }
 

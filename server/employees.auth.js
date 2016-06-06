@@ -1,13 +1,14 @@
-(function () {
+(function() {
     'use strict';
 
 
     var LocalStrategy = require('passport-local').Strategy;
     var Employee = require('./employees.model');
+    var Ponto = require('./ponto.models');
 
     //Parameters
 
-    module.exports = function (passport) {
+    module.exports = function(passport) {
         //        passport.serializeUser(function(user, done) {
         //            console.log('serializing user', user);
         //            done(null, user.id);
@@ -27,15 +28,15 @@
                 passwordField: 'password',
                 passReqToCallback: true,
             },
-            function (req, email, password, done) {
+            function(req, email, password, done) {
                 console.log('chegou do cliente', req.body);
                 // asynchronous
                 // User.findOne wont fire unless data is sent back
-                process.nextTick(function () {
+                process.nextTick(function() {
 
                     Employee.findOne({
                         'empId': email
-                    }, function (err, user) {
+                    }, function(err, user) {
                         if (err) {
                             return done(err);
                         }
@@ -54,16 +55,15 @@
                             //                            newEmployee.sobrenome = req.body.sobrenome;
                             newEmployee.empId = req.body.email; //take email as id (beacause passport requires email field)
                             newEmployee.password = newEmployee.generateHash(password);
-                            //                            newEmployee.sex = req.body.sex;
-                            //                            newEmployee.birthDate = req.body.birthDate;
-                            //                            newEmployee.phone = req.body.phone;
-                            //                            newEmployee.maritalStatus = req.body.maritalStatus;
-                            //                            newEmployee.age: req.body.age;
-                            //                            newEmployee.admissionDate: req.body.admissionDate;
-                            //                            newEmployee.education: req.body.admissionDate;
-                            //                            newEmployee.department: req.body.admissionDate;
-                            //                            newEmployee.function: req.body.admissionDate;
-                            //                            newEmployee.imgPath: req.body.admissionDate;
+                            newEmployee.gender = req.body.gender;
+                            newEmployee.birthDate = req.body.birthDate;
+                            newEmployee.phone = req.body.phone;
+                            newEmployee.maritalStatus = req.body.maritalStatus;
+                            newEmployee.age = req.body.age;
+                            newEmployee.admissionDate = req.body.admissionDate;
+                            newEmployee.education = req.body.education;
+                            newEmployee.jobTitle = req.body.jobTitle;
+                            newEmployee.imgPath = req.body.imgPath;
 
                             //Endereco
                             //                            endereco.destinatario = req.body.destinatario;
@@ -81,18 +81,44 @@
                             //Push to endereco Array
                             //                            newEmployee.local.endereco.push(endereco);
 
+                            var newPonto = new Ponto();
+                            newPonto.fullName = newEmployee.fullName;
+                            newPonto.empId = newEmployee.empId;
+                            newPonto.password = (Number(req.body.email) * 1000).toString();
+                            //                            newPonto.department = newEmployee.department;
+                            newPonto.imgPath = newEmployee.imgPath;
+
+
+
                             //Save the user in the database
-                            newEmployee.save(function (err) {
+                            newEmployee.save(function(err) {
                                 if (err) {
                                     console.log('Error in Saving user: ' + err);
                                     //                                    throw err;
+
                                     return done(null, {
                                         message: 'user not saved' + err
                                     });
+
                                 }
-                                return done(null, {
-                                    message: 'user saved'
+
+                                //save ponto colection
+                                newPonto.save(function(err, data) {
+
+                                    if (err) {
+                                        return done(null, {
+                                            message: 'user not saved' + err
+                                        });
+                                    }
+                                    //everything is ok
+                                    console.log(err, data);
+                                    console.log('Heyyyyyyy dados:', data);
+                                    return done(null, {
+
+                                        message: 'user saved'
+                                    });
                                 });
+
                             });
                         }
                     });
@@ -107,13 +133,13 @@
             passwordField: 'password',
             passReqToCallback: true // allows us to pass back the entire request to the callback
 
-        }, function (req, email, password, done) {
+        }, function(req, email, password, done) {
             console.log(email);
             //find a user whose email is the same as the forms email
             //we are checking to see if the user trying to login already exists
             Employee.findOne({
                 'local.email': email
-            }, function (err, employee) {
+            }, function(err, employee) {
                 console.log(employee);
                 //              console.log('ola', user.validPassword(password))
                 if (err) {

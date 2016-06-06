@@ -2,11 +2,16 @@
 /*Crete a mongoose Schema*/
 var mongoose = require('mongoose');
 
-var employeesSchema = new mongoose.Schema({
-    working: Boolean,
-    name: String,
+var pontoSchema = new mongoose.Schema({
+    working: {
+        type: Boolean,
+        defaul: false
+    },
+    fullName: String,
     password: String,
-    Id: {
+    department: String,
+    imgPath: String,
+    empId: {
         type: String,
         index: {
             unique: true
@@ -32,7 +37,7 @@ var employeesSchema = new mongoose.Schema({
             },
             totalExtraTime: Date,
             totalFaultTime: Date,
-            totalWorkedTime:Date,
+            totalWorkedTime: Date,
             isExtraTime: {
                 type: Boolean,
                 default: false
@@ -117,4 +122,4 @@ var employeesSchema = new mongoose.Schema({
     ]
 })
 
-module.exports = mongoose.model('Employees', employeesSchema)
+module.exports = mongoose.model('Ponto', pontoSchema, 'ponto');

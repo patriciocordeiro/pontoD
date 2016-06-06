@@ -1,8 +1,8 @@
 {
   "version": 3,
-  "file": "style.css",
+  "file": "brackets-closure-linter-temp.style.css",
   "sources": [
-    "style.scss",
+    "brackets-closure-linter-temp.style.scss",
     "palette.scss"
   ],
   "sourcesContent": [],

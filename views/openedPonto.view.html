@@ -1,7 +1,8 @@
-<md-content layout="row" layout-align="center center">
+<div layout="row" layout-align="center center">
+
     <md-card flex="100" flex-gt-md="60" class="no-margin">
         <md-card-title>
-            <h2 class="md-display-1">Pontos abertos</h2>
+            <h2 class="md-display-1"><b>Pontos abertos</b></h2>
         </md-card-title>
         <md-card-content class="mmd-nopadding ">
             <md-divider></md-divider>
@@ -21,14 +22,13 @@
                 <md-divider></md-divider>
                 <!--            <md-card class="mmd-list-item" >-->
                 <md-list-item ng-class="{'md-3-line': $mdMedia('xs')}" ng-repeat="activeEmployee in vm.activeEmployees">
-
                     <md-card class="no-margin no-shadow">
 
                         <md-card-title>
                             <md-card-title-media>
 
                                 <div class="md-media-sm card-media">
-                                    <img ng-src="{{vm.rootPath + activeEmployee.imgPath + '.png'}}" />
+                                    <img ng-src="{{vm.rootPath + activeEmployee.imgPath}}" />
                                 </div>
                             </md-card-title-media>
                         </md-card-title>
@@ -37,23 +37,25 @@
 
                     <div hide show-xs class="md-list-item-text" layout="column">
                         <h3>
-                            <md-button class="md-primary md-hue-2 no-text-transform no-margin mmd-nopadding" ui-sref="app.employee({id: activeEmployee.id})"><b>{{activeEmployee.name}}</b>
+
+                            <md-button class="md-primary md-hue-2 no-text-transform no-margin mmd-nopadding" ui-sref="app.employee({id: activeEmployee.empId})"><b>{{activeEmployee.fullName}}</b>
+
                             </md-button>
                         </h3>
                         <h4>Entrada:&nbsp;<b>{{activeEmployee.ponto.turno2.inTime || activeEmployee.ponto.turno1.inTime | date:'hh:mm:ss a'}}</b>
                         </h4>
-                        <p>Depto.:&nbsp;<b>{{activeEmployee.departamento}}</b>
+                        <p>Depto.:&nbsp;<b>{{activeEmployee.department}}</b>
                         </p>
                     </div>
 
                     <!--                    <div >-->
                     <p hide show-gt-xs>
-                        <md-button class="md-primary md-hue-2 no-text-transform" ui-sref="app.employee({id: activeEmployee.id})"><b>{{activeEmployee.name}}</b>
+                        <md-button class="md-primary md-hue-2 no-text-transform" ui-sref="app.employee({id: activeEmployee.empId})"><b>{{activeEmployee.fullName}}</b>
                         </md-button>
                     </p>
                     <p hide show-gt-xs class="smooth-title"><b>{{activeEmployee.ponto.turno2.inTime || activeEmployee.ponto.turno1.inTime | date:'hh:mm:ss a'}}</b>
                     </p>
-                    <p hide show-gt-xs class="smooth-title"><b>{{activeEmployee.departamento}}</b>
+                    <p hide show-gt-xs class="smooth-title"><b>{{activeEmployee.department}}</b>
                     </p>
                     <!--                    </div>-->
 
@@ -64,5 +66,5 @@
             </md-list>
         </md-card-content>
     </md-card>
-</md-content>
+</div>
 

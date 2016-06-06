@@ -4,30 +4,36 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 
 var userSchema = new mongoose.Schema({
-    'fullName': String,
-    sex: String,
+    fullName: String,
+    gender: String,
     email: String,
     password: String,
-    empId: String,
-    'birthDate': String,
-    'maritalStatus': String,
+    empId: {
+        type: String,
+        index: {
+            unique: true
+        }
+    },
+    birthDate: String,
+    maritalStatus: String,
     age: String,
     phone: String,
-    'admissionDate': Date, //data de contratação
-    'education': String,
+    admissionDate: Date, //data de contratação
+    education: String,
+    educationLevel: String,
     department: String,
-    'function': String,
-    'imgPath': String,
+    jobTitle: String, //cargo na empresa
+    imgPath: String,
 
 
 });
 // methods ======================
 // generating a hash
-userSchema.methods.generateHash = function (password) {
+userSchema.methods.generateHash = function(password) {
     return bcrypt.hashSync(password, this.password);
 };
 
-userSchema.methods.validPassword = function (password) {
+userSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
 };
 

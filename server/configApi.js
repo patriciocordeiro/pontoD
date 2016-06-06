@@ -1,0 +1,30 @@
+(function() {
+    'use strict';
+    var config = require('./generalConfig.model');
+    module.exports = {
+        getformFields: function(req, res) {
+            config.find({}, function(err, data) {
+                if (err) console.log(err);
+                res.send(data);
+            });
+        },
+
+        insertNewIputFields: function(req, res) {
+            console.log(req.body);
+            //checa se  já não existe
+            var array = req.body.newInputFields;
+            property = req.body.property;
+            config.update({
+                    config: req.body.property
+                }, {
+                $pushAll:  {property: array
+                    }
+                },
+                function(err, data) {
+                    if (err) console.log(error);
+                    console.log(data);
+                });
+            res.send('hello')
+        }
+    }
+})();

@@ -3,7 +3,7 @@
     <md-card flex-gt-md="30">
         <md-toolbar>
             <md-card-title layout="row" layout-align="center center">
-                <h2 class="md-display-1">Registro de ponto</h2>
+                <h2 class="md-display-1"><b>Registro de ponto</b></h2>
             </md-card-title>
         </md-toolbar>
         <form name="vm.baterPontoForm" ng-submit="vm.baterPontoForm.$valid && vm.getPontoOpenClose(vm.employee,$event)" novalidate>
@@ -27,10 +27,10 @@
             <md-divider></md-divider>
             <md-card-actions layout="row" layout-align="space-between">
                 <div layout="column" flex="30">
-                    <md-button ng-click="vm.employee.action='openPonto'" type="submit" class="md-primary md-raised lg-button">Entrada</md-button>
+                    <md-button ng-click="vm.employee.action='openPonto'" type="submit" class="md-primary md-raised lg-button"><b>Entrada</b></md-button>
                 </div>
                 <div layout="column" flex="30">
-                    <md-button ng-click="vm.employee.action='closePonto'" type="submit" class="md-warn md-raised lg-button">Saída</md-button>
+                    <md-button ng-click="vm.employee.action='closePonto'" type="submit" class="md-warn md-raised lg-button"><b>Saída</b></md-button>
                 </div>
             </md-card-actions>
         </form>

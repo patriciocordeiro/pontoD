@@ -1,0 +1,275 @@
+/* line 3, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+body {
+  color: #6a6c6e !important; }
+
+/**
+ * google-material-color v1.2.6
+ * https://github.com/danlevan/google-material-color
+ */
+/* line 7, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.my-md-menu-button {
+  position: absolute;
+  top: 0;
+  bottom: 0; }
+  /* line 11, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+  .my-md-menu-button .md-button {
+    border-radius: 0;
+    margin: 0;
+    display: inherit; }
+  /* line 17, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+  .my-md-menu-button .md-button:hover {
+    border-bottom: solid 4px #FF5722; }
+
+/* line 21, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.active-menu {
+  border-bottom: solid 4px #FF5722; }
+
+/* line 24, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.work-is-true {
+  background-color: aquamarine; }
+
+/* line 27, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.work-is-fale {
+  background-color: red; }
+
+/* line 30, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.list-grey {
+  background-color: #E3F2FD !important; }
+
+/* line 33, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.smooth-title {
+  color: rgba(0, 0, 0, 0.54) !important; }
+
+/* line 37, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.material-icons.md-18 {
+  font-size: 18px;
+  height: 18px;
+  width: 18px; }
+
+/* line 42, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.material-icons.md-24 {
+  font-size: 24px;
+  height: 24px;
+  width: 24px; }
+
+/* line 47, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.material-icons.md-36 {
+  font-size: 36px;
+  height: 36px;
+  width: 36px; }
+
+/* line 52, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.material-icons.md-48 {
+  font-size: 48px;
+  height: 48px; }
+
+/* line 56, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.material-icons.md-60 {
+  font-size: 60px;
+  height: 60px; }
+
+/* line 60, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.material-icons.md-96 {
+  font-size: 96px !important;
+  height: 96px;
+  width: 96px; }
+
+/* line 65, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.material-icons.md-success {
+  color: #4CAF50; }
+
+/* line 68, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.material-icons.md-warning {
+  color: #FF9800; }
+
+/* line 71, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.material-icons.md-error {
+  color: #F44336; }
+
+/* line 74, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.delayIn {
+  background-color: aqua; }
+
+/* line 77, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.antiOut {
+  background-color: orange; }
+
+/* line 80, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.legend-box {
+  height: 25px;
+  width: 25px; }
+
+/* line 84, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.mmd-nopadding {
+  padding: 0; }
+
+/* line 87, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.mmd-nopadding_tb {
+  padding-bottom: 0 !important;
+  padding-top: 0 !important; }
+
+/* line 91, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.list {
+  background-color: #ECEFF1;
+  margin: 4px; }
+
+/* line 95, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.no-text-transform {
+  text-transform: none; }
+
+/* line 98, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.no-shadow {
+  box-shadow: none; }
+
+/* line 101, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.mmd-input-container {
+  background-color: #80D8FF;
+  border-left: solid 4px red; }
+
+/* line 109, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.bg-grey {
+  background-color: #f5f5f5 !important; }
+
+/* line 112, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.no-margin-tb {
+  margin-top: 0;
+  margin-bottom: 0; }
+
+/* line 117, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.no-margin {
+  margin: 0; }
+
+/* line 120, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.odd {
+  background-color: #f1f1f1;
+  margin-top: 4px; }
+
+/* line 126, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.even {
+  background-color: white;
+  margin-top: 4px; }
+
+/* line 130, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.list-header {
+  background-color: #80D8FF; }
+
+/* line 133, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.mmd-footer {
+  position: absolute;
+  bottom: 0; }
+
+/* line 137, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.calendar {
+  color: rgba(0, 0, 0, 0.64);
+  font-size: 18px;
+  font-weight: bold; }
+  /* line 138, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+  .calendar .items {
+    background-color: #90CAF9; }
+
+/* line 148, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.smooth-text {
+  opacity: 0.54; }
+
+/* line 152, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.employee-avatar {
+  width: 60px;
+  height: 60px;
+  max-height: 60px;
+  max-width: 60px; }
+
+/* line 158, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.mmd-list-item {
+  border-left: 8px solid #1976D2; }
+
+/* line 162, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.mmd-paddingleft {
+  padding-left: 8px; }
+
+/* line 165, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.lg-button {
+  padding: 6px; }
+
+/* line 168, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.mmd-border-bt {
+  border-bottom: solid 1px #2196F3; }
+
+/* line 172, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.thumb {
+  width: 120px;
+  height: 120px;
+  float: none;
+  position: relative;
+  top: 7px;
+  background-color: antiquewhite; }
+
+/* line 180, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.img-placeholder {
+  text-align: center;
+  vertical-align: middlent;
+  width: 150px;
+  height: 150px;
+  background-color: #f5f5f5;
+  border: 1px solid #cccaca;
+  border-radius: 2px; }
+
+/* line 190, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.fotoArea {
+  margin-top: 8px;
+  padding: 16px; }
+
+/* line 194, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.cropArea {
+  background: #E4E4E4;
+  overflow: hidden;
+  width: 152px;
+  height: 152px;
+  border-radius: 4px; }
+
+/* line 201, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.mmd-form-input {
+  background-color: white !important;
+  border-radius: 2px !important; }
+
+/* line 210, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.mmd-no-bg {
+  background-color: transparent !important; }
+
+/* line 213, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.mmd-margin-l {
+  margin-right: 16px; }
+
+/* line 216, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.mmd-button-md {
+  padding-bottom: 8px;
+  padding-top: 8px;
+  font-weight: bold; }
+
+/* line 221, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.warn {
+  border-left: 8px solid #1976D2; }
+
+/* line 224, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.mmd-title {
+  color: aliceblue;
+  font-weight: bold; }
+
+/* line 228, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.mmd-capitalize {
+  text-transform: capitalize; }
+
+/* line 231, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.mmd-border {
+  border: 1px solid #E0E0E0 !important; }
+
+/* line 235, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.mmd-input-border {
+  border-top: 1px solid #E0E0E0 !important;
+  border-left: 1px solid #E0E0E0 !important;
+  border-right: 1px solid #E0E0E0 !important; }
+
+/* line 242, C:/Home Solutions/projetos/pontoD/code/pontoD/assets/css/brackets-closure-linter-temp1-style.scss */
+.input-button {
+  margin-top: 16px; }
+
+/*# sourceMappingURL=brackets-closure-linter-temp1-style.css.map */
