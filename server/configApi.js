@@ -13,18 +13,21 @@
             console.log(req.body);
             //checa se  já não existe
             var array = req.body.newInputFields;
-            property = req.body.property;
-            config.update({
-                    config: req.body.property
+            config.findOneAndUpdate({
+                    _id: req.body._id
                 }, {
-                $pushAll:  {property: array
-                    }
+                    $pushAll: {
+                        'values': array
+                    },
+                }, {
+                    new: true,
                 },
                 function(err, data) {
                     if (err) console.log(error);
                     console.log(data);
+                    res.send(data);
                 });
-            res.send('hello')
+
         }
-    }
+    };
 })();

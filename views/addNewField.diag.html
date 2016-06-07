@@ -1,6 +1,6 @@
 <md-dialog aria-label="ponto" ng-cloak flex-gt-md="40" flex="60">
-    <form name="ewInputFieldsForm" ng-submit="vm.submitNewInputFields(vm.newEmployee, vm.inputField.property)">
-        <md-toolbar layout="row" class="md-tall" ng-class="vm.headerClass" layout-align="center center">
+    <form name="ewInputFieldsForm" ng-submit="vm.submitNewInputFields(vm.newEmployee, vm.inputField._id,vm.inputField.property)">
+        <md-toolbar layout="row"  ng-class="vm.headerClass" layout-align="center center">
             <div class="md-toolbar-tools" layout="row" layout-align="end center">
                 <h2><b>Inserção de novos itens para  {{vm.inputField.name}}</b> </h2>
                 <span flex></span>
@@ -26,13 +26,14 @@
                         </md-input-container>
                         <!--                    </div>-->
                         <div class="input-button">
-                            <md-button aria-label="{{vm.inputField.name+$index}}" class="md-icon-button md-accent" ng-click="vm.cancelDialg()">
+                            <md-button aria-label="{{vm.inputField.name+$index}}" class="md-icon-button md-accent" ng-click="vm.remInputField($index)">
                                 <md-icon class="material-icons">close</md-icon>
                             </md-button>
                             <md-tooltip md-direction="bottom">Remover Item</md-tooltip>
                         </div>
                     </div>
                 </div>
+                <md-button class="md-primary md-hue-3 no-text-transform" ng-click="vm.addInputField()">Adicionar<md-icon class="material-icons">plus_one</md-icon></md-button>
             </div>
         </md-dialog-content>
         <md-divider></md-divider>

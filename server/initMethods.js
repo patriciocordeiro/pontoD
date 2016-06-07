@@ -19,18 +19,17 @@
                         console.log('collection DOES NOT  exists');
                         console.log('Creating collection for the first time');
 
-                        var newConfig = generalConfig();
-                        newConfig.config.education = formFields.education;
-                        newConfig.config.educationLevel = formFields.educationLevel;
-                        newConfig.config.department = formFields.department;
-                        newConfig.config.jobTitle = formFields.jobTitle;
-
-                        newConfig.save(function(err){
-                            if(err)
-                                console.log(err);
+                        for (var i = 0; i < formFields.length; i++) {
+                            var newConfig = generalConfig();
+                            newConfig.name = formFields[i].name;
+                            newConfig.values = formFields[i].values;
+                            newConfig.save(function(err) {
+                                if (err)
+                                    console.log(err);
                                 console.log('saved successfully');
-                        })
+                            })
 
+                        }
                     }
 
                 });

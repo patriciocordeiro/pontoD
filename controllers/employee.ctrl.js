@@ -152,29 +152,27 @@
         function getFormFields() {
             http.api.getAll('getFormFields', function(res) {
                 console.log(res);
-                vm.formFields = res[0];
-                //                console.log(vm.formFields.education);
-            })
-        };
+                vm.formFields = {};
+                _(res).forEach(function(data) {
+                    vm.formFields[data.name] = data.values;
+                    vm.formFields[data.name]._id = data._id;
+                    console.log(vm.formFields);
+                });
+            });
+        }
 
-
-
-        //        vm.inputField = {
-        //            label: 'hello',
-        //            value: []
-        //        };
         //Create the options  for number of inputs
         vm.numOfInputFields = {
             value: 1 //for ng-model
         }
         var maxNumOfNewFormFields = 10; //max number of inputs to add at once
-        vm.NumOfNewFormFields = [1] // array of numbers 1 to maxNumOfNewFormFields
+        vm.NumOfNewFormFields = [1]; // array of numbers 1 to maxNumOfNewFormFields
         for (var i = 2; i <= maxNumOfNewFormFields; i++) {
             vm.NumOfNewFormFields.push(i);
         }
 
-
-        vm.addNewFormField = function(selInputField, property, ev) {
+//        vm.inputFieldId ='';
+        vm.addNewFormField = function(selInputField, id, ev) {
             $mdDialog.show({
                 targetEvent: ev,
                 parent: angular.element(document.body),
@@ -220,11 +218,6 @@
                     '  </md-dialog-actions>' +
                     '</form>' +
                     '</md-dialog>',
-                //                locals: {
-                //                    data: {
-                //                        message: resp.res,
-                //                        diag: 'ponto'
-                //                    }
             }).then(function(maxNumOfNewFormFields) {
                     console.log(maxNumOfNewFormFields);
                     if (maxNumOfNewFormFields) {
@@ -233,6 +226,7 @@
                             inputFieldItems(maxNumOfNewFormFields, function(items) {
                                 vm.inputField = items;
                                 console.log(vm.inputField);
+
                                 var ev;
                                 $mdDialog.show({
                                     targetEvent: ev,
@@ -245,11 +239,10 @@
                                     locals: {
                                         inputField: {
                                             name: selInputField,
-                                            property: property,
+                                            _id: id,
                                             items: vm.inputField
                                         },
                                     }
-                                    //                                            }
                                 });
                             });
                         }
@@ -258,8 +251,6 @@
                 function() {
                     //                $scope.status = 'You cancelled the dialog.';
                 });
-
-
         };
 
         vm.cancelDialg = function() {
@@ -270,20 +261,16 @@
             $mdDialog.hide(answer);
         };
 
-        vm.submitNewInputFields = function(newInputFields, property) {
-            console.log(newInputFields, property);
+        vm.submitNewInputFields = function(newInputFields, inputFieldId, property) {
             var values = _.values(newInputFields);
             var query = {};
             query.property = property;
             query.newInputFields = values;
-            //TODO Sent to server
+            query._id =  inputFieldId;
             http.api.getByQuery(
-               query
-            , 'insertNewIputFields', function(data) {
-
-                vm.employeeData = data.res[0];
-                console.log(data);
-            });
+                query, 'insertNewIputFields', function(data) {
+                    vm.formFields[data.name] = data.values;
+                });
             //TODO deal with answer (dialog)
             $mdDialog.hide(newInputFields);
         };
@@ -296,6 +283,16 @@
             }
             console.log(items);
             callback(items);
+        }
+
+        //Remove inputFieldItems
+        vm.remInputField = function(index){
+            console.log(index);
+            console.log(vm.inputField.items.splice(index, 1))
+        }
+
+        vm.addInputField = function(){
+            vm.inputField.items.push(vm.inputField.items+1)
         }
 
     }
