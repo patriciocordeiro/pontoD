@@ -1,9 +1,9 @@
 (function() {
     'use strict';
 
-    angular.module('pontoDApp').controller('relatorioCtrl', ['httpCallSrvc', 'relatorioSrvc', 'statisticsSrvc', 'employeeSrvc', '$filter', '$q', relatorioCtrl]);
+    angular.module('pontoDApp').controller('relatorioCtrl', ['httpCallSrvc', 'reportSrvc', 'statisticsSrvc', 'employeeSrvc', '$filter', '$q', relatorioCtrl]);
 
-    function relatorioCtrl(httpCallSrvc, relatorioSrvc, statisticsSrvc, employeeSrvc, $filter, $q) {
+    function relatorioCtrl(httpCallSrvc, reportSrvc, statisticsSrvc, employeeSrvc, $filter, $q) {
         var vm = this;
         vm.allEmployees = employeeSrvc.data;
         //Load statistics (load tabs)
@@ -11,17 +11,54 @@
         //root path for images
         vm.rootPath = '/assets/img/employees/';
         //Load http service
-        var http = httpCallSrvc;
-        var currentYear = moment().format('YYYY'); //stores the current year
-        var currentMonth = moment().format('MM'); //stores the current month
+        //        var http = httpCallSrvc;
+        //        var currentYear = moment().format('YYYY'); //stores the current year
+        //        var currentMonth = moment().format('MM'); //stores the current month
         vm.months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
             'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
         ];
         vm.weekDays = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'];
         vm.years = ['2010', '2011', '2012', '2013', '2014', '2015', '2016'];
-        vm.departamentos = ['Engenharia', 'Planejamento', 'Administrativo', 'Pedagógico',
+        vm.departments = ['Engenharia', 'Planejamento', 'Administrativo', 'Pedagógico',
             'Jurídico'
         ];
+        reportSrvc.report.getDepartments(function(data){
+            vm.departments = data.values;
+            console.log(vm.departments);
+        })
+
+        if (reportSrvc.employeeId!=='' && reportSrvc.reportYear!=='') {
+            var query = {
+                empId: reportSrvc.employeeId,
+                reportYear: reportSrvc.reportYear
+            }
+            getEmployeeBySector(query, function(data) {
+                console.log(reportSrvc.employeeId);
+                console.log(data[0].pontos);
+                vm.selEmployeeData = {
+                    pontos: data[0].pontos
+                }
+                if (data[0]._id) {
+                    //sinalize para que as tabs sejam visualizadas
+                    vm.isViewReport = true;
+                } else {
+                    //Esconda as tabs
+                    vm.isViewReport = false;
+                }
+
+                var startingMonth = "0"; //set firs month to show
+                filterByMonth(data[0].pontos, startingMonth, function(data) {
+                    console.log(data);
+                    vm.employeePontoSingleMonth = data;
+                })
+                //            console.log(vm.employeePontoSingleMonth);
+                //load statistics on employee selection
+                getStatistics();
+                //create chart for the first property (first tab)
+                //            statisticsCreateChart(vm.statisticsTabs[0].total.value);
+
+            });
+        }
         vm.currentYear = "2016"; //stores the current year
         vm.currentMonth = vm.months[0];
         /*----------------------------------------------------------------------*/
@@ -41,9 +78,9 @@
         /*Tabs*/
         /*----------------------------------------------------------------------*/
         //build relatório tabs
-        vm.relatorioTabsTwoCols = relatorioSrvc.report.tabsTwoCols;
-        vm.relatorioTabs = relatorioSrvc.report.tabs;
-        console.log(relatorioSrvc.report.tabs);
+        vm.relatorioTabsTwoCols = reportSrvc.report.tabsTwoCols;
+        vm.relatorioTabs = reportSrvc.report.tabs;
+        console.log(reportSrvc.report.tabs);
         /*----------------------------------------------------------------------*/
 
         /*----------------------------------------------------------------------*/
@@ -51,12 +88,20 @@
         /*----------------------------------------------------------------------*/
         vm.isViewSelectEmployee = false; // show hide the selected employee div
         vm.getEmployeesBySector = function(query) {
-            employeeSrvc.getBySector(query, function(data) {
-                vm.allEmployees = data.res;
+            getEmployeeBySector(query, function(data) {
                 console.log(data);
+                vm.allEmployees = data;
                 vm.isViewSelectEmployee = true;
             });
         };
+
+        function getEmployeeBySector(query, callback) {
+            employeeSrvc.getBySector(query, function(data) {
+                callback(data.res);
+            });
+        }
+
+
 
         /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
         /*----------------Employee Selection-------------------------------------------------------------*/
@@ -65,31 +110,20 @@
         vm.selectedEmployee = {
             //            name: ''
         }; // selected employee for the report (ng-model)
+
+
         vm.getSelectedEmployee = function(index) {
             vm.selEmployeeData = vm.allEmployees[index];
             console.log(vm.selEmployeeData);
             //Se for selecionado um colaborador
-            if (vm.selEmployeeData._id.name) {
+            if (vm.selEmployeeData._id.fullName) {
                 //sinalize para que as tabs sejam visualizadas
                 vm.isViewReport = true;
             } else {
                 //Esconda as tabs
                 vm.isViewReport = false;
             }
-            //            vm.selEmployeePonto = vm.selEmployeeData.ponto;
-            //            console.log(vm.selEmployeePonto);
 
-            //            var test = _.filter(vm.selEmployeeData, {
-            //
-            //                date: {
-            //
-            //                    month: defaultMonth.toString()
-            //                }
-            //
-            //            });
-
-
-            //                                        console.log(test);
             var startingMonth = "0"; //set firs month to show
             filterByMonth(vm.selEmployeeData.pontos, startingMonth, function(data) {
                 console.log(data);
@@ -102,6 +136,8 @@
             //            statisticsCreateChart(vm.statisticsTabs[0].total.value);
         };
 
+
+
         function filterByMonth(data, month, callback) {
             var filtData = $filter('filter')(data, {
                 date: {
@@ -112,9 +148,6 @@
         } /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
         vm.isListView = true;
-        //        vm.viewIconicon = 'view_comfy';
-        //        vm.buttonClass = 'md-primary';
-        //        vm.tooltip = 'Ver como Calendário'
         vm.viewMode = {
             icon: 'view_list',
             buttonClass: 'md-primary',
@@ -135,9 +168,6 @@
                     buttonClass: 'md-accent',
                     tooltip: 'Ver como Calendário',
                 };
-                //                vm.viewIconicon = 'view_comfy';
-                //                vm.buttonClass = 'md-primary'
-                //                vm.tooltip = 'Ver como Calendário';
             }
         };
 
@@ -149,11 +179,11 @@
             isShowYearSel: false
         };
         //Get report entry on selection
-        var prevSector ='';
+        var prevSector = '';
         vm.getReportEntry = function(entry, value) {
             console.log(vm.employee);
-            console.log('report entry', entry,value);
-            if (entry === 'sector') {
+            console.log('report entry', entry, value);
+            if (entry === 'department') {
                 vm.reportEntry.isShowYearSel = true;
                 if (prevSector !== value) {
                     vm.isViewSelectEmployee = false;
@@ -198,20 +228,12 @@
 
             };
 
-
             var currentYear = "2016";
             var currentMonth = "0";
             var totalDelaydIn = 0;
             var totalAntiOut = 0;
             var totalExtraHours = 0;
-            var workedHoursPerMonth = 0;
             var totalHora = 0;
-            var totalMin = 0;
-            var totalSec = 0;
-            var totalWorkedHourPerMonth = [];
-            var totalDelayedInPerMonth = [];
-            var totalAntiOutPerMonth = [];
-            var totalExtraHoursPerMonth = [];
 
             vm.pontoSingleYearData = _.filter(vm.selEmployeeData.ponto, {
                 date: {
@@ -249,8 +271,7 @@
                         totalExtraHours++;
                     }
                     totalHora = totalHora + Math.round(moment.duration(data.totalWorkedTime).asHours())
-                    //                    console.log('totalHora', totalHora);
-                })
+                });
 
                 //Total
                 vm.statistics.total.delayedInPerMonth.push(totalDelaydIn);
@@ -264,8 +285,6 @@
                 vm.statistics.mean.extraHoursPerMonth = _.mean(vm.statistics.total.extraHoursPerMonth);
 
                 //Initialize the chart on load
-                //                vm.chartjs.data.push(vm.statistics.total)
-                //                chartsMonthStatistics(vm.statistics);
                 totalDelaydIn = 0; //reinit
                 totalAntiOut = 0;
                 totalHora = 0;
@@ -289,50 +308,45 @@
 
         /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
         /*----------------get ponto by month-------------------------------------------------------------*/
-
         var monthIndex = 0; //janeiro
-        //        var prevMonth = 11; //december
-
         vm.currentMonth = vm.months[0]; // 'Jan'; //stores the current month
         vm.isDataView = true; // show/hide the relatorio data
         vm.getPontoPerMonth = function(action) {
+
+            //Handle month change
             if (action === 'next') {
                 if (monthIndex < 11) {
+                    //increment month
                     monthIndex++;
                 }
             } else if (action === 'prev') {
                 if (monthIndex !== 0) {
+                    //Decrement month
                     monthIndex--;
                 }
             } else {
                 //Selection of month directlly
-                //                console.log(action);
                 monthIndex = action;
-                //                console.log('nennhum dos dois');
             }
 
+            //get the corresponding month name
             vm.currentMonth = vm.months[monthIndex];
-            //
-            //            vm.employeePontoSingleMonth = _.filter(vm.selEmployeePonto, {
-            //                date: {
-            //                    month: startMonthindex.toString()
-            //                }
-            //            });
+            //--------------------------------------
 
+            //Filter to limit data to only one month
+            console.log(vm.selEmployeeData.pontos);
             filterByMonth(vm.selEmployeeData.pontos, monthIndex.toString(), function(data) {
-                console.log(data);
                 vm.employeePontoSingleMonth = data;
                 if (data.length < 1) {
                     vm.isDataView = false;
                 } else {
                     vm.isDataView = true;
                 }
-
                 //Calculate totals
-                vm.turno1TotalDelayedIn = 0 //Total de entradas atrasadas
-                vm.turno2TotalDelayedIn = 0 //Total de entradas atrasadas
-                vm.turno1TotalDelayedOut = 0 //Total de saídas antecipadas
-                vm.turno2TotalDelayedOut = 0 //Total de saídas antecipadas
+                vm.turno1TotalDelayedIn = 0; //Total de entradas atrasadas
+                vm.turno2TotalDelayedIn = 0; //Total de entradas atrasadas
+                vm.turno1TotalDelayedOut = 0; //Total de saídas antecipadas
+                vm.turno2TotalDelayedOut = 0; //Total de saídas antecipadas
                 _(data).forEach(function(data) {
                     if (data.turno1.isDelayedIn) {
                         vm.turno1TotalDelayedIn++;
@@ -349,18 +363,9 @@
                 });
 
             });
-
-
-            //            console.log(vm.SelectedEmployeeFiltData);
-
-
-            //            console.log(vm.SelectedEmployeeFiltData);
-
             getStatistics();
         };
         /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-
-
     }
 
 

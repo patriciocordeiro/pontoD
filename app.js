@@ -1,9 +1,15 @@
 'use strict'
-angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngMessages','validation.match', 'ngResource', 'highcharts-ng', 'chart.js', 'angularMoment', 'ui.mask', 'ngFileUpload', 'ngImgCrop'])
-    .run(function(employeeSrvc, amMoment) {
+angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngMessages', 'validation.match', 'ngResource', 'highcharts-ng', 'chart.js', 'angularMoment', 'ui.mask', 'ngFileUpload', 'ngImgCrop'])
+    .run(function(employeeSrvc, amMoment, $rootScope) {
 
-    //Moment config
-    amMoment.changeLocale('pt-br');//local to pt br
+        //Moment config
+        amMoment.changeLocale('pt-br'); //local to pt br
+
+        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState) {
+            console.log('mudei de estado', toState);
+            console.log("Esse eh o meu estado atual: ", toState.name);
+            console.log("Esse o estado de onde venho: ", fromState.name);
+        });
 
     })
     .config(function($stateProvider, $urlRouterProvider, ChartJsProvider, $mdThemingProvider) {
@@ -57,7 +63,7 @@ angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngMessages','validation
                 //                abstract: true,
                 url: "/cadastro",
                 templateUrl: '/views/cadastro.view.html',
-            controller: 'employeeCtrl as vm',
+                controller: 'employeeCtrl as vm',
             })
             .state('app.estatisticas', {
                 //                abstract: true,

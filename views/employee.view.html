@@ -15,7 +15,7 @@
                         <span class="md-headline mmd-capitalize"><b>{{vm.employeeData.fullName}}</b></span>
                         <span ><b>{{vm.employeeData.jobTitle}}</b></span>
                     </md-card-title-text>
-                    <md-button  class="md-primary">Relatórios<md-tooltip>Ver relatórios de ponto de <span class="mmd-capitalize">{{vm.employeeData.fullName}}</span> </md-tooltip></md-button>
+                    <md-button ng-click="vm.getEmployeeReport($event, vm.employeeData.empId)" class="md-primary">Relatórios<md-tooltip>Ver relatórios de ponto de <span class="mmd-capitalize">{{vm.employeeData.fullName}}</span> </md-tooltip></md-button>
                     <md-button class="md-primary">Estatísticas<md-tooltip> Ver estatísticas de ponto de <span class="mmd-capitalize">{{vm.employeeData.fullName}}</span></md-tooltip></md-button>
                 </md-card-title>
 

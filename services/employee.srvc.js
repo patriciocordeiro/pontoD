@@ -16,12 +16,17 @@
             },
 
             this.getBySector = function(query, callback) {
-                http.api.getByQuery(query, 'getEmployeesBySector', function(data) {
+                http.api.getByQuery(query, 'getEmployeesBydepartment', function(data) {
                     return callback(data);
                 });
             },
             this.getOne = function(query, callback) {
                 http.api.getByQuery(query, 'getEmployee', function(data) {
+                    return callback(data);
+                });
+            },
+            this.getOnePonto = function(query, callback) {
+                http.api.getByQuery(query, 'getOnePonto', function(data) {
                     return callback(data);
                 });
             }

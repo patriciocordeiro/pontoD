@@ -522,9 +522,9 @@ async.series([
             //            employee.id = i + 100;
             //            employee.id = employee.id.toString();
             //            console.log(i, employeesData[i]);
-            employee.name = employeesData[i]['Nome completo'];
-            employee.id = employeesData[i].id;
-            employee.departamento = employeesData[i].Departamento;
+            employee.fullName = employeesData[i]['Nome completo'];
+            employee.empId = employeesData[i].id;
+            employee.department = employeesData[i].Departamento;
             employee.imgPath = employeesData[i].imgPath;
             employee.working = false;
             //            employee.setor = setor[Math.floor(Math.random() * ((maxSetor - minSetor) + 1) + minSetor)];

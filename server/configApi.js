@@ -28,6 +28,13 @@
                     res.send(data);
                 });
 
+        },
+        getDepartments :function(req, res){
+            config.find({'name':req.body.name}, function(err, data) {
+                if (err) console.log(err);
+                console.log('getDepartments',data);
+                res.send(data[0]);
+            });
         }
     };
 })();

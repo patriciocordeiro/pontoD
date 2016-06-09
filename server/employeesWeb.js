@@ -15,12 +15,12 @@
             });
         },
 
-        sector: function(req, res) {
+        department: function(req, res) {
             console.log('chegou do usuário', req.body);
 
             employee.aggregate({
                 $match: {
-                    departamento: req.body.setor
+                    department: req.body.department
                 }
             })
                 .unwind('$ponto')
@@ -30,8 +30,8 @@
                 .group({
                     '_id': {
                         '_id': '$_id',
-                        'name': '$name',
-                        'departamento': '$departamento',
+                        'fullName': '$fullName',
+                        'department': '$department',
                         'imgPath': '$imgPath'
                     },
                     'pontos': {
@@ -53,7 +53,7 @@
             User.find({
                 'empId': req.body.empId
             })
-                .select('-_id -empId -password')
+                .select('-_id -password')
                 .exec(function(err, data) {
                     if (err) console.log(err);
                     console.log('hello', data);
@@ -62,6 +62,38 @@
                     });
                 });
         },
+
+        onePonto: function(req, res) {
+            console.log('onePonto', req.body);
+            employee.aggregate({
+                $match: {
+                    empId: req.body.empId
+                }
+            })
+                .unwind('$ponto')
+                .match({
+                    'ponto.date.year': req.body.reportYear
+                })
+                .group({
+                    '_id': {
+                        '_id': '$_id',
+                        'fullName': 'fullName',
+                        'department': 'department',
+                        'imgPath': '$imgPath'
+                    },
+                    'pontos': {
+                        $push: '$ponto'
+                    }
+                })
+                .exec(function(err, data) {
+                    if (err) console.log(err);
+                    console.log(data);
+                    res.json({
+                        res: data
+                    });
+                });
+        },
+
 
         signup: function(req, res, next) {
             passport.authenticate('local-signup', {

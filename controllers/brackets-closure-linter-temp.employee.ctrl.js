@@ -1,15 +1,15 @@
 (function() {
     'use strict';
 
-    angular.module('pontoDApp').controller('employeeCtrl', ['$scope', 'httpCallSrvc', '$timeout', '$mdDialog', '$stateParams', 'Upload', '$state', 'reportSrvc', employeeCtrl]);
+    angular.module('pontoDApp').controller('employeeCtrl', ['$scope', 'httpCallSrvc', '$timeout', '$mdDialog', '$stateParams', 'Upload','$state','reportSrvc', employeeCtrl]);
 
     function employeeCtrl($scope, httpCallSrvc, $timeout, $mdDialog, $stateParams, Upload, $state, reportSrvc) {
 
         var vm = this;
         var http = httpCallSrvc;
         vm.years = ['2010', '2011', '2012', '2013', '2014', '2015', '2016'];
-        vm.report = {
-            year: '2016'
+        vm.report ={
+            year : '2016'
         };
 
         //image root path
@@ -329,8 +329,8 @@
                 '<md-input-container flex="80" class="md-block" flex-gt-sm>' +
                     '<label>Número de itens à adicionar</label>' +
                     '<md-select name="maxNumOfInputFields" ng-model="vm.report.year" required>' +
-                    '<md-option value="{{year}}" ng-repeat="year in  vm.years">' +
-                    '{{year}}' +
+                '<md-option value="{{year}}" ng-repeat="year in  vm.years">' +
+                '{{year}}' +
                     '</md-option>' +
                     '</md-select>' +
                     '<div ng-messages="vm.numOfFieldsForm.maxNumOfInputFields.$error">' +
@@ -340,7 +340,7 @@
                     '</div>' +
                     '  </md-dialog-content>' +
                     '  <md-dialog-actions>' +
-                '    <md-button ng-click="vm.answerDialg(vm.report.year)" class="md-primary md-raised">' +
+                    '    <md-button ng-click="vm.answerDialg()" class="md-primary md-raised">' +
                     '     Confirmar' +
                     '    </md-button>' +
                     '<md-button ng-click="vm.cancelDialg()" class="md-primary">' +
@@ -350,12 +350,10 @@
                     '</form>' +
                     '</md-dialog>',
 
-            }).then(function(reportYear) {
-                reportSrvc.employeeId = empId; //share id to service (to get it in relatório controller)
-                reportSrvc.reportYear = reportYear;
-                console.log(reportYear);
+            }).then(function(employeeId){
+                reportSrvc.employeeId = employeeId //share id to service (to get it in relatório controller)
                 $state.go('app.relatorios');
-                //                console.log('helloooo');
+//                console.log('helloooo');
 
             });
         };

@@ -1,10 +1,22 @@
 (function() {
     'use strict';
 
-    angular.module('pontoDApp').service('relatorioSrvc', [
-        function() {
+    angular.module('pontoDApp').service('reportSrvc', ['httpCallSrvc',
+        function(httpCallSrvc) {
             /*Automate the generation of tabs*/
+            this.employeeId = '';
+            this.reportYear = '';
             this.report = {
+                getDepartments : function(){
+                    httpCallSrvc.api.getByQuery({name:'department'}, 'getDepartments', function(res){
+console.log(res);
+                    });
+                },
+                months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+                'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+                ],
+                weekDays: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
+
                 tabs: [{
                         label: 'Horas trabalhadas',
                         title: 'Relatório de horas trabalhadas',

@@ -16,9 +16,9 @@
                     1
                 </span>
                             <md-input-container class="md-block">
-                                <label>Selecione o setor</label>
-                                <md-select ng-model="vm.employee.setor" name="setor" required>
-                                    <md-option ng-repeat="setor in vm.departamentos" ng-value="setor" ng-click="vm.getReportEntry('sector', vm.employee.setor)">
+                                <label>Selecione o departamento</label>
+                                <md-select ng-model="vm.employee.department" name="setor" required>
+                                    <md-option ng-repeat="setor in vm.departments | orderBy:'toString()' | filter:searchText" ng-value="setor" ng-click="vm.getReportEntry('department', vm.employee.department)">
                                         {{setor}}
                                     </md-option>
                                 </md-select>
@@ -64,7 +64,7 @@
                     <label>Selecione o colaborador</label>
                     <md-select ng-model="vm.employee.name">
                         <md-option ng-click="vm.getSelectedEmployee($index)" ng-repeat="employee in vm.allEmployees" ng-value="employee._id.name">
-                            {{employee._id.name}}
+                            {{employee._id.fullName}}
                         </md-option>
                     </md-select>
 
@@ -94,8 +94,8 @@
                                     </div>
                                 </md-card-title-media>
                                 <md-card-title-text class="mmd-paddingleft">
-                                    <span class="md-headline">{{vm.employee.name}}</span>
-                                    <span class="md-subhead">{{vm.employee.setor}}</span>
+                                    <span class="md-headline">{{vm.selEmployeeData._id.fullName}}</span>
+                                    <span class="md-subhead">Departamento:&nbsp;<b>{{vm.employee.department}}</b></span>
                                 </md-card-title-text>
                             </md-card-title>
                             <!--
