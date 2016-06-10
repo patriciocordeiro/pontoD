@@ -8,50 +8,44 @@
         vm.allEmployees = employeeSrvc.data;
         //Load statistics (load tabs)
         vm.statisticsTabs = statisticsSrvc.tabs;
-        //root path for images
-        vm.rootPath = '/assets/img/employees/';
-        //Load http service
-        //        var http = httpCallSrvc;
-        //        var currentYear = moment().format('YYYY'); //stores the current year
-        //        var currentMonth = moment().format('MM'); //stores the current month
-        vm.months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-            'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
-        ];
-        vm.weekDays = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'];
+        vm.rootPath = '/assets/img/employees/'; //root path for images
+        vm.months = moment.months();
+        vm.weekDays = reportSrvc.report.weekDays;
         vm.years = ['2010', '2011', '2012', '2013', '2014', '2015', '2016'];
-        vm.departments = ['Engenharia', 'Planejamento', 'Administrativo', 'Pedagógico',
-            'Jurídico'
-        ];
-        reportSrvc.report.getDepartments(function(data){
+        vm.currentYear = moment().year().toString(); //stores the current year
+        vm.currentMonth = vm.months[moment().month()]; //january
+        console.log(vm.currentMonth);
+        /*Executed on page load*/
+        //--------------------------------------------------------------------------------
+        //Get all departments on page load
+        reportSrvc.report.getDepartments(function(data) {
             vm.departments = data.values;
-            console.log(vm.departments);
-        })
+            console.log(vm);
+        });
 
-        if (reportSrvc.employeeId!=='' && reportSrvc.reportYear!=='') {
+        //Execute this if report was fired in employee detail page
+        if (reportSrvc.employeeId !== '' && reportSrvc.reportYear !== '') {
             var query = {
                 empId: reportSrvc.employeeId,
                 reportYear: reportSrvc.reportYear
-            }
-            getEmployeeBySector(query, function(data) {
-                console.log(reportSrvc.employeeId);
-                console.log(data[0].pontos);
-                vm.selEmployeeData = {
-                    pontos: data[0].pontos
-                }
-                if (data[0]._id) {
-                    //sinalize para que as tabs sejam visualizadas
+            };
+            employeeSrvc.getOnePonto(query, function(data) {
+                //Check id there is an id or employee exists
+                if (data.res[0]._id) {
+                    //pass returned data to vm
+                    //                    vm.selEmployeeData.pontos = data[0].pontos;
+                    //show report area
                     vm.isViewReport = true;
                 } else {
-                    //Esconda as tabs
+                    //hide the report area
                     vm.isViewReport = false;
                 }
 
-                var startingMonth = "0"; //set firs month to show
-                filterByMonth(data[0].pontos, startingMonth, function(data) {
+                var startingMonth = "0"; //set first month to show
+                filterByMonth(data.res[0].pontos, startingMonth, function(data) {
                     console.log(data);
                     vm.employeePontoSingleMonth = data;
-                })
-                //            console.log(vm.employeePontoSingleMonth);
+                });
                 //load statistics on employee selection
                 getStatistics();
                 //create chart for the first property (first tab)
@@ -59,8 +53,7 @@
 
             });
         }
-        vm.currentYear = "2016"; //stores the current year
-        vm.currentMonth = vm.months[0];
+
         /*----------------------------------------------------------------------*/
         /*charts.js*/
         /*----------------------------------------------------------------------*/
@@ -88,18 +81,18 @@
         /*----------------------------------------------------------------------*/
         vm.isViewSelectEmployee = false; // show hide the selected employee div
         vm.getEmployeesBySector = function(query) {
-            getEmployeeBySector(query, function(data) {
+            employeeSrvc.getBySector(query, function(data) {
                 console.log(data);
-                vm.allEmployees = data;
+                vm.allEmployees = data.res;
                 vm.isViewSelectEmployee = true;
             });
         };
-
-        function getEmployeeBySector(query, callback) {
-            employeeSrvc.getBySector(query, function(data) {
-                callback(data.res);
-            });
-        }
+        //
+        //        function getEmployeeBySector(query, callback) {
+        //            employeeSrvc.getBySector(query, function(data) {
+        //                callback(data.res);
+        //            });
+        //        }
 
 
 
@@ -110,8 +103,6 @@
         vm.selectedEmployee = {
             //            name: ''
         }; // selected employee for the report (ng-model)
-
-
         vm.getSelectedEmployee = function(index) {
             vm.selEmployeeData = vm.allEmployees[index];
             console.log(vm.selEmployeeData);
@@ -173,7 +164,6 @@
 
         /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
         /*--------------------- Report entry-------------------------------------------*/
-
         //Handle report selection show/hide
         vm.reportEntry = {
             isShowYearSel: false
@@ -300,11 +290,9 @@
             //pass total values to chart data
             vm.chartjs.data = [(vm.statistics.total[value])];
         }
-
         vm.createChart = function(value) {
             statisticsCreateChart(value);
         };
-
 
         /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
         /*----------------get ponto by month-------------------------------------------------------------*/

@@ -1,12 +1,12 @@
-<div layout="column" layout-margin ng-cloak>
+<div layout="column"  ng-cloak>
 
-    <md-card class="no-shadow">
+    <md-card class="no-shadow no-margin">
         <md-card-title class="md-display-1"><b>Relatório de ponto dos colaboradores</b></md-card-title>
     </md-card>
     <md-divider></md-divider>
 
     <div id="reportEntry" ng-show="!vm.isViewReport">
-        <md-card class="no-shadow">
+        <md-card class="no-shadow no-margin">
             <md-card-title class="md-title">Selecione as entradas para a geração do relatório</md-card-title>
             <md-card-content>
                 <form name="employeeReportForm" ng-submit="employeeReportForm.$valid && vm.getEmployeesBySector(vm.employee)" novalidate>
@@ -53,7 +53,7 @@
             </md-card-content>
         </md-card>
 
-        <md-card class="no-shadow" ng-show="vm.isViewSelectEmployee">
+        <md-card class="no-shadow no-margin mmd-nopadding" ng-show="vm.isViewSelectEmployee">
             <md-divider></md-divider>
             <md-card-content>
                 <h3 class="md-title">Selecione o colaborador</h3>

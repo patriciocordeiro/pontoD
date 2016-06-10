@@ -7,13 +7,22 @@
             this.employeeId = '';
             this.reportYear = '';
             this.report = {
-                getDepartments : function(){
-                    httpCallSrvc.api.getByQuery({name:'department'}, 'getDepartments', function(res){
-console.log(res);
+                getDepartments: function(callback) {
+                    httpCallSrvc.api.getByQuery({
+                        name: 'department'
+                    }, 'getDepartments', function(res) {
+                        callback(res);
+                    });
+                },
+                getYears: function(callback) {
+                    httpCallSrvc.api.getByQuery({
+                        name: 'department'
+                    }, 'getDepartments', function(res) {
+                        callback(res);
                     });
                 },
                 months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-                'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+                    'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
                 ],
                 weekDays: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
 
