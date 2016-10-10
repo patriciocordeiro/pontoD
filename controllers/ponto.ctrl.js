@@ -25,7 +25,7 @@
                 vm.baterPontoForm.$setPristine();
                 vm.baterPontoForm.$setUntouched();
                 vm.baterPontoForm.$setDirty(false);
-                vm.employee = '';
+//                vm.employee = '';
                 //---------------------------------------------
                 //Ponto Answer dialog
                 $mdDialog.show({
@@ -54,7 +54,18 @@
         })
         /*--------------------------------------------*/
 
-
+        /*Image crop settings*/
+        vm.imgCropOptions = {
+            areaType: "square",
+            areaMinSize: "152",
+            resultImageSize: "152",
+            //            resultImageFormat: "png"
+            //            [result-image-quality="{number}"]
+            //            [on-change="{expression}"]
+            //            [on-load-begin="{expression"]
+            //            [on-load-done="{expression"]
+            //            [on-load-error="{expression"]
+        };
 
     }
 

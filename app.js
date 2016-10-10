@@ -1,27 +1,27 @@
 'use strict'
 angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngMessages', 'validation.match', 'ngResource', 'highcharts-ng', 'chart.js', 'angularMoment', 'ui.mask', 'ngFileUpload', 'ngImgCrop'])
-    .run(function(employeeSrvc, amMoment, $rootScope) {
+    .run(function (employeeSrvc, amMoment, $rootScope) {
 
         //Moment config
         amMoment.changeLocale('pt-br'); //local to pt br
 
-        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState) {
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {
             console.log('mudei de estado', toState);
             console.log("Esse eh o meu estado atual: ", toState.name);
             console.log("Esse o estado de onde venho: ", fromState.name);
         });
 
     })
-    .config(function($stateProvider, $urlRouterProvider, ChartJsProvider, $mdThemingProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, ChartJsProvider, $mdThemingProvider) {
 
         // Configure all charts
 
         /*Angular theme configuration*/
         $mdThemingProvider.theme('default')
-        //            .primaryPalette('teal')
-        .primaryPalette('blue')
-        //        .primaryPalette('indigo')
-        .accentPalette('red');
+            //            .primaryPalette('teal')
+            .primaryPalette('blue')
+            //        .primaryPalette('indigo')
+            .accentPalette('red');
 
 
         ChartJsProvider.setOptions({
@@ -85,6 +85,6 @@ angular.module("pontoDApp", ['ui.router', 'ngMaterial', 'ngMessages', 'validatio
         //            });
 
         //if no state redirect to home
-        $urlRouterProvider.otherwise("app.home");
+        $urlRouterProvider.otherwise("app");
 
     });

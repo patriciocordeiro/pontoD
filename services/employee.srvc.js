@@ -20,6 +20,11 @@
                     return callback(data);
                 });
             },
+            this.getPontoByYear = function(query, callback) {
+                http.api.getByQuery(query, 'getPontoByYear', function(data) {
+                    return callback(data);
+                });
+            },
             this.getOne = function(query, callback) {
                 http.api.getByQuery(query, 'getEmployee', function(data) {
                     return callback(data);

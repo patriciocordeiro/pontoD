@@ -3,7 +3,12 @@
     /*Crete a mongoose Schema*/
     var mongoose = require('mongoose');
     var configSchema = new mongoose.Schema({
-        name: String,
+        name: {
+            type: String,
+            index: {
+                unique: true
+            }
+        },
         values: Array
     });
 

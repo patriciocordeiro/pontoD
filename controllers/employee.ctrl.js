@@ -73,6 +73,8 @@
 
         vm.newEmployee = {};
         vm.createEmployee = function(newEmployee, imgFile) {
+            console.log(imgFile);
+            console.log(Upload.dataUrltoBlob(imgFile, imgName));
             var imgName = 'employee' + Date.now() + '.png';
             //on sucess upload new employee data
             var query = newEmployee;

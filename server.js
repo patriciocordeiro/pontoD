@@ -24,7 +24,7 @@ var initialization = require('./server/initMethods');
 //----------------------------------------------------------------------
 
 /*MONGODB--------------------------------------------------*/
-mongoose.connect('mongodb://localhost/pontoD');
+mongoose.connect('mongodb://192.168.0.12/pontoD');
 //check if connected
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));

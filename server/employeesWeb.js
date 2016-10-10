@@ -16,7 +16,7 @@
         },
 
         department: function(req, res) {
-            console.log('chegou do usuário', req.body);
+            console.log('department, chegou do usuário ', req.body);
 
             employee.aggregate({
                 $match: {
@@ -31,6 +31,7 @@
                     '_id': {
                         '_id': '$_id',
                         'fullName': '$fullName',
+                        'empId': '$empId',
                         'department': '$department',
                         'imgPath': '$imgPath'
                     },
@@ -64,7 +65,7 @@
         },
 
         onePonto: function(req, res) {
-            console.log('onePonto', req.body);
+            console.log('onePonto, chegou do usuário', req.body);
             employee.aggregate({
                 $match: {
                     empId: req.body.empId
@@ -77,8 +78,9 @@
                 .group({
                     '_id': {
                         '_id': '$_id',
-                        'fullName': 'fullName',
-                        'department': 'department',
+                        'fullName': '$fullName',
+                        'empId': '$empId',
+                        'department': '$department',
                         'imgPath': '$imgPath'
                     },
                     'pontos': {

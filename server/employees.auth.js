@@ -61,31 +61,16 @@
                             newEmployee.maritalStatus = req.body.maritalStatus;
                             newEmployee.age = req.body.age;
                             newEmployee.admissionDate = req.body.admissionDate;
+                            newEmployee.department = req.body.department;
                             newEmployee.education = req.body.education;
                             newEmployee.jobTitle = req.body.jobTitle;
                             newEmployee.imgPath = req.body.imgPath;
-
-                            //Endereco
-                            //                            endereco.destinatario = req.body.destinatario;
-                            //                            endereco.tipoEndereco = req.body.tipoEndereco;
-                            //                            endereco.cep = req.body.cep;
-                            //                            endereco.endereco = req.body.endereco;
-                            //                            endereco.complemento = req.body.complemento;
-                            //                            endereco.numero = req.body.numero;
-                            // endereco.referencia = req.body.referencia;
-                            //                            endereco.bairro = req.body.bairro;
-                            //                            endereco.cidade = req.body.cidade;
-                            //                            endereco.estado = req.body.estado;
-                            //                            endereco.principal = req.body.principal;
-
-                            //Push to endereco Array
-                            //                            newEmployee.local.endereco.push(endereco);
 
                             var newPonto = new Ponto();
                             newPonto.fullName = newEmployee.fullName;
                             newPonto.empId = newEmployee.empId;
                             newPonto.password = (Number(req.body.email) * 1000).toString();
-                            //                            newPonto.department = newEmployee.department;
+                            newPonto.department = newEmployee.department;
                             newPonto.imgPath = newEmployee.imgPath;
 
 

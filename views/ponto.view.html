@@ -35,6 +35,40 @@
             </md-card-actions>
         </form>
     </md-card>
+    iv flex class="employeeImg" layout="row" layout-align="center start">
+    <md-card flex="100" class="fotoArea" layout="row" layout-align="center center">
+        <div>
+            <div layout="column" layout-align="center center" style="margin-bottom:8px;">
+                <span class="md-subhead"><b>Foto do colaborador</b></span>
+                <span class="md-subhead" style="color:red" ng-show="isViewOriginalImg && vm.signupForm.imgFile.$valid"><b>Selecione a área para recorte</b>.</span>
+                <div layout="column" layout-align="center center" ng-init="isViewOriginalImg =true" ng-show="isViewOriginalImg">
+                    <md-input-container class="no-margin">
+                        <input type="file" class="ng-hide" id="input-file-id" ngf-select ng-model="vm.newEmployee.imgFile" name="imgFile" ngf-pattern="'image/*'" accept="image/*" ngf-max-size="2MB" required>
+                        <div ngf-drop ng-model="vm.newEmployee.imgFile" ngf-pattern="image/*" class="cropArea">
+                            <img-crop area-type="{{vm.imgCropOptions.areaType}}" area-min-size="vm.imgCropOptions.areaMinSize" result-image-size="vm.imgCropOptions.resultImageSize" image="vm.newEmployee.imgFile  | ngfDataUrl" result-image="croppedDataUrl" ng-init="croppedDataUrl=''">
+                            </img-crop>
+                        </div>
+                        <div ng-messages="vm.signupForm.imgFile.$error">
+                            <div ng-message="required">Precisa incluir uma foto</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <label ng-show="!vm.signupForm.imgFile.$valid" for="input-file-id" class="md-button md-raised no-text-transform">Escolha a imagem</label>
+                <label ng-show="vm.signupForm.imgFile.$valid && isViewOriginalImg" for="input-file-id" class="md-button md-raised no-text-transform" ng-click="isViewOriginalImg=true">Trocar imagem</label>
+
+            </div>
+            <div layout-margin ng-class="{'bg-grey':vm.signupForm.imgFile.$valid && isViewOriginalImg}" layout="column" layout-align="center center" ng-show="vm.signupForm.imgFile.$valid">
+                <span ng-show="vm.signupForm.imgFile.$valid && isViewOriginalImg"><b>Resultado</b></span>
+                <div class="cropArea">
+                    <img ng-src="{{croppedDataUrl}}" />
+                </div>
+                <md-button ng-show="vm.signupForm.imgFile.$valid && isViewOriginalImg" class="md-hue-2 md-warn" ng-click="isViewOriginalImg=false"><b>Recortar</b>
+                </md-button>
+                <label ng-show="!isViewOriginalImg" for="input-file-id" class="md-button md-raised no-text-transform" ng-click="isViewOriginalImg=true">Trocar imagem</label>
+            </div>
+        </div>
+    </md-card>
+
     <!--    </md-content>-->
 </md-content>
 

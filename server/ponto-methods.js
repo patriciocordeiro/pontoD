@@ -39,35 +39,34 @@ module.exports = {
         //maxTime: defined maxTime to compare with
         //create a date object with today date and maxTime
 
-        var maxTimeDate = moment.utc().startOf('day').hour(maxTime.hour).minute(maxTime.min).second(maxTime.sec);
+        var maxTimeDate = moment().startOf('day').hour(maxTime.hour).minute(maxTime.min).second(maxTime.sec);
         //compare the two times
         var isDelayd = moment(currTime).isAfter(maxTimeDate);
-        console.log('isDelayd:', isDelayd);
         return isDelayd;
     },
 
     getWordkedTime: function(inTime, outTime, minTimeTowork) {
-        //        console.log('getWordkedTime', inTime);
-        //        console.log('getWordkedTime', outTime);
+
 
         var inTimeDate = moment(inTime);
         var outTimeDate = moment(outTime);
         var workedTime = {};
-
-        var temp = moment.utc(moment(outTimeDate.diff(inTimeDate)));
-
+//        console.log('inTimeDate', inTimeDate.format());
+//        console.log('outTimeDate', outTimeDate.format());
+        var temp = moment.utc(outTimeDate.diff(inTimeDate));
+//console.log(temp.ho());
         //create a date with current date and time
         workedTime.duration = moment.utc().startOf('day').hour(temp.hours()).minutes(temp.minutes()).seconds(temp.seconds()); //No fault time
-
+//        console.log('workedTime.duration', workedTime.duration.format());
         if (workedTime.duration.hour() < minTimeTowork) {
             workedTime.worked = false;
         } else {
             workedTime.worked = true;
         }
 
-        workedTime.duration = workedTime.duration.format();
+        workedTime.duration = moment(workedTime.duration);
 
-        console.log(workedTime);
+//        console.log(workedTime);
         return workedTime;
 
     },
@@ -75,10 +74,10 @@ module.exports = {
     getFaultTime: function(workedTime, expedientTime) {
         var faultTime = {};
         faultTime.duration = moment(moment.utc().startOf('day').hour(0).minute(0).second(0)).format(); //No fault time
-        var expedientTimeObj = moment.utc().startOf('day').hour(expedientTime.hour).minute(expedientTime.min).second(expedientTime.sec)
-        var workedTimeObj = moment(workedTime);
-        faultTime.state = moment(workedTimeObj).isBefore(expedientTimeObj);
+        var expedientTimeObj = moment.utc().startOf('day').hour(expedientTime.hour).minute(expedientTime.min).second(expedientTime.sec);
 
+        var workedTimeObj = moment(workedTime);
+        faultTime.state = moment(workedTimeObj).isAfter(expedientTimeObj);
         if (faultTime.state) {
             var duration = moment.duration(expedientTimeObj.diff(workedTimeObj)); //get the diference bettween the two times
             //            console.log(duration);
@@ -91,9 +90,10 @@ module.exports = {
         var extraTime = {};
         extraTime.duration = moment.utc().startOf('day').hour(0).minute(0).second(0); //No extra time
 
-        var maxTimeToWork = moment.utc().startOf('day').hour(4).minute(0).second(0)
-        var workedTime = moment.utc().startOf('day').hour(3).minute(0).second(40)
-
+        var maxTimeToWork = moment.utc().startOf('day').hour(expedientTime.hour).minute(expedientTime.min).second(expedientTime.sec);
+//        var workedTime = moment.utc().startOf('day').hour(3).minute(0).second(40)
+        console.log('maxTimeToWork', maxTimeToWork.format());
+        console.log('workedTime', workedTime.format());
         extraTime.state = moment(workedTime).isAfter(maxTimeToWork);
 
         if (extraTime.state) {
@@ -150,7 +150,7 @@ module.exports = {
                 "ponto._id": new ObjectId(currUser.ponto._id)
             }, {
                 $set: {
-                    'ponto.$.turno2.workedHours': pontoData.workedTime.duration,
+                    'ponto.$.turno2.workedTime': pontoData.workedTime.duration,
                     'ponto.$.turno2.faultTime': pontoData.faultTime.duration,
                     'ponto.$.turno2.extraTime': pontoData.extraTime.duration,
                     'ponto.$.turno2.outTime': moment.utc().format(),

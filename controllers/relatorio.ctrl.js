@@ -13,8 +13,18 @@
         vm.weekDays = reportSrvc.report.weekDays;
         vm.years = ['2010', '2011', '2012', '2013', '2014', '2015', '2016'];
         vm.currentYear = moment().year().toString(); //stores the current year
-        vm.currentMonth = vm.months[moment().month()]; //january
-        console.log(vm.currentMonth);
+        vm.currentMonthName = vm.months[moment().month()]; //january
+        vm.currentMonthNum = moment().month(); //january
+        var monthIndex = vm.currentMonthNum; //pass current month number (0-11)
+        vm.turno1 = {};
+        vm.turno2 = {};
+//        vm.employee = {
+//            name: ''
+//        };
+        vm.selEmployeeData = {};
+        vm.viewNoDataMsg = false
+
+
         /*Executed on page load*/
         //--------------------------------------------------------------------------------
         //Get all departments on page load
@@ -29,27 +39,43 @@
                 empId: reportSrvc.employeeId,
                 reportYear: reportSrvc.reportYear
             };
+            vm.employee = {};
+            vm.employee.reportYear = reportSrvc.reportYear;
             employeeSrvc.getOnePonto(query, function(data) {
+                console.log('res data', data);
                 //Check id there is an id or employee exists
-                if (data.res[0]._id) {
-                    //pass returned data to vm
-                    //                    vm.selEmployeeData.pontos = data[0].pontos;
-                    //show report area
-                    vm.isViewReport = true;
-                } else {
-                    //hide the report area
-                    vm.isViewReport = false;
-                }
+                if (data.res.length>0) {
+                    if (data.res[0]._id) {
+                        console.log(data.res[0].pontos);
+                        //pass returned data to vm
+                        vm.selEmployeeData = data.res[0];
+                        console.log('vm.selEmployeeData', vm.selEmployeeData);
+                        filterByMonth(data.res[0].pontos, vm.currentMonthNum, function(data) {
+                            console.log(data);
+                            vm.employeePontoSingleMonth = data;
+                            delaydTotals(data);
+                        });
+                        //load statistics on employee selection
+                        getStatistics();
+                        //create chart for the first property (first tab)
+                        //            statisticsCreateChart(vm.statisticsTabs[0].total.value);
+                        //show report area
+                        vm.isViewReport = true;
 
-                var startingMonth = "0"; //set first month to show
-                filterByMonth(data.res[0].pontos, startingMonth, function(data) {
-                    console.log(data);
-                    vm.employeePontoSingleMonth = data;
-                });
-                //load statistics on employee selection
-                getStatistics();
-                //create chart for the first property (first tab)
-                //            statisticsCreateChart(vm.statisticsTabs[0].total.value);
+                        //clear credentials
+                        reportSrvc.employeeId = '';
+                        reportSrvc.reportYear ='';
+
+                    } else {
+                        //hide the report area
+                        vm.isViewReport = false;
+                    }
+                }else{
+                    //no ponto data
+                   // display no ponto msg
+                    vm.isDataView = false;
+                    vm.isViewReport = true;
+                }
 
             });
         }
@@ -80,11 +106,19 @@
         /*Tabs*/
         /*----------------------------------------------------------------------*/
         vm.isViewSelectEmployee = false; // show hide the selected employee div
+
+        /*Funtion*/
         vm.getEmployeesBySector = function(query) {
             employeeSrvc.getBySector(query, function(data) {
                 console.log(data);
+                if (data.res.length>0) {
                 vm.allEmployees = data.res;
                 vm.isViewSelectEmployee = true;
+                vm.employee.name = ''; //reset employee model
+                }else{
+                    vm.isViewSelectEmployee = false;
+                    vm.viewNoDataMsg = !vm.isViewSelectEmployee;
+                }
             });
         };
         //
@@ -103,31 +137,45 @@
         vm.selectedEmployee = {
             //            name: ''
         }; // selected employee for the report (ng-model)
+
+
+        /*Function*/
         vm.getSelectedEmployee = function(index) {
             vm.selEmployeeData = vm.allEmployees[index];
             console.log(vm.selEmployeeData);
             //Se for selecionado um colaborador
             if (vm.selEmployeeData._id.fullName) {
+
+                //pass credentials to report service
+                reportSrvc.employeeId = vm.selEmployeeData._id.empId;
                 //sinalize para que as tabs sejam visualizadas
                 vm.isViewReport = true;
+                // reset monthIndex
+                vm.currentMonthName = vm.months[moment().month()];
+                //reset month index;
+                monthIndex = vm.currentMonthNum;
+                // reset: 'there is no data' view
+                vm.isDataView = true;
             } else {
                 //Esconda as tabs
                 vm.isViewReport = false;
             }
 
-            var startingMonth = "0"; //set firs month to show
-            filterByMonth(vm.selEmployeeData.pontos, startingMonth, function(data) {
-                console.log(data);
+            //            var startingMonth = "0"; //set firs month to show
+            filterByMonth(vm.selEmployeeData.pontos, vm.currentMonthNum, function(data) {
                 vm.employeePontoSingleMonth = data;
-            })
-            console.log(vm.employeePontoSingleMonth);
+                //calculate totals
+                delaydTotals(data);
+            });
             //load statistics on employee selection
-            getStatistics();
+            //            getStatistics();
             //create chart for the first property (first tab)
             //            statisticsCreateChart(vm.statisticsTabs[0].total.value);
         };
 
+        function resetVars() {
 
+        }
 
         function filterByMonth(data, month, callback) {
             var filtData = $filter('filter')(data, {
@@ -171,12 +219,14 @@
         //Get report entry on selection
         var prevSector = '';
         vm.getReportEntry = function(entry, value) {
+            vm.viewNoDataMsg = false; // no data message (turn off for every new selection)
             console.log(vm.employee);
             console.log('report entry', entry, value);
             if (entry === 'department') {
                 vm.reportEntry.isShowYearSel = true;
                 if (prevSector !== value) {
                     vm.isViewSelectEmployee = false;
+
                 }
             }
             prevSector = value;
@@ -284,6 +334,7 @@
 
         /*---------------------------------------------------------------------------*/
         /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
+        /*Function*/
         function statisticsCreateChart(value) {
             //pass  mean values
             vm.chartjs.mean = vm.statistics.mean[value];
@@ -296,9 +347,10 @@
 
         /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
         /*----------------get ponto by month-------------------------------------------------------------*/
-        var monthIndex = 0; //janeiro
-        vm.currentMonth = vm.months[0]; // 'Jan'; //stores the current month
+
         vm.isDataView = true; // show/hide the relatorio data
+
+        /*Function*/
         vm.getPontoPerMonth = function(action) {
 
             //Handle month change
@@ -318,43 +370,72 @@
             }
 
             //get the corresponding month name
-            vm.currentMonth = vm.months[monthIndex];
+            vm.currentMonthName = vm.months[monthIndex];
             //--------------------------------------
 
             //Filter to limit data to only one month
-            console.log(vm.selEmployeeData.pontos);
             filterByMonth(vm.selEmployeeData.pontos, monthIndex.toString(), function(data) {
                 vm.employeePontoSingleMonth = data;
                 if (data.length < 1) {
-                    vm.isDataView = false;
+                    vm.isDataView = false; //Show there is no data to show
                 } else {
                     vm.isDataView = true;
                 }
-                //Calculate totals
-                vm.turno1TotalDelayedIn = 0; //Total de entradas atrasadas
-                vm.turno2TotalDelayedIn = 0; //Total de entradas atrasadas
-                vm.turno1TotalDelayedOut = 0; //Total de saídas antecipadas
-                vm.turno2TotalDelayedOut = 0; //Total de saídas antecipadas
-                _(data).forEach(function(data) {
-                    if (data.turno1.isDelayedIn) {
-                        vm.turno1TotalDelayedIn++;
-                    }
-                    if (data.turno2.isDelayedIn) {
-                        vm.turno2TotalDelayedIn++;
-                    }
-                    if (data.turno1.isDelayedOut) {
-                        vm.turno1TotalDelayedOut++;
-                    }
-                    if (data.turno2.isDelayedOut) {
-                        vm.turno2TotalDelayedOut++;
-                    }
-                });
 
+                delaydTotals(data);
             });
-            getStatistics();
+            //            getStatistics();
+        };
+
+        /*Function*/
+        vm.getPontoByYear = function(year) {
+            console.log(year);
+            var query = {
+                empId: reportSrvc.employeeId,
+                reportYear: year
+            };
+            console.log(query);
+            //reset month
+            vm.currentMonthName = vm.months[moment().month()];
+            employeeSrvc.getOnePonto(query, function(data) {
+                filterByMonth(data.res[0].pontos, vm.currentMonthNum, function(data) {
+                    console.log('vm.currentMonthNum', vm.currentMonthName);
+                    vm.employeePontoSingleMonth = data;
+                });
+                console.log(data);
+            });
         };
         /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
+        function delaydTotals(data) {
+            //Calculate totals
+            vm.turno1.totalDelayedIn = 0; //Total de entradas atrasadas
+            vm.turno2.totalDelayedIn = 0; //Total de entradas atrasadas
+            vm.turno1.totalAntiOut = 0; //Total de saídas antecipadas
+            vm.turno2.totalAntiOut = 0; //Total de saídas antecipadas
+            _(data).forEach(function(data) {
+                console.log(data.turno1);
+                if (data.turno1.isDelayedIn) {
+                    vm.turno1.totalDelayedIn++;
+                }
+                if (data.turno2.isDelayedIn) {
+                    vm.turno2.totalDelayedIn++;
+                }
+                if (data.turno1.isAntiOut) {
+                    console.log(data.turno1.isAntiOut);
+                    vm.turno1.totalAntiOut++;
+                }
+                if (data.turno2.isAntiOut) {
+                    vm.turno2.totalAntiOut++;
+                }
+            });
+        }
+        var dateObj = moment('2016-06-11T11:26:26-03:00');
+        console.log(dateObj.year())
+        console.log(dateObj.month())
+        console.log(dateObj.date())
+        console.log(dateObj.weekday())
     }
+
 
 
 })();

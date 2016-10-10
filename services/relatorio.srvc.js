@@ -111,11 +111,11 @@
                         subtitle1: 'Total de entradas atrasadas',
                         subtitle2: 'Total de saídas antecipadas',
                         cols: [{
-                            title: 'Entrada atrasada ',
+                            title: 'Entradas atrasadas ',
                             property: 'isDelayedIn',
                             value: 'inTime'
                         }, {
-                            title: 'Saída antecipada',
+                            title: 'Saídas antecipadas',
                             property: 'isAntiOut',
                             value: 'outTime'
 
@@ -128,11 +128,11 @@
                         subtitle1: 'Total de entradas atrasadas',
                         subtitle2: 'Total de saídas antecipadas',
                         cols: [{
-                            title: 'Entrada atrasada',
+                            title: 'Entradas atrasadas',
                             property: 'isDelayedIn',
                             value: 'inTime'
                         }, {
-                            title: 'Saída antecipada',
+                            title: 'Saídas antecipadas',
                             property: 'isAntiOut',
                             value: 'outTime'
 
